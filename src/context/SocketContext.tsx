@@ -19,7 +19,16 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [viewerCount, setViewerCount] = useState(0);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5000');
+    // Determine the socket URL:
+    // 1. Explicit VITE_SOCKET_URL
+    // 2. VITE_API_URL stripped of /api
+    // 3. Fallback to localhost:5000
+    const apiBase = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || apiBase;
+    
+    const newSocket = io(socketUrl, {
+      transports: ['polling', 'websocket'], // Ensure both are supported
+    });
     setSocket(newSocket);
 
     newSocket.on('updateViewerCount', (count: number) => {
