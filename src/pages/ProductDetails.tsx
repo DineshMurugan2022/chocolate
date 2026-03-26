@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { ShoppingBag, Package, ShieldCheck, ChevronLeft, ArrowRight, Info } from 'lucide-react';
+import { ShoppingBag, ChevronLeft, ArrowRight } from 'lucide-react';
 import { addToCart } from '../store/cartSlice';
 import BoutiqueProductCard from '../components/BoutiqueProductCard';
 import CustomerReviews from '../components/CustomerReviews';

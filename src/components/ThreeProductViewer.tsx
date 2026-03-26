@@ -39,8 +39,8 @@ export default function ThreeProductViewer() {
           </RoundedBox>
           
           {/* Subtle Glint Surface overlay */}
-          <RoundedBox args={[3.52, 5.52, 0.42]} radius={0.16} opacity={0.1} transparent>
-             <MeshWobbleMaterial factor={0.05} speed={1} color="#B3530F" />
+          <RoundedBox args={[3.52, 5.52, 0.42]} radius={0.16}>
+             <MeshWobbleMaterial factor={0.05} speed={1} color="#B3530F" opacity={0.1} transparent />
           </RoundedBox>
         </Float>
       </Canvas>

@@ -48,7 +48,6 @@ export default function GiftCurations() {
     </section>
   );
 }
-}
 
 // Sub-components used by GiftCurations
 const ShieldCheck = ({ size, className }: { size: number, className?: string }) => (
