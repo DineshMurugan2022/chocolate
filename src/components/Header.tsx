@@ -1,8 +1,9 @@
 import { useState } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { useNavigate } from 'react-router-dom';
-import { User, Heart, ShoppingBag, Search } from 'lucide-react';
+import { User, Heart, ShoppingBag, Search, Menu, X } from 'lucide-react';
 import AuthModal from '@/components/AuthModal';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import HeaderOoze from './HeaderOoze';
@@ -31,7 +32,15 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       <HeaderOoze />
 
       {/* NAVBAR CONTENTS - Compact and integrated */}
-      <div className={`max-w-[1400px] mx-auto px-6 md:px-20 flex items-center justify-between transition-all duration-700 relative z-20 pointer-events-auto h-16 md:h-20 lg:h-24`}>
+      <div className={`max-w-[1400px] mx-auto px-4 md:px-20 flex items-center justify-between transition-all duration-700 relative z-20 pointer-events-auto h-16 md:h-20 lg:h-24`}>
+        
+        {/* Mobile Menu Toggle */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden text-ivory-warm p-2 hover:bg-white/10 rounded-full transition-colors"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
         
         {/* Navigation - Centered vertically on the compact wave */}
         <nav className="hidden lg:flex items-center gap-12 mt-[-5px]">
@@ -51,7 +60,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           onClick={() => navigate('/')}
           className="flex flex-col items-center cursor-pointer group mt-[-5px]"
         >
-           <Logo className="w-56 h-auto transition-transform group-hover:scale-105" variant="light" />
+           <Logo className="w-32 md:w-56 h-auto transition-transform group-hover:scale-105" variant="light" />
         </div>
 
         {/* Action Layer */}
@@ -98,6 +107,42 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[110] bg-cocoa-deep text-ivory-warm p-10 flex flex-col pointer-events-auto lg:hidden">
+          <div className="flex justify-between items-center mb-20">
+            <Logo className="w-40" variant="light" />
+            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/10 rounded-full">
+              <X size={24} />
+            </button>
+          </div>
+          
+          <nav className="flex flex-col gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => {
+                  navigate(link.path);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-4xl font-display italic font-black text-left hover:text-gold-accent transition-colors"
+              >
+                {link.name}
+              </button>
+            ))}
+          </nav>
+
+          <div className="mt-auto pt-10 border-t border-white/10 flex flex-col gap-6">
+            <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className="flex items-center gap-4 text-xl font-body font-bold tracking-widest">
+              <Heart size={20} /> WISHLIST
+            </button>
+            <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="flex items-center gap-4 text-xl font-body font-bold tracking-widest">
+              <User size={20} /> {user ? 'PROFILE' : 'LOG_IN'}
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

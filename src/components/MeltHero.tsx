@@ -16,7 +16,7 @@ export default function MeltHero() {
   const barOpacity = useTransform(smoothProgress, [0.15, 0.25], [1, 0]);
 
   // STEP 2: FRAME-BY-FRAME CINEMATIC (10% - 85% Scroll) - EARLIER REVEAL
-  const frameCount = 160;
+  const frameCount = 161;
   const frameIndex = useTransform(smoothProgress, [0.1, 0.85], [1, frameCount]); 
   const [currentFrame, setCurrentFrame] = useState(1);
 
@@ -43,7 +43,7 @@ export default function MeltHero() {
   return (
     <section 
       ref={containerRef}
-      className="relative h-[250vh] md:h-[400vh] w-full bg-transparent overflow-visible"
+      className="relative h-[200vh] md:h-[400vh] w-full bg-transparent overflow-visible"
     >
       {/* Cinematic Vignette Overlay */}
       <div className="absolute inset-0 z-[50] pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.05)]" />
@@ -70,7 +70,7 @@ export default function MeltHero() {
         >
            <motion.div style={{ x: leftX }} className="relative">
               <div 
-                className="w-[150px] h-[280px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-l-[40px] md:rounded-[60px] border-r-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
+                className="w-[120px] h-[220px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-l-[30px] md:rounded-[60px] border-r-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
                 style={{ 
                    backgroundImage: `url("https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000")`, 
                    backgroundPosition: 'left' 
@@ -80,7 +80,7 @@ export default function MeltHero() {
 
            <motion.div style={{ x: rightX }} className="relative">
               <div 
-                className="w-[150px] h-[280px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-r-[40px] md:rounded-[60px] border-l-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
+                className="w-[120px] h-[220px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-r-[30px] md:rounded-[60px] border-l-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
                 style={{ 
                    backgroundImage: `url("https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000")`, 
                    backgroundPosition: 'right' 
@@ -118,7 +118,7 @@ export default function MeltHero() {
         >
            <div className="space-y-6">
               <span className="font-body text-[12px] font-black uppercase text-burnt-caramel tracking-[1em] block border-l-4 border-burnt-caramel pl-6">Heritage_Archive</span>
-              <h2 className="text-6xl md:text-8xl font-display font-black text-cocoa-deep italic leading-tight">
+              <h2 className="text-4xl md:text-8xl font-display font-black text-cocoa-deep italic leading-tight">
                  Molecular<br/>Inheritance
               </h2>
            </div>

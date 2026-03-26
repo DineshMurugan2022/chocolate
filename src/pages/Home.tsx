@@ -8,7 +8,7 @@ import GoldenScrollPath from '@/components/GoldenScrollPath';
 import FloatingIngredients from '@/components/FloatingIngredients';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 
 import prod1 from '../assets/product/bgremove_5dff1f0908_bgremoved_1774415915012.png';
@@ -56,13 +56,7 @@ export default function Home() {
       fetchProducts();
    }, []);
 
-   const { scrollYProgress } = useScroll({
-      target: containerRef,
-      offset: ["start start", "end end"]
-   });
-
-   // MINIMAL OVERALL BACKGROUND - Keeping it a consistent Ivory/Clean Tone
-   const bgColor = useTransform(scrollYProgress, [0, 1], ['#FAF9F6', '#F5F2ED']);
+   // Background logic removed as it was unused and causing lint errors
 
    return (
       <motion.div
@@ -81,7 +75,7 @@ export default function Home() {
             <MeltHero />
 
             {/* Step 2: The Exhibition (Hyper-Minimalist Lyra Grid) */}
-            <section className="relative py-60 px-6 lg:px-20 overflow-hidden bg-[#F5F2ED]/20">
+            <section className="relative py-24 md:py-60 px-6 lg:px-20 overflow-hidden bg-[#F5F2ED]/20">
                {/* Subtle Grid Pattern Overlay */}
                <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                   style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/graphy.png")' }} />
@@ -89,19 +83,19 @@ export default function Home() {
                <div className="max-w-[1400px] mx-auto relative z-10">
                   <div className="flex flex-col md:flex-row items-end justify-between mb-32 gap-10">
                      <div className="flex flex-col gap-6 max-w-2xl">
-                        <span className="font-body text-[14px] font-black uppercase text-burnt-caramel tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
-                        <h2 className="text-6xl md:text-9xl font-display font-black leading-[0.85] tracking-tight text-[#1A0F0D] opacity-100">
+                        <span className="font-body text-[10px] md:text-[14px] font-black uppercase text-burnt-caramel tracking-[0.5em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
+                        <h2 className="text-4xl md:text-9xl font-display font-black leading-[0.85] tracking-tight text-[#1A0F0D] opacity-100">
                            Reveal the <br /> <span className="not-italic font-black text-botanical-green">Soul</span>
                         </h2>
                      </div>
                      <div className="max-w-xs text-right">
-                        <p className="font-serif italic text-2xl md:text-4xl leading-relaxed text-[#1A0F0D] font-bold">
+                        <p className="font-serif italic text-xl md:text-4xl leading-relaxed text-[#1A0F0D] font-bold">
                            Experience the molecular architecture of our heritage artifacts.
                         </p>
                      </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                      {exhibitionProducts.map((product: any) => (
                         <HoverRevealProductCard
                            key={product._id}
@@ -124,8 +118,8 @@ export default function Home() {
             <section className="relative py-40 px-6 lg:px-20 bg-transparent">
                <div className="max-w-[1400px] mx-auto">
                   <div className="mb-32 text-center">
-                     <h2 className="text-7xl md:text-[8vw] font-display italic font-black text-[#1A0F0D] leading-none mb-10 block opacity-100 drop-shadow-sm">The_Crate_Architect</h2>
-                     <p className="font-body text-[16px] font-black uppercase tracking-[1.2em] text-[#B3530F] opacity-100">Configure Your Personal Legacy Collection</p>
+                     <h2 className="text-4xl md:text-[8vw] font-display italic font-black text-[#1A0F0D] leading-none mb-10 block opacity-100 drop-shadow-sm">The_Crate_Architect</h2>
+                     <p className="font-body text-[14px] font-black uppercase tracking-[1em] text-[#B3530F] opacity-100 italic">Configure Your Personal Legacy Collection</p>
                   </div>
                   <BuildYourBox />
                </div>
