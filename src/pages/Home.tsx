@@ -117,9 +117,9 @@ export default function Home() {
             {/* Step 3: The Lab (Build Your Box) */}
             <section className="relative py-40 px-6 lg:px-20 bg-transparent">
                <div className="max-w-[1400px] mx-auto">
-                  <div className="mb-32 text-center">
-                     <h2 className="text-4xl md:text-[8vw] font-display italic font-black text-[#1A0F0D] leading-none mb-10 block opacity-100 drop-shadow-sm">The_Crate_Architect</h2>
-                     <p className="font-body text-[14px] font-black uppercase tracking-[1em] text-[#B3530F] opacity-100 italic">Configure Your Personal Legacy Collection</p>
+                  <div className="mb-20 text-center space-y-4">
+                     <h2 className="text-5xl md:text-8xl font-display italic font-black text-[#1A0F0D]">The Crate Architect</h2>
+                     <p className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-burnt-caramel">Design Your Personal Collection</p>
                   </div>
                   <BuildYourBox />
                </div>
