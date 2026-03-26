@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  {/* The Chocolate Base */}
+  <rect x="10" y="20" width="80" height="60" rx="4" fill="#3D1C10" />
+  
+  {/* 3D Depth Sides */}
+  <path d="M10 80L90 80L95 85L5 85Z" fill="#1A0F0D" />
+  <path d="M90 20L90 80L95 85L95 25Z" fill="#1A0F0D" />
+
+  {/* Chocolate Segments */}
+  <g fill="#4E2315">
+    {/* Top Left */}
+    <rect x="18" y="28" width="28" height="20" rx="2" />
+    <path d="M18 48H46V50H20L18 48Z" fill="#1A0F0D" opacity="0.3" />
+    <path d="M46 28V48L48 50V30L46 28Z" fill="#1A0F0D" opacity="0.3" />
+
+    {/* Top Right */}
+    <rect x="54" y="28" width="28" height="20" rx="2" />
+    <path d="M54 48H82V50H56L54 48Z" fill="#1A0F0D" opacity="0.3" />
+    <path d="M82 28V48L84 50V30L82 28Z" fill="#1A0F0D" opacity="0.3" />
+
+    {/* Bottom Left */}
+    <rect x="18" y="52" width="28" height="20" rx="2" />
+    <path d="M18 72H46V74H20L18 72Z" fill="#1A0F0D" opacity="0.3" />
+    <path d="M46 52V72L48 74V54L46 52Z" fill="#1A0F0D" opacity="0.3" />
+
+    {/* Bottom Right */}
+    <rect x="54" y="52" width="28" height="20" rx="2" />
+    <path d="M54 72H82V74H56L54 72Z" fill="#1A0F0D" opacity="0.3" />
+    <path d="M82 52V72L84 74V54L82 52Z" fill="#1A0F0D" opacity="0.3" />
+  </g>
+
+  {/* Subtle Shine/Sheen */}
+  <path d="M15 25L40 25L35 30L15 30Z" fill="white" opacity="0.1" />
+</svg>

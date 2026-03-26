@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b3530f",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221810",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>Collections | L'Or Noir Premium Chocolate</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-dark/80 backdrop-blur-md px-6 md:px-16 lg:px-40 py-4 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">flare</span>
+</div>
+<h1 class="text-xl font-extrabold tracking-tighter uppercase italic">L'Or Noir</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors border-b-2 border-primary" href="#">Collections</a>
+<a class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity" href="#">Our Story</a>
+<a class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity" href="#">Gifts</a>
+<a class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity" href="#">Bespoke</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 lg:gap-8">
+<div class="hidden sm:flex items-center bg-primary/10 rounded-lg px-3 py-1.5 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-primary/40 w-32 lg:w-48" placeholder="Find your flavor" type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-primary/20 rounded-lg transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[60vh] w-full overflow-hidden flex items-end">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent z-10"></div>
+<div class="absolute inset-0 scale-110 bg-center bg-cover" data-alt="Luxury dark chocolate Ganache close up view" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvba7eTvL5D42qI9yV2CbVjbCm902Wm9E2M2GCAWCSQywtnVxwsTcol63NCCK7lA2Vi-24zUjTihMldgaSl0Rke7HjLvLZR9S54yhpPznBtHW4pJnL5rzGX28k-eMHHWG-TwIpGvaFPYh0MrTKs3asljuxIve1jrqDqq-q1cyr0LmFRvYFP4d6W28nrsHX9QJUduSa6f34M_mfKekJFu0NKpPHBuEYCSz5WbILz6EYIsLFUuC8H1U0Epiv9Pf9kZn8BkTdOiARUyKu');">
+</div>
+<div class="relative z-20 px-6 md:px-16 lg:px-40 pb-16 max-w-4xl">
+<span class="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-4 block">The Art of Cacao</span>
+<h2 class="text-5xl md:text-7xl font-black mb-6 leading-[1.1]">Exquisite Collections</h2>
+<p class="text-lg text-slate-300 max-w-xl leading-relaxed">
+                    A symphony of rare flavors and masterful craftsmanship. Discover our curated selections of the world's finest single-origin chocolates.
+                </p>
+</div>
+</section>
+<!-- Category Filter -->
+<div class="sticky top-[73px] z-40 bg-background-dark/95 backdrop-blur-sm border-b border-primary/10">
+<div class="px-6 md:px-16 lg:px-40 flex gap-8 overflow-x-auto no-scrollbar">
+<button class="py-6 border-b-2 border-primary text-primary font-bold text-sm whitespace-nowrap">All Collections</button>
+<button class="py-6 border-b-2 border-transparent hover:text-primary opacity-60 hover:opacity-100 transition-all font-bold text-sm whitespace-nowrap">Signature</button>
+<button class="py-6 border-b-2 border-transparent hover:text-primary opacity-60 hover:opacity-100 transition-all font-bold text-sm whitespace-nowrap">Limited Edition</button>
+<button class="py-6 border-b-2 border-transparent hover:text-primary opacity-60 hover:opacity-100 transition-all font-bold text-sm whitespace-nowrap">Gift Curations</button>
+<button class="py-6 border-b-2 border-transparent hover:text-primary opacity-60 hover:opacity-100 transition-all font-bold text-sm whitespace-nowrap">Single Origin</button>
+</div>
+</div>
+<main class="px-6 md:px-16 lg:px-40 py-16 space-y-24">
+<!-- Signature Collection -->
+<section>
+<div class="flex justify-between items-end mb-10">
+<div>
+<h3 class="text-3xl font-bold mb-2">The Signature Collection</h3>
+<p class="text-slate-400">Our timeless classics, perfected over generations.</p>
+</div>
+<a class="group flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest" href="#">
+                        View All <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Product 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-primary/5 relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Dark chocolate truffles with gold leaf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTJQreqCw02DI7IcswU75einRQ6afaru68Wg6SH2PsA3fyiHNHM9A2mW4_nTEyXzuvzgzhXuvu4SPUX3gZtBQIPmo8LDnyn-QrEHQ-TRrbztZLnhJFX_sjJu7FEedwk0beqxPv0rP_J71SByV4VahyKFERVa-ypkjMphSuqzr7Gd59cP6U_C-Zc1neOs0slOSXCdEGWkwk-ApXJtPqQZcDa19dIqCnOomgOjomLAGkG_wL9wQfGFFa_9xTAo9lxKWH-M60RRJQ1Srr"/>
+<div class="absolute inset-0 bg-background-dark/20 group-hover:bg-transparent transition-colors"></div>
+<div class="absolute top-4 right-4 bg-background-dark/80 backdrop-blur-md px-3 py-1 rounded-full border border-primary/30">
+<span class="text-xs font-bold text-primary">BESTSELLER</span>
+</div>
+</div>
+<h4 class="text-xl font-bold mb-1">Midnight Truffle Noir</h4>
+<p class="text-slate-400 text-sm mb-3">72% Dark Venezuelan Cacao, Sea Salt</p>
+<p class="text-primary font-bold">$42.00</p>
+</div>
+<!-- Product 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-primary/5 relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Assorted luxury chocolates in a box" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5O2_wEDUes9D9BgEx2oy0bdZGBl4oLXCDDCW7pY7uUjbPClEd171-TYBAA1vemJ1PSBin1wR-twJ8__k5ZwNcfMzRxvrwetlEvysf7BEHK-1P8AnXy1MebgCut-zSReVZG5QFVJHGf-mHxEdtsz8CXcW3HpCss_7gizoD8YCPheNcANd8glpfVOEECa-bhLMySMmHjmYVZI_XMEwSak1nzldPVFng8GNjmKvkR50uRd2XEcD4MzZpOMEmCBnM9umaxfeqjk0dctnD"/>
+<div class="absolute inset-0 bg-background-dark/20 group-hover:bg-transparent transition-colors"></div>
+</div>
+<h4 class="text-xl font-bold mb-1">Signature Praliné Box</h4>
+<p class="text-slate-400 text-sm mb-3">Handcrafted Hazelnut &amp; Almond Ganache</p>
+<p class="text-primary font-bold">$65.00</p>
+</div>
+<!-- Product 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] overflow-hidden rounded-xl bg-primary/5 relative mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Artisanal dark chocolate bar broken in pieces" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1hiZsh_J3Ba4tR_Gu1vvp-cUV2Kki6aESzM3JRJM_QPFUemhOswlwj8s_-IYK8SP6UCZxQFSOQd32YvuP2gHBSotaEeyZ9CVR4sAgLsu6ivTQ7qsxk1E4SyNqNeDr49hQ7KdJ3hjKHoS-9zD498UTQJMSXLsACksROSHX3AYKy6VYbuGV0oM0F4YqBKe8AwiTy8Czdk6vOz6Iz98-w74gGlVozRPptr6G2p84aRT8THy5iw_FVwbioyYie9YxZTg6gnqMsEVtnEe9"/>
+<div class="absolute inset-0 bg-background-dark/20 group-hover:bg-transparent transition-colors"></div>
+</div>
+<h4 class="text-xl font-bold mb-1">Single Origin Tasting Set</h4>
+<p class="text-slate-400 text-sm mb-3">Madagascar, Peru, and Ecuador Flight</p>
+<p class="text-primary font-bold">$58.00</p>
+</div>
+</div>
+</section>
+<!-- Limited Editions Banner -->
+<section class="relative w-full aspect-[21/9] rounded-3xl overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105" data-alt="Close up of chocolate melting and flowing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2L-GY4DJJjaxFpl6ByGotPki9i5q-5wIdNnOG7RxalrMWY0n1ESErTbQjaUDfHJDh3QZ6uMwPd6Fws7NBa7jDJNhWjyltxjYkJLd2bZWEvleOshNURnXgg9sIOokM83cYy6Bz_eTGGY0xd9ohDJwF_jeQXknUQrr8kgTYlzPuvmXvogDBO4LVRLz_0QOjB2lh22bWZi6q4eAfDT1Ut4XBSQ3--90NYv35P0T7_AelG5VBqbxfulpVUnMLnm2_IDKqqam6DASn5_zP"/>
+<div class="relative z-20 h-full flex flex-col justify-center px-12 md:px-24 max-w-2xl">
+<span class="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-4">Rare &amp; Seasonal</span>
+<h3 class="text-4xl md:text-5xl font-black mb-6">The Winter Solstice Edition</h3>
+<p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                        Infused with smoked cedar and aged brandy, our most exclusive collection yet. Only 500 sets produced.
+                    </p>
+<div>
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:-translate-y-1">
+                            Secure Early Access
+                        </button>
+</div>
+</div>
+</section>
+<!-- Gift Curations -->
+<section>
+<div class="flex flex-col items-center text-center mb-16">
+<span class="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-4">For Someone Special</span>
+<h3 class="text-4xl font-black mb-4">Gift Curations</h3>
+<p class="text-slate-400 max-w-xl">Elegantly packaged experiences designed to be shared and remembered.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-video">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="Luxury gift box with ribbon and chocolates" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhAtg0a0rbfGMmUtXVjc_JBo8Vc_3FSUiOay_MjJ4X2aXiSTW_L2u7LES4CDIzOdGioBIJJEZoe2sfJ91fvbR7RTQgZqyeO6y93yHddnai_INLRb5jgTgDtdSTtI8FICjhZ5s4orJTFfd7s4_mHNfjZ1DuWfXuovbCsQykzdbFwSpgc0fVfco8wM-kdWXgZtRWwjhVCaQWgFDCGMYkNLSwsoKkkkWBKvpBhnZNKKjxBs3o_y1ML4rIZrkAVvclIES0s02Idbwr-cWi"/>
+<div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all duration-500"></div>
+<div class="absolute inset-0 p-12 flex flex-col justify-end">
+<h4 class="text-2xl font-black text-white mb-2">The Connoisseur's Chest</h4>
+<p class="text-slate-200 text-sm mb-6 max-w-sm">A full anthology of our signature flavors in a bespoke wooden case.</p>
+<span class="text-primary font-bold text-lg">$145.00 — Shop Gift</span>
+</div>
+</div>
+<div class="relative group cursor-pointer overflow-hidden rounded-2xl aspect-video">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="Champagne and chocolate pairing set" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWP-BIsjGRt9PycOxsnBg-Ivam9jVK7PgZvxa7d4yIy46_pCWwhA9BTiAOVZRRy_V2IPuV38d_EvD0RK-5Rx7FAOleEQNwGE9AacLvSio3BmhCzKlLajfvebRwIGmoB5LtHEgj2nGeOxKNV5sVXGgi4XGdco9MqbyQsNIrbA3vkchZdXEHHrkoNumR48Vucxr-_PMma1USbJyq9qkMi_eIf2jfpBno38Ee2nKKqqrdrW5_8u57aRxkcWWNFI-C533RKKmDM1cu1nRf"/>
+<div class="absolute inset-0 bg-background-dark/40 group-hover:bg-background-dark/20 transition-all duration-500"></div>
+<div class="absolute inset-0 p-12 flex flex-col justify-end">
+<h4 class="text-2xl font-black text-white mb-2">The Celebration Pairing</h4>
+<p class="text-slate-200 text-sm mb-6 max-w-sm">Moët &amp; Chandon accompanied by a selection of our dark fruit ganaches.</p>
+<span class="text-primary font-bold text-lg">$180.00 — Shop Gift</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Newsletter / CTA -->
+<section class="bg-primary/5 border-t border-primary/20 py-24 px-6 md:px-16 lg:px-40">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div>
+<h3 class="text-4xl font-black mb-6">Join the Connoisseur Circle</h3>
+<p class="text-slate-400 text-lg mb-8">Receive exclusive invitations to private tasting events, early access to seasonal launches, and stories from the cacao groves.</p>
+<form class="flex gap-4">
+<input class="flex-1 bg-background-dark border border-primary/30 rounded-lg px-6 py-4 focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-10 rounded-lg transition-colors whitespace-nowrap" type="submit">Join Now</button>
+</form>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="Chocolate chef making truffles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSfuik4LOfoc9qJrC_VhzyL-IbkBMLd4BL-47pCoGQxBll68j_P5X4eBXyU9nm-0Cxz8JsQU-nuAcWRLoPNURhIGkegoHH5y94DlIUkRPX9ewCI9OS42mrPa2cphRDuml7CMq5YtBCjZw67zcbRTsDgIIPsBtAzEIQMTrzDy_KGTjGsH7q2fIjHoQBaOUIUawGbGtBt_EvdeZBQrUbsAdqURapJWTVpg_ByJlSFFZqfXGsYkk5NADpRxQCB6WKsPvm_NACPsTt4oF7"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden mt-8">
+<img class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="Close up of cacao beans" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUjqCLoztfqiy92VGEyYTP83PfrEioaAzt94viOBUlW_A70PQTHeQqS0fXgrNt0PXqX9IDWHWrxRB_IYf5VwVgtjeJ8AkMQa2QLHuC3FO8twVHYbaLs2FhG2zf4JK0ZzhcsNFszYQpSBJ9DYBIKTl5tj_HpXj2qcyM_p5TfQaEUHJ9vzJEv4qWF2jFLfrTWYICmajWpuc1FoRssjteoC2qAvGwhfqBNZSAj8k2SsGDI31tMZC0EdpSr0pR-NxASTiEZZTGOEbYyqo"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-background-dark border-t border-primary/10 px-6 md:px-16 lg:px-40 py-20">
+<div class="flex flex-col md:flex-row justify-between gap-16">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">flare</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tighter uppercase italic">L'Or Noir</h2>
+</div>
+<p class="text-slate-500 max-w-xs text-sm leading-relaxed italic">
+                        "The pursuit of the perfect moment, captured in the essence of the world's most rare cacao."
+                    </p>
+<div class="flex gap-4">
+<a class="size-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">share</span>
+</a>
+<a class="size-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">photo_camera</span>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-12 lg:gap-24">
+<div class="space-y-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary">Shop</h5>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Collections</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Best Sellers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Subscription</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Gift Cards</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary">House</h5>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Our Story</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cacao Sourcing</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Craftsmanship</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary">Support</h5>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Store Locator</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-xs text-slate-600">© 2024 L'Or Noir Artisanal Chocolates. All Rights Reserved.</p>
+<div class="flex gap-8 text-xs text-slate-600">
+<a class="hover:text-slate-400" href="#">Privacy Policy</a>
+<a class="hover:text-slate-400" href="#">Terms of Service</a>
+<a class="hover:text-slate-400" href="#">Accessibility</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

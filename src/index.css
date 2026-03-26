@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@theme {
+  /* Botanical Boutique Palette - Tailwind 4 */
+  --color-cocoa-deep: #1A0F0D;
+  --color-burnt-caramel: #B3530F;
+  --color-ivory-warm: #F5F2ED;
+  --color-botanical-green: #14211A;
+  --color-gold-soft: #D4AF37;
+  
+  --font-display: "Cormorant Garamond", serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-body: "Outfit", sans-serif;
+  
+  --shadow-organic: 0 30px 60px -12px rgba(26, 15, 13, 0.12), 0 18px 36px -18px rgba(0, 0, 0, 0.2);
+}
+
+.grid-bg {
+  background-image: radial-gradient(var(--color-cocoa-deep) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0;
+  opacity: 0.05;
+}
+
+.grid-line-bg {
+  background: linear-gradient(90deg, rgba(26, 15, 13, 0.03) 1px, transparent 1px),
+              linear-gradient(rgba(26, 15, 13, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+@layer base {
+  * {
+    @apply border-transparent transition-colors duration-300;
+  }
+  body {
+    background-color: #FAF9F6;
+    background-image: 
+        linear-gradient(rgba(250, 249, 246, 0.85), rgba(250, 249, 246, 0.85)),
+        url("/assets/global_bg.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--color-cocoa-deep);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://www.transparenttextures.com/patterns/noise-lines.png");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
+/* Custom UI Effects */
+.glass-panel {
+  background: rgba(255, 252, 247, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-organic);
+}
+
+.text-gradient-rich {
+  background: linear-gradient(to bottom right, var(--color-cocoa-deep), var(--color-burnt-caramel));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.organic-shape {
+  border-radius: 64% 36% 27% 73% / 55% 58% 42% 45%;
+}
+
+.parallax-bg {
+  transform: translateZ(-1px) scale(2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory-warm);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-burnt-caramel);
+  border-radius: 20px;
+  border: 3px solid var(--color-ivory-warm);
+}
+
+/* Animations */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  33% { transform: translateY(-15px) rotate(2deg); }
+  66% { transform: translateY(10px) rotate(-1deg); }
+}
+
+.animate-gentle {
+  animation: float-gentle 8s ease-in-out infinite;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: reveal-up-anim 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes reveal-up-anim {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drip {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(500%); opacity: 0; }
+}
+
+@keyframes drip-slow {
+  0% { transform: translateY(-100%) scaleY(0.5); opacity: 0; }
+  15% { opacity: 1; transform: translateY(0) scaleY(1.2); }
+  100% { transform: translateY(800%) scaleY(0.8); opacity: 0; }
+}
+
+.animate-drip {
+  animation: drip 4s infinite cubic-bezier(0.5, 0, 0.75, 0);
+}
+
+.animate-drip-slow {
+  animation: drip-slow 6s infinite cubic-bezier(0.5, 0, 0.75, 0) 1s;
+}
+
+.animate-drip-delayed {
+  animation: drip 5s infinite cubic-bezier(0.5, 0, 0.75, 0) 2.5s;
+}
