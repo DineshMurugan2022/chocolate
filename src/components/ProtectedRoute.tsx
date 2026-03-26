@@ -12,14 +12,11 @@ const ProtectedRoute = ({ children, adminOnly = false }: ProtectedRouteProps) =>
   const { user } = useSelector((state: RootState) => state.auth);
 
   if (!user) {
-    // Temporarily allowing access to admin routes for development/fix
-    if (adminOnly) return <>{children}</>;
     return <Navigate to="/" replace />;
   }
 
   if (adminOnly && user.role !== 'admin') {
-    // Temporarily allowing access for development/fix
-    return <>{children}</>;
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
