@@ -8,13 +8,13 @@ export default function Footer() {
   const year = new Date().getFullYear();
   
   return (
-    <footer className="relative bg-cocoa-deep text-ivory-warm pt-16 pb-8 px-6 md:px-20 overflow-visible mt-16">
+    <footer className="relative bg-cocoa-deep text-ivory-warm pt-10 pb-6 px-6 md:px-20 overflow-visible mt-8">
       
       {/* Stochastic Chocolate Wave Animation */}
       <ChocolateWave />
 
       <div className="w-full max-w-[1400px] mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           
           {/* Brand Identity */}
           <div className="space-y-8">
@@ -117,7 +117,7 @@ export default function Footer() {
         </div>
 
         {/* Unified Legal Base */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-ivory-warm/5 pt-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-t border-ivory-warm/5 pt-8">
            <div className="flex flex-wrap items-center justify-center md:justify-start gap-10">
               <span className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em]">© {year} ASIAN CHOCOLATE STORE INNOVATIVE</span>
               <button className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em] hover:text-burnt-caramel transition-colors">Privacy_Protocol</button>

@@ -1,5 +1,6 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import chocolateGate from '../assets/chocolate-gate.png';
 
 export default function MeltHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +22,7 @@ export default function MeltHero() {
   const [currentFrame, setCurrentFrame] = useState(1);
 
   useEffect(() => {
-    return frameIndex.onChange((v) => {
+    return frameIndex.on("change", (v) => {
       const idx = Math.floor(v);
       if (idx >= 1 && idx <= frameCount) {
         setCurrentFrame(idx);
@@ -31,10 +32,11 @@ export default function MeltHero() {
 
   const framePath = `/assets/small_chocolate/ezgif-frame-${currentFrame.toString().padStart(3, '0')}.jpg`;
 
-  // DYNAMIC LAYOUT: SLIDE TO RIGHT & LEFT TEXT
-  const xCore = useTransform(smoothProgress, [0.3, 0.6], [0, 300]); 
+  // DYNAMIC LAYOUT: SLIDE TO RIGHT & LEFT TEXT (Adjusted for mobile)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const xCore = useTransform(smoothProgress, [0.3, 0.6], [0, isMobile ? 80 : 300]); 
   const textOpacity = useTransform(smoothProgress, [0.35, 0.55], [0, 1]);
-  const textX = useTransform(smoothProgress, [0.35, 0.55], [-100, 0]);
+  const textX = useTransform(smoothProgress, [0.35, 0.55], isMobile ? [0, 0] : [-100, 0]);
 
   // DECORATIVE PARALLAX TYPOGRAPHY
   const typoX1 = useTransform(smoothProgress, [0.1, 0.5], [-200, 200]);
@@ -51,41 +53,56 @@ export default function MeltHero() {
       {/* Sticky Cinematic Stage */}
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
         
-        {/* BACKGROUND TYPOGRAPHY - SOLID AS REQUESTED */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-0 select-none overflow-hidden">
-           <motion.div style={{ x: typoX1 }} className="whitespace-nowrap flex gap-20 opacity-10">
-              <span className="text-[15vw] font-display font-black uppercase text-cocoa-deep">Molecular Mastery • Patiently Harvested • </span>
-              <span className="text-[15vw] font-display font-black uppercase text-cocoa-deep">Molecular Mastery • Patiently Harvested</span>
-           </motion.div>
-           <motion.div style={{ x: typoX2 }} className="whitespace-nowrap flex gap-20 -mt-20 opacity-10">
-              <span className="text-[12vw] font-serif italic text-cocoa-deep">The Inheritance • Boutique Identity • </span>
-              <span className="text-[12vw] font-serif italic text-cocoa-deep">The Inheritance • Boutique Identity</span>
-           </motion.div>
-        </div>
+        {/* Dynamic Welcome Message */}
+        <motion.div 
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.5, duration: 2 }}
+           style={{ opacity: barOpacity }}
+           className="absolute top-[15%] md:top-[10%] z-40 text-center space-y-4"
+        >
+           <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-gold-soft">The Asian Chocolate Store</p>
+           <h1 className="text-4xl md:text-7xl font-display italic font-black text-gold-soft">Crafted with Heritage</h1>
+           <div className="flex flex-col items-center gap-10 mt-20 opacity-60">
+              <span className="font-body text-[9px] font-black uppercase tracking-[0.5em] text-gold-soft">Scroll to Discover</span>
+              <div className="w-[1px] h-20 bg-gradient-to-b from-gold-soft to-transparent" />
+           </div>
+        </motion.div>
+        
 
-        {/* LAYER 1: THE BREAKING BAR */}
+        {/* LAYER 1: THE BREAKING BAR - Now redesigned as Stunning Heritage Gates */}
         <motion.div 
            style={{ opacity: barOpacity, zIndex: 30 }}
            className="absolute flex items-center justify-center w-full"
         >
-           <motion.div style={{ x: leftX }} className="relative">
+           <motion.div style={{ x: leftX }} className="relative group/gate">
+              {/* Glass Reflection Overlay */}
+              <div className="absolute inset-0 z-20 opacity-0 group-hover/gate:opacity-30 transition-opacity bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
               <div 
-                className="w-[120px] h-[220px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-l-[30px] md:rounded-[60px] border-r-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
+                className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-l-[40px] md:rounded-[80px] border-r-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                 style={{ 
-                   backgroundImage: `url("https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000")`, 
-                   backgroundPosition: 'left' 
+                   backgroundImage: `url(${chocolateGate})`, 
+                   backgroundPosition: 'left center' 
                 }}
-              />
+              >
+                {/* Artisan Golden Foil Breaking Edge */}
+                <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-burnt-caramel/60 to-transparent" />
+              </div>
            </motion.div>
 
-           <motion.div style={{ x: rightX }} className="relative">
+           <motion.div style={{ x: rightX }} className="relative group/gate">
+              {/* Glass Reflection Overlay */}
+              <div className="absolute inset-0 z-20 opacity-0 group-hover/gate:opacity-30 transition-opacity bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
               <div 
-                className="w-[120px] h-[220px] md:w-[320px] md:h-[550px] bg-cover bg-center rounded-r-[30px] md:rounded-[60px] border-l-4 border-white shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
+                className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-r-[40px] md:rounded-[80px] border-l-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                 style={{ 
-                   backgroundImage: `url("https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000")`, 
-                   backgroundPosition: 'right' 
+                   backgroundImage: `url(${chocolateGate})`, 
+                   backgroundPosition: 'right center' 
                 }}
-              />
+              >
+                {/* Artisan Golden Foil Breaking Edge */}
+                <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-transparent via-burnt-caramel/60 to-transparent" />
+              </div>
            </motion.div>
         </motion.div>
 
@@ -111,38 +128,54 @@ export default function MeltHero() {
            </div>
         </motion.div>
 
-        {/* LAYER 3: LEFT SIDE STORYTELLING */}
+        {/* LAYER 3: MINIMALIST FLOATING GOLDEN TEXT - REDESIGNED & RESPONSIVE */}
         <motion.div 
            style={{ opacity: textOpacity, x: textX }}
-           className="absolute left-[5%] md:left-[10%] top-1/2 -translate-y-1/2 w-full max-w-[450px] z-[40] flex flex-col gap-10"
+           className="absolute left-[5%] md:left-[10%] top-[15%] md:top-1/2 -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-full md:max-w-[650px] z-[40]"
         >
-           <div className="space-y-6">
-              <span className="font-body text-[12px] font-black uppercase text-burnt-caramel tracking-[1em] block border-l-4 border-burnt-caramel pl-6">Heritage_Archive</span>
-              <h2 className="text-4xl md:text-8xl font-display font-black text-cocoa-deep italic leading-tight">
-                 Molecular<br/>Inheritance
-              </h2>
-           </div>
-
-           <div className="p-10 bg-white/40 backdrop-blur-3xl rounded-[40px] border border-white/50 shadow-2xl space-y-8">
-              <p className="font-serif italic text-2xl text-cocoa-deep/70 leading-relaxed">
-                 "Our laboratory extracts the genetic essence of the cocoa bean, resulting in a molecular symmetry that redefines the boutique experience."
-              </p>
-              
-              <div className="flex items-center gap-6">
-                 <div className="h-[1px] flex-1 bg-burnt-caramel/20" />
-                 <span className="font-body text-[10px] font-bold text-burnt-caramel/60 uppercase tracking-widest leading-none">Registry_No_042</span>
-                 <div className="h-[1px] flex-1 bg-burnt-caramel/20" />
+           <div className="space-y-6 md:space-y-16">
+              {/* Floating Minimalist Header */}
+              <div className="flex items-center gap-4 md:gap-10">
+                 <div className="h-[1px] w-12 md:w-24 bg-gold-soft/40" />
+                 <span className="font-body text-[9px] md:text-[12px] font-black uppercase text-gold-soft tracking-[0.8rem] md:tracking-[1.5rem] opacity-70">Heritage_Archive</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-8">
-                 <div className="space-y-2">
-                    <span className="block text-[8px] font-black uppercase tracking-widest text-cocoa-deep opacity-40">Intensity</span>
-                    <span className="block text-xl font-display font-black text-cocoa-deep">88.4% Dark</span>
+              {/* Ultra-Large Minimalist Typography */}
+              <div className="space-y-4 md:space-y-6">
+                 <h2 className="text-4xl md:text-[8vw] font-display font-black text-gold-soft leading-[0.8] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
+                    Molecular<br/>Inheritance
+                 </h2>
+                 <div className="h-[2px] md:h-[4px] w-16 md:w-32 bg-gold-soft" />
+              </div>
+
+              {/* Floating Quote - No Background */}
+              <p className="font-serif italic text-lg md:text-5xl text-gold-soft leading-tight font-light max-w-xl">
+                 "Our laboratory extracts the <span className="underline decoration-gold-soft/30 underline-offset-8">genetic essence</span> of the cocoa bean."
+              </p>
+              
+              {/* Minimalist Data Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-20 pt-8 md:pt-16 border-t border-gold-soft/10">
+                 <div className="space-y-2 md:space-y-6">
+                    <span className="block text-[8px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Registry_Intensity</span>
+                    <div className="flex items-baseline gap-2 md:gap-4">
+                       <span className="text-2xl md:text-7xl font-display font-black text-gold-soft">88.4</span>
+                       <span className="text-[8px] md:text-sm font-body text-gold-soft/40 uppercase tracking-[0.2em] md:tracking-[0.3em]">SRI_UNIT</span>
+                    </div>
                  </div>
-                 <div className="space-y-2">
-                    <span className="block text-[8px] font-black uppercase tracking-widest text-cocoa-deep opacity-40">Origin</span>
-                    <span className="block text-xl font-display font-black text-cocoa-deep">Madagascar</span>
+
+                 <div className="space-y-2 md:space-y-6">
+                    <span className="block text-[8px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Estate_Registry</span>
+                    <span className="block text-xl md:text-6xl font-display font-black text-gold-soft italic">
+                       Madagascar
+                    </span>
                  </div>
+              </div>
+
+              {/* Subtle Footer Authentication */}
+              <div className="flex items-center gap-8 pt-10 opacity-30">
+                 <span className="font-mono text-[10px] text-gold-soft tracking-widest">AUTH_VERIFIED_2026</span>
+                 <div className="h-[1px] flex-1 bg-gold-soft/20" />
+                 <span className="font-mono text-[10px] text-gold-soft">ESTATE_NO_42</span>
               </div>
            </div>
         </motion.div>

@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import img1 from '../assets/product/WhatsApp Image 2026-03-25 at 10.12.14 AM.jpeg';
-import img2 from '../assets/product/WhatsApp Image 2026-03-24 at 6.47.47 PM.jpeg';
-import img3 from '../assets/product/WhatsApp Image 2026-03-24 at 5.43.48 PM.jpeg';
-import img4 from '../assets/product/WhatsApp Image 2026-03-24 at 5.42.48 PM.jpeg';
+const img1 = "https://images.unsplash.com/photo-1548324741-28956903d35a?auto=format&fit=crop&q=80&w=1200";
+const img2 = "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?auto=format&fit=crop&q=80&w=1200";
+const img3 = "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&q=80&w=1200";
+const img4 = "https://images.unsplash.com/photo-1624462966581-bc6d768cbce5?auto=format&fit=crop&q=80&w=1200";
 
 gsap.registerPlugin(ScrollTrigger);
 

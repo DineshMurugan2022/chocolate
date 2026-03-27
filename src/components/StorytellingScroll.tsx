@@ -1,10 +1,10 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
-import img1 from '../assets/product/WhatsApp Image 2026-03-25 at 10.12.14 AM.jpeg';
-import img2 from '../assets/product/WhatsApp Image 2026-03-24 at 6.47.47 PM.jpeg';
-import img3 from '../assets/product/WhatsApp Image 2026-03-24 at 5.43.48 PM.jpeg';
-import img4 from '../assets/product/WhatsApp Image 2026-03-24 at 5.42.48 PM.jpeg';
+const img1 = "https://images.unsplash.com/photo-1548324741-28956903d35a?auto=format&fit=crop&q=80&w=1200";
+const img2 = "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?auto=format&fit=crop&q=80&w=1200";
+const img3 = "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&q=80&w=1200";
+const img4 = "https://images.unsplash.com/photo-1624462966581-bc6d768cbce5?auto=format&fit=crop&q=80&w=1200";
 
 export default function StorytellingScroll() {
    const containerRef = useRef<HTMLDivElement>(null);
@@ -62,13 +62,13 @@ export default function StorytellingScroll() {
                {/* IMAGE RIGHT */}
                <div className="flex-[1.5] relative w-full aspect-video rounded-[50px] overflow-hidden shadow-[0_80px_160px_rgba(26,15,13,0.3)] order-1 md:order-2">
                   <motion.img
-                     src="/assets/pod_whole.png"
+                     src="https://images.unsplash.com/photo-1548324741-28956903d35a?auto=format&fit=crop&q=80&w=1200"
                      style={{ clipPath: peelProgress }}
                      className="absolute inset-0 w-full h-full object-cover z-10"
                      alt="Whole Pod"
                   />
                   <img
-                     src="/assets/pod_peeled.png"
+                     src="https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?auto=format&fit=crop&q=80&w=1200"
                      className="absolute inset-0 w-full h-full object-cover z-0"
                      alt="Internal Pod"
                   />
@@ -124,15 +124,15 @@ export default function StorytellingScroll() {
                {/* IMAGE LEFT */}
                <div className="flex-1 relative w-full h-[400px] md:h-[600px] flex flex-col items-center">
                   <div className="relative w-12 h-full bg-ivory-warm/20 rounded-full overflow-hidden border border-white/20">
-                     <motion.div style={{ height: streamHeight }} className="w-full bg-burnt-caramel rounded-full shadow-[0_0_60px_rgba(179,153,10,0.5)] overflow-hidden">
-                        <img src="/assets/melt_stream.png" className="w-full h-full object-cover animate-pulse" alt="Liquid" />
+                     <motion.div style={{ height: streamHeight }} className="w-full bg-burnt-caramel rounded-full shadow-[0_0_60px_rgba(179,153,10,0.5)] overflow-hidden flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-b from-burnt-caramel/20 to-burnt-caramel" />
                      </motion.div>
                   </div>
                   <motion.div
                      style={{ scale: useTransform(smoothProgress, [0.85, 1], [0.5, 1]), opacity: useTransform(smoothProgress, [0.85, 0.95], [0, 1]) }}
                      className="absolute -bottom-20 size-[350px] md:size-[600px] rounded-[60px] md:rounded-[100px] bg-transparent backdrop-blur-3xl shadow-[0_80px_150px_rgba(26,15,13,0.4)] overflow-hidden flex items-center justify-center z-50"
                   >
-                     <img src="/assets/story/stage3.jpeg" className="w-full h-full object-cover" alt="Final Synthesis Result" />
+                     <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="Final Synthesis Result" />
                   </motion.div>
                </div>
 

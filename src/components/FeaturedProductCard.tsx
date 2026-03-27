@@ -20,7 +20,7 @@ export default function FeaturedProductCard({ product, onAdd }: FeaturedProductC
     <div className="relative w-full h-[700px] rounded-[40px] overflow-hidden group">
       {/* Background Texture & Gradient */}
       <div className="absolute inset-0 z-0">
-        <img src={liquidRibbons} alt="" className="w-full h-full object-cover mix-blend-overlay opacity-40 scale-110 group-hover:scale-100 transition-transform duration-[2s]" />
+        <div className="w-full h-full bg-gradient-to-br from-cocoa-deep via-cocoa-deep/80 to-cocoa-deep" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A110D] via-[#2B1B17] to-[#1A110D] opacity-95" />
       </div>
 

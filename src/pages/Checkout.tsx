@@ -118,7 +118,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-cocoa-deep selection:bg-burnt-caramel selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative overflow-hidden">
       
       {/* Heritage Grid Motif & Texture */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -132,7 +132,7 @@ const Checkout = () => {
         
         <button 
           onClick={() => navigate(-1)}
-          className="flex items-center gap-6 text-cocoa-deep/20 hover:text-burnt-caramel transition-all mb-20 uppercase text-[9px] tracking-[0.8em] font-black group"
+          className="flex items-center gap-6 text-gold-soft/20 hover:text-gold-soft transition-all mb-20 uppercase text-[9px] tracking-[0.8em] font-black group"
         >
           <ChevronLeft size={16} className="group-hover:-translate-x-3 transition-transform" /> Back_to_Registry
         </button>
@@ -143,14 +143,14 @@ const Checkout = () => {
           <div className="space-y-32">
             
             <section className="space-y-12">
-               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-cocoa-deep/5 pb-10 gap-6">
+               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gold-soft/10 pb-10 gap-6">
                   <div className="space-y-4">
-                     <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-burnt-caramel opacity-40">Section_01A</span>
-                     <h1 className="text-5xl md:text-7xl font-display font-black leading-[0.8] tracking-tighter uppercase">
-                        Acquisition <span className="italic font-light text-cocoa-deep/20">Matrix</span>
+                     <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-gold-soft/40">Section_01A</span>
+                     <h1 className="text-5xl md:text-7xl font-display font-black leading-[0.8] tracking-tighter uppercase text-gold-soft">
+                        Acquisition <span className="italic font-light text-gold-soft/20">Matrix</span>
                      </h1>
                   </div>
-                  <Logo className="w-32 h-auto opacity-20 hidden md:block" variant="dark" />
+                  <Logo className="w-32 h-auto opacity-20 hidden md:block" variant="light" />
                </div>
               
               <div className="space-y-8">
@@ -163,39 +163,39 @@ const Checkout = () => {
                     <motion.div 
                       layout
                       key={item.id}
-                      className="p-10 bg-white rounded-[48px] border border-cocoa-deep/[0.03] flex flex-wrap lg:flex-nowrap items-center gap-10 group shadow-sm hover:shadow-2xl transition-all duration-700"
+                      className="p-10 bg-black/40 backdrop-blur-3xl rounded-[48px] border border-gold-soft/10 flex flex-wrap lg:flex-nowrap items-center gap-10 group shadow-sm hover:shadow-2xl transition-all duration-700"
                     >
-                      <div className="size-32 bg-ivory-warm rounded-[32px] overflow-hidden shrink-0 border border-cocoa-deep/5 p-4">
+                      <div className="size-32 bg-black/40 rounded-[32px] overflow-hidden shrink-0 border border-gold-soft/10 p-4">
                         <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000" />
                       </div>
                       
                       <div className="flex-grow space-y-3">
                         <div className="flex items-center gap-4">
-                           <div className="h-[1px] w-10 bg-burnt-caramel/20" />
-                           <span className="font-body text-[9px] font-black text-burnt-caramel uppercase tracking-[0.4em]">{item.category || 'Limited Piece'}</span>
+                           <div className="h-[1px] w-10 bg-gold-soft/20" />
+                           <span className="font-body text-[9px] font-black text-gold-soft uppercase tracking-[0.4em]">{item.category || 'Limited Piece'}</span>
                         </div>
-                        <h3 className="text-3xl font-display text-cocoa-deep italic leading-tight">{item.name}</h3>
-                        <p className="font-mono text-[9px] text-cocoa-deep/20 uppercase tracking-[0.2em] font-black">ORIGIN_BATCH_{item.id.slice(-6).toUpperCase()}</p>
+                        <h3 className="text-3xl font-display text-gold-soft italic leading-tight">{item.name}</h3>
+                        <p className="font-mono text-[9px] text-gold-soft/20 uppercase tracking-[0.2em] font-black">ORIGIN_BATCH_{item.id.slice(-6).toUpperCase()}</p>
                       </div>
 
-                      <div className="flex items-center gap-6 bg-[#FAF9F6] p-2 rounded-[24px] border border-cocoa-deep/5 self-end lg:self-center">
+                       <div className="flex items-center gap-6 bg-black/40 p-2 rounded-[24px] border border-gold-soft/10 self-end lg:self-center">
                         <button 
                           onClick={() => dispatch(decrementQuantity(item.id))}
-                          className="size-10 flex items-center justify-center hover:bg-white rounded-xl transition-all text-cocoa-deep/30 hover:text-burnt-caramel shadow-sm active:scale-90"
+                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-gold-soft/30 hover:text-gold-soft shadow-sm active:scale-90"
                         >
                           <Minus size={14} />
                         </button>
-                        <span className="w-10 text-center font-body font-black text-cocoa-deep text-sm">{item.quantity}</span>
+                        <span className="w-10 text-center font-body font-black text-gold-soft text-sm">{item.quantity}</span>
                         <button 
                           onClick={() => dispatch(addToCart(item))}
-                          className="size-10 flex items-center justify-center hover:bg-white rounded-xl transition-all text-cocoa-deep/30 hover:text-burnt-caramel shadow-sm active:scale-90"
+                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-gold-soft/30 hover:text-gold-soft shadow-sm active:scale-90"
                         >
                           <Plus size={14} />
                         </button>
                       </div>
 
                       <div className="text-right min-w-[120px] self-end lg:self-center">
-                        <p className="text-4xl font-display font-black text-cocoa-deep tracking-tighter">₹{item.price * item.quantity}</p>
+                        <p className="text-4xl font-display font-black text-gold-soft tracking-tighter shadow-sm">₹{item.price * item.quantity}</p>
                       </div>
                     </motion.div>
                   ))
@@ -204,66 +204,66 @@ const Checkout = () => {
             </section>
 
             {/* Curatorial Registry Integration (Shipping) */}
-            <section className="p-16 md:p-24 bg-white/40 backdrop-blur-3xl rounded-[80px] border border-white shadow-3xl space-y-20 relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-2 h-full bg-burnt-caramel/10" />
+            <section className="p-16 md:p-24 bg-black/40 backdrop-blur-3xl rounded-[80px] border border-gold-soft/10 shadow-3xl space-y-20 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-2 h-full bg-gold-soft/10" />
                
-               <div className="flex flex-col md:flex-row items-center justify-between border-b border-cocoa-deep/5 pb-12 gap-10">
+               <div className="flex flex-col md:flex-row items-center justify-between border-b border-gold-soft/10 pb-12 gap-10">
                 <div className="space-y-4">
                   <div className="flex items-center gap-6">
-                    <div className="size-14 rounded-[20px] bg-botanical-green flex items-center justify-center text-ivory-warm shadow-xl">
+                    <div className="size-14 rounded-[20px] bg-gold-soft flex items-center justify-center text-black shadow-xl">
                       <Ship size={20} />
                     </div>
-                    <h2 className="text-4xl font-display italic leading-none">Curatorial <span className="text-burnt-caramel font-black not-italic tracking-tighter">Registry</span></h2>
+                    <h2 className="text-4xl font-display italic leading-none text-gold-soft">Curatorial <span className="text-gold-soft font-black not-italic tracking-tighter">Registry</span></h2>
                   </div>
                 </div>
                 <div className="flex items-center gap-6 opacity-40">
-                   <ShieldCheck size={20} />
-                   <span className="font-body text-[9px] font-black uppercase tracking-[0.6em]">SECURE_EXTRACTION_PROTOCOL</span>
+                   <ShieldCheck size={20} className="text-gold-soft" />
+                   <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-gold-soft">SECURE_EXTRACTION_PROTOCOL</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Authorized Curator Identity</span>
+                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Authorized Curator Identity</span>
                   <input 
                     type="text" 
                     value={shippingData.name}
                     onChange={(e) => setShippingData({...shippingData, name: e.target.value})}
                     placeholder="HARVEST_NAME" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
                 
                 <div className="space-y-6">
-                   <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Digital Link</span>
+                   <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Digital Link</span>
                   <input 
                     type="email" 
                     value={shippingData.email}
                     onChange={(e) => setShippingData({...shippingData, email: e.target.value})}
                     placeholder="EMAIL_STATION" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
 
                 <div className="space-y-6">
-                   <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Voice Path</span>
+                   <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Voice Path</span>
                   <input 
                     type="tel" 
                     value={shippingData.phoneNumber}
                     onChange={(e) => setShippingData({...shippingData, phoneNumber: e.target.value})}
                     placeholder="+91_MOBILE_FREQ" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
 
                 <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Extraction Point Address</span>
+                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Extraction Point Address</span>
                   <input 
                     type="text" 
                     value={shippingData.address}
                     onChange={(e) => setShippingData({...shippingData, address: e.target.value})}
                     placeholder="UNIT_STREET_AREA_ESTATE" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
 
@@ -273,7 +273,7 @@ const Checkout = () => {
                     value={shippingData.city}
                     onChange={(e) => setShippingData({...shippingData, city: e.target.value})}
                     placeholder="DISTRICT" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
 
@@ -283,7 +283,7 @@ const Checkout = () => {
                     value={shippingData.postalCode}
                     onChange={(e) => setShippingData({...shippingData, postalCode: e.target.value})}
                     placeholder="PIN_CODE" 
-                    className="w-full bg-white border-b-2 border-cocoa-deep/5 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em] bg-transparent" 
+                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]" 
                   />
                 </div>
               </div>
@@ -292,14 +292,14 @@ const Checkout = () => {
 
           {/* Right Side: High-End Heritage Liquidation */}
           <div className="sticky top-40">
-            <div className="p-16 bg-botanical-green rounded-[100px] text-ivory-warm space-y-20 shadow-4xl relative overflow-hidden group border-8 border-white/5">
+            <div className="p-16 bg-black/40 backdrop-blur-3xl rounded-[100px] text-gold-soft space-y-20 shadow-4xl relative overflow-hidden group border-8 border-gold-soft/5">
                {/* Internal Text Texture */}
                <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none font-display font-black text-[30vw] italic text-white -rotate-12 translate-y-1/2">ACS</div>
                
-              <div className="space-y-6 border-b border-white/10 pb-12 text-center">
+              <div className="space-y-6 border-b border-gold-soft/10 pb-12 text-center">
                  <Logo className="w-48 h-auto mx-auto mb-8" variant="light" />
-                 <h2 className="text-4xl font-display italic">Acquisition <span className="text-burnt-caramel font-black not-italic">Liquidation</span></h2>
-                 <p className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-white/30 italic">Registry_Verified_v09</p>
+                 <h2 className="text-4xl font-display italic">Acquisition <span className="text-gold-soft font-black not-italic">Liquidation</span></h2>
+                 <p className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-gold-soft/30 italic">Registry_Verified_v09</p>
               </div>
               
               <div className="space-y-12">
@@ -313,33 +313,32 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="space-y-6 pt-12 border-t border-white/10 text-center">
-                 <span className="font-body text-white/20 tracking-[0.8em] uppercase text-[11px] font-black">Authorized_Total</span>
+              <div className="space-y-6 pt-12 border-t border-gold-soft/10 text-center">
+                 <span className="font-body text-gold-soft/20 tracking-[0.8em] uppercase text-[11px] font-black">Authorized_Total</span>
                  <div className="flex items-center justify-center">
                     <span className="text-8xl font-display font-black tracking-tighter shadow-sm">₹{grandTotal.toFixed(0)}</span>
                  </div>
               </div>
-
               <div className="space-y-10 pt-10">
                 {user ? (
                   <button 
                     disabled={loading || items.length === 0}
                     onClick={handleRazorpayPayment}
-                    className="w-full h-24 bg-ivory-warm hover:bg-burnt-caramel text-botanical-green hover:text-white font-body font-black rounded-[40px] shadow-3xl flex items-center justify-center gap-10 transition-all transform group active:scale-[0.98] disabled:opacity-50"
+                    className="w-full h-24 bg-gold-soft hover:bg-gold-soft/80 text-black font-body font-black rounded-[40px] shadow-3xl flex items-center justify-center gap-10 transition-all transform group active:scale-[0.98] disabled:opacity-50"
                   >
                     <span className="uppercase tracking-[0.6em] text-[13px]">
                        {loading ? 'AUTHENTICATING...' : 'FINALIZE_ACQUISITION'}
-                    </span>
-                    {!loading && <ArrowRight className="w-8 h-8 group-hover:translate-x-4 transition-transform" />}
-                  </button>
-                ) : (
-                  <button 
-                    onClick={() => setIsAuthModalOpen(true)}
-                    className="w-full h-24 bg-white/5 hover:bg-white/10 text-ivory-warm font-body font-black rounded-[40px] flex items-center justify-center gap-10 transition-all border border-white/10 uppercase tracking-[0.4em] text-[12px] italic"
-                  >
-                    Identify as Curator to Proceed <Lock size={20} />
-                  </button>
-                )}
+                     </span>
+                     {!loading && <ArrowRight className="w-8 h-8 group-hover:translate-x-4 transition-transform" />}
+                   </button>
+                 ) : (
+                   <button 
+                     onClick={() => setIsAuthModalOpen(true)}
+                     className="w-full h-24 bg-black/40 hover:bg-black/60 text-gold-soft font-body font-black rounded-[40px] flex items-center justify-center gap-10 transition-all border border-gold-soft/10 uppercase tracking-[0.4em] text-[12px] italic"
+                   >
+                     Identify as Curator to Proceed <Lock size={20} />
+                   </button>
+                 )}
                 
                 <div className="flex items-center justify-center gap-6 opacity-30">
                    <ShieldCheck size={20} />

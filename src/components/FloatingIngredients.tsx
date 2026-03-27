@@ -1,12 +1,32 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
+import cocoaBean from '../assets/cocoa-bean.png';
+import almond from '../assets/almond.png';
+import chocolateShard from '../assets/chocolate-shard.png';
+import strawberrySlice from '../assets/strawberry-slice.png';
+import cacaoPod from '../assets/cacao-pod.png';
+import mintLeaf from '../assets/mint-leaf.png';
+
 const ingredients = [
-  { id: 1, type: 'cocoa-bean', x: '10%', y: '150vh', size: 60, delay: 0 },
-  { id: 2, type: 'almond', x: '85%', y: '280vh', size: 40, delay: 0.5 },
-  { id: 3, type: 'chocolate-piece', x: '5%', y: '450vh', size: 80, delay: 1 },
-  { id: 4, type: 'strawberry-slice', x: '80%', y: '580vh', size: 50, delay: 1.5 },
-  { id: 5, type: 'cocoa-pod', x: '15%', y: '720vh', size: 100, delay: 2 },
-  { id: 6, type: 'mint-leaf', x: '90%', y: '850vh', size: 40, delay: 2.5 },
+  // Section 1: Hero & Top Reveal
+  { id: 1, type: 'cocoa-bean', image: cocoaBean, x: '8%', y: '20vh', size: 140, speed: 0.15, rotateDir: 1 },
+  { id: 2, type: 'almond', image: almond, x: '88%', y: '45vh', size: 90, speed: 0.1, rotateDir: -1 },
+  { id: 3, type: 'chocolate-piece', image: chocolateShard, x: '4%', y: '130vh', size: 180, speed: 0.25, rotateDir: 1 },
+  
+  // Section 2: Exhibition Grid
+  { id: 4, type: 'strawberry-slice', image: strawberrySlice, x: '82%', y: '280vh', size: 110, speed: 0.2, rotateDir: -1 },
+  { id: 5, type: 'cacao-pod', image: cacaoPod, x: '15%', y: '350vh', size: 220, speed: 0.1, rotateDir: 1 },
+  { id: 6, type: 'mint-leaf', image: mintLeaf, x: '94%', y: '420vh', size: 100, speed: 0.3, rotateDir: -1 },
+  
+  // Section 3: Mid Section
+  { id: 7, type: 'cocoa-bean', image: cocoaBean, x: '78%', y: '550vh', size: 100, speed: 0.15, rotateDir: -1 },
+  { id: 8, type: 'chocolate-piece', image: chocolateShard, x: '10%', y: '620vh', size: 140, speed: 0.2, rotateDir: 1 },
+  
+  // Section 4: Final Registry
+  { id: 9, type: 'strawberry-slice', image: strawberrySlice, x: '86%', y: '780vh', size: 90, speed: 0.25, rotateDir: 1 },
+  { id: 10, type: 'almond', image: almond, x: '12%', y: '850vh', size: 70, speed: 0.1, rotateDir: -1 },
+  { id: 11, type: 'cacao-pod', image: cacaoPod, x: '80%', y: '980vh', size: 200, speed: 0.15, rotateDir: 1 },
+  { id: 12, type: 'mint-leaf', image: mintLeaf, x: '6%', y: '1100vh', size: 110, speed: 0.2, rotateDir: -1 },
 ];
 
 export default function FloatingIngredients() {
@@ -17,15 +37,16 @@ export default function FloatingIngredients() {
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
       {ingredients.map((ing) => {
         // Different parallax factors for each ingredient
-        const yTransform = useTransform(smoothProgress, [0, 1], [0, -(1000 + Math.random() * 2000)]);
-        const rotationTransform = useTransform(smoothProgress, [0, 1], [0, 360 * (ing.id % 2 === 0 ? 1 : -1)]);
+        // Dynamic parallax and rotation based on scroll
+        const yTransform = useTransform(smoothProgress, [0, 1], [0, -(2000 * ing.speed)]);
+        const rotationTransform = useTransform(smoothProgress, [0, 1], [0, 720 * ing.rotateDir]);
         
         return (
           <motion.div
             key={ing.id}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ delay: ing.delay, duration: 1.5, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
             style={{ 
               left: ing.x, 
               top: ing.y,
@@ -35,18 +56,21 @@ export default function FloatingIngredients() {
             className="absolute transition-all duration-700 pointer-events-none drop-shadow-2xl"
           >
             {/* Using more identifiable and visible placeholders for ingredients */}
-            <div 
+            <motion.img
+              src={ing.image}
+              alt={ing.type}
+              animate={{ 
+                 y: [0, -25, 0],
+                 rotate: [0, 5 * ing.rotateDir, 0]
+              }}
+              transition={{ 
+                 duration: 4 + Math.random() * 4, 
+                 repeat: Infinity, 
+                 ease: "easeInOut" 
+              }}
               style={{ width: ing.size, height: ing.size }} 
-              className={`opacity-40 rounded-[30%_70%_70%_30%] blur-[0.5px] border border-white/10 flex items-center justify-center
-                ${ing.type.includes('cocoa') ? 'bg-[#3D2B1F]' : 
-                  ing.type.includes('almond') ? 'bg-[#C29B6D]' : 
-                  ing.type.includes('strawberry') ? 'bg-[#E63946]' : 
-                  'bg-burnt-caramel'}`}
-            >
-               <span className="text-[12px] font-black uppercase text-white/40 select-none">
-                  {ing.type.charAt(0)}
-               </span>
-            </div>
+              className="opacity-100 blur-[0.2px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] select-none"
+            />
           </motion.div>
         );
       })}

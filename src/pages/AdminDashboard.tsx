@@ -253,13 +253,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#FAF9F6] font-body text-cocoa-deep relative overflow-hidden selection:bg-burnt-caramel selection:text-white">
-      {/* Background Motifs */}
-      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(#1A0F0D 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.2] mix-blend-multiply" 
-           style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
-
+    <div className="flex min-h-screen bg-cocoa-deep font-body text-gold-soft overflow-hidden selection:bg-gold-soft selection:text-cocoa-deep">
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
@@ -268,7 +262,7 @@ export default function AdminDashboard() {
         logout={handleLogout}
       />
 
-      <main className="flex-1 overflow-hidden flex flex-col relative z-10">
+      <main className="flex-1 overflow-hidden flex flex-col relative">
         <AdminHeader 
           activeTab={activeTab} 
           setIsSidebarOpen={setIsSidebarOpen} 
@@ -278,53 +272,49 @@ export default function AdminDashboard() {
           handleAddCategory={handleAddCategory} 
         />
 
-        <div className="p-8 md:p-14 flex-1 overflow-y-auto custom-scrollbar">
+        <div className="p-6 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
           {activeTab === 'inventory' ? (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="space-y-12">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                <StatsCard label="Verified Artifacts" value={products.length.toString()} icon={<Package size={24} className="text-burnt-caramel" />} />
-                <StatsCard label="Depleted Registry" value={products.filter(p => p.stock === 0).length.toString()} icon={<X size={24} className="text-rose-400" />} />
-                <StatsCard label="Taxonomy Nodes" value={categories.length.toString()} icon={<Tag size={24} className="text-botanical-green" />} />
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <StatsCard label="Total Products" value={products.length.toString()} icon={<Package size={20} className="text-blue-600" />} />
+                <StatsCard label="Out of Stock" value={products.filter(p => p.stock === 0).length.toString()} icon={<X size={20} className="text-red-600" />} />
+                <StatsCard label="Categories" value={categories.length.toString()} icon={<Tag size={20} className="text-purple-600" />} />
               </div>
               
-              <div className="flex items-center justify-between border-b-2 border-cocoa-deep/5 pb-6">
-                 <div className="flex items-center gap-6">
-                    <ShieldCheck size={20} className="text-burnt-caramel/40" />
-                    <h2 className="text-3xl font-display italic">Botanical <span className="text-burnt-caramel font-black not-italic tracking-tighter">Inventory Matrix</span></h2>
+              <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+                 <div className="flex items-center gap-4">
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Inventory</h2>
                  </div>
-                 <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-cocoa-deep/10">Authorized_Registry_v04</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Admin Panel</span>
               </div>
               
               <InventoryTable products={products} loading={loading} handleOpenModal={handleOpenModal} handleDelete={handleDelete} />
             </motion.div>
           ) : activeTab === 'orders' ? (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="space-y-12">
-               <div className="flex items-center justify-between border-b-2 border-cocoa-deep/5 pb-6">
-                 <div className="flex items-center gap-6">
-                    <Zap size={20} className="text-botanical-green/40" />
-                    <h2 className="text-3xl font-display italic">Acquisition <span className="text-botanical-green font-black not-italic tracking-tighter">Transmission Logs</span></h2>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
+               <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+                 <div className="flex items-center gap-4">
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Orders</h2>
                  </div>
-                 <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-cocoa-deep/10">Encrypted_History_Active</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Order History</span>
               </div>
               <OrdersTable orders={orders} loading={loading} handleUpdateOrderStatus={handleUpdateOrderStatus} setSelectedOrder={setSelectedOrder} />
             </motion.div>
           ) : (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="space-y-12">
-               <div className="flex items-center justify-between border-b-2 border-cocoa-deep/5 pb-6">
-                 <div className="flex items-center gap-6">
-                    <Tag size={20} className="text-burnt-caramel/40" />
-                    <h2 className="text-3xl font-display italic">Botanical <span className="text-burnt-caramel font-black not-italic tracking-tighter">Taxonomy Nodes</span></h2>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
+               <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+                 <div className="flex items-center gap-4">
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Categories</h2>
                  </div>
-                 <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-cocoa-deep/10">Hierarchy_Management_v2</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Manage Categories</span>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {categories.map((cat) => (
-                  <motion.div key={cat._id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} className="bg-white p-10 rounded-[40px] border border-cocoa-deep/[0.03] shadow-sm hover:shadow-4xl transition-all group relative overflow-hidden group">
-                     <div className="absolute top-[-30px] right-[-10px] text-[10vw] font-display font-black text-cocoa-deep/[0.02] select-none pointer-events-none italic tracking-tighter">{cat.name.charAt(0)}</div>
-                     <div className="relative z-10 flex items-center justify-between">
-                        <h4 className="text-2xl font-display text-cocoa-deep italic group-hover:pl-4 transition-all duration-700">{cat.name}</h4>
-                        <button onClick={() => handleDeleteCategory(cat._id)} className="size-10 rounded-xl bg-rose-50 border border-rose-100 text-rose-400 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center hover:bg-rose-500 hover:text-white transform group-hover:-translate-x-2">
+                  <motion.div key={cat._id} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all group overflow-hidden">
+                     <div className="flex items-center justify-between relative z-10">
+                        <h4 className="text-lg font-bold text-gray-900">{cat.name}</h4>
+                        <button onClick={() => handleDeleteCategory(cat._id)} className="p-2 rounded-lg bg-red-50 text-red-600 border border-red-100 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 hover:text-white">
                            <X size={16} />
                         </button>
                      </div>

@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 
 export default function GoldenScrollPath() {
   const pathRef = useRef<SVGPathElement>(null);
@@ -19,9 +19,10 @@ export default function GoldenScrollPath() {
   }, []);
 
   // Create a wavy path that spans the entire page height
-  const generatePath = () => {
+  // Memoize the path to prevent re-generation on every render
+  const pathData = useMemo(() => {
     const segments = 25;
-    const height = 15000; // Increased height to cover all potential scroll
+    const height = 15000;
     const width = 100;
     let d = `M ${width / 2} 0`;
     
@@ -33,7 +34,7 @@ export default function GoldenScrollPath() {
         d += ` C ${width / 2} ${cp1y}, ${x} ${cp2y}, ${width / 2} ${y}`;
     }
     return d;
-  };
+  }, []);
 
   return (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-full pointer-events-none z-[5] opacity-60 hidden md:block">
@@ -47,7 +48,7 @@ export default function GoldenScrollPath() {
       >
         <motion.path
           ref={pathRef}
-          d={generatePath()}
+          d={pathData}
           stroke="#D4AF37"
           strokeWidth="3.5"
           strokeDasharray={pathLength}
@@ -56,7 +57,7 @@ export default function GoldenScrollPath() {
         />
         {/* Deep background shadow for absolute visibility */}
         <path
-          d={generatePath()}
+          d={pathData}
           stroke="#1A0F0D"
           strokeWidth="1.5"
           opacity="0.8"

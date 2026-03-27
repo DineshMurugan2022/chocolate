@@ -34,32 +34,36 @@
     @apply border-transparent transition-colors duration-300;
   }
   body {
-    background-color: #FAF9F6;
-    background-image: 
-        linear-gradient(rgba(250, 249, 246, 0.85), rgba(250, 249, 246, 0.85)),
-        url("/assets/global_bg.png");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    color: var(--color-cocoa-deep);
+    background-color: var(--color-cocoa-deep);
+    color: var(--color-gold-soft);
     font-family: var(--font-body);
     overflow-x: hidden;
     position: relative;
   }
-  
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url("https://www.transparenttextures.com/patterns/noise-lines.png");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 9999;
-  }
+}
+
+/* Global Golden Text Override - The "Nuclear" Golden Option */
+.text-cocoa-deep, 
+.text-burnt-caramel, 
+.text-botanical-green,
+.text-\[#1A0F0D\],
+.text-ivory-warm,
+.text-white,
+.text-ivory-warm\/30,
+.text-ivory-warm\/40,
+.text-ivory-warm\/50,
+.text-ivory-warm\/60,
+.text-ivory-warm\/20,
+.text-ivory-warm\/10,
+.text-cocoa-deep\/70,
+.text-cocoa-deep\/50,
+.text-cocoa-deep\/30,
+.text-cocoa-deep\/20,
+.text-cocoa-deep\/10,
+.text-white\/40,
+.text-white\/60,
+.text-white\/80 {
+  color: var(--color-gold-soft) !important;
 }
 
 /* Custom UI Effects */

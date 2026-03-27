@@ -19,11 +19,11 @@ interface SidebarProps {
 
 const Sidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, logout }: SidebarProps) => {
   const tabs = [
-    { id: 'overview', icon: LayoutDashboard, label: 'Heritage Matrix' },
-    { id: 'inventory', icon: Package, label: 'Botanical Registry' },
-    { id: 'orders', icon: ShoppingCart, label: 'Acquisition Logs' },
-    { id: 'categories', icon: Tag, label: 'Taxonomy Nodes' },
-    { id: 'analytics', icon: BarChart3, label: 'Liquidation Analytics' },
+    { id: 'overview', icon: LayoutDashboard, label: 'REGISTRY_STATUS' },
+    { id: 'inventory', icon: Package, label: 'HERITAGE_COLLECTION' },
+    { id: 'orders', icon: ShoppingCart, label: 'CUSTOMER_MANIFESTS' },
+    { id: 'categories', icon: Tag, label: 'TAXONOMY_GROUPS' },
+    { id: 'analytics', icon: BarChart3, label: 'ANALYTIC_METRICS' },
   ];
 
   return (
@@ -35,51 +35,42 @@ const Sidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, log
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsSidebarOpen(false)}
-            className="fixed inset-0 bg-cocoa-deep/20 backdrop-blur-md z-40 lg:hidden"
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
           />
         )}
       </AnimatePresence>
 
-      <aside className={`fixed inset-y-0 left-0 w-80 border-r-2 border-cocoa-deep/5 bg-white flex flex-col z-50 shadow-4xl transition-transform duration-700 lg:relative lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        {/* Background Paper Texture */}
-        <div className="absolute inset-0 z-0 opacity-[0.2] pointer-events-none mix-blend-multiply" 
-             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
-
-        <div className="relative z-10 p-12 border-b-2 border-cocoa-deep/5">
-           <div className="flex justify-center mb-8">
-              <Logo className="w-56 h-auto" variant="dark" />
+      <aside className={`fixed inset-y-0 left-0 w-64 border-r border-gold-soft/10 bg-cocoa-deep flex flex-col z-50 shadow-2xl transition-transform duration-300 lg:relative lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-8 border-b border-gold-soft/10 bg-black/20">
+           <div className="flex justify-center mb-4">
+              <Logo className="w-40 h-auto" variant="light" />
            </div>
-           <div className="flex items-center gap-6 justify-center">
-              <div className="h-[1px] w-8 bg-burnt-caramel/20" />
-              <span className="text-[10px] tracking-[0.6em] font-body font-black text-cocoa-deep/30 uppercase text-center">Curator_Panel_v09</span>
-              <div className="h-[1px] w-8 bg-burnt-caramel/20" />
+           <div className="text-center">
+              <span className="text-[10px] font-bold text-gold-soft/30 uppercase tracking-[0.5em]">Registry_Protocol</span>
            </div>
         </div>
         
-        <nav className="relative z-10 flex-1 p-10 space-y-4">
+        <nav className="flex-1 p-6 space-y-2">
           {tabs.map((item) => (
             <button 
               key={item.id}
               onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }}
-              className={`w-full flex items-center gap-6 px-8 py-5 rounded-[24px] transition-all duration-700 group relative overflow-hidden ${
+              className={`w-full flex items-center gap-4 px-6 py-4 rounded-xl transition-all group ${
                 activeTab === item.id 
-                  ? 'bg-cocoa-deep text-ivory-warm shadow-3xl' 
-                  : 'text-cocoa-deep/40 hover:text-cocoa-deep hover:bg-[#FAF9F6]'
+                  ? 'bg-gold-soft text-black shadow-lg shadow-gold-soft/10' 
+                  : 'text-gold-soft/50 hover:text-gold-soft hover:bg-gold-soft/5'
               }`}
             >
-              <item.icon size={20} className={activeTab === item.id ? 'text-burnt-caramel' : 'group-hover:text-burnt-caramel transition-colors'} />
-              <span className="font-body font-black text-[11px] uppercase tracking-[0.4em]">{item.label}</span>
-              {activeTab === item.id && (
-                 <motion.div layoutId="activePill" className="absolute right-6 size-2 rounded-full bg-burnt-caramel" />
-              )}
+              <item.icon size={18} className={activeTab === item.id ? 'text-black' : 'text-gold-soft/40 group-hover:text-gold-soft/60'} />
+              <span className="font-semibold text-sm">{item.label}</span>
             </button>
           ))}
         </nav>
 
-        <div className="relative z-10 p-10 border-t-2 border-cocoa-deep/5 bg-[#FAF9F6]/40">
-          <button onClick={logout} className="flex items-center gap-6 px-8 py-5 w-full text-cocoa-deep/40 hover:text-rose-600 transition-all font-body font-black text-[11px] uppercase tracking-[0.4em] rounded-[24px] hover:bg-rose-50 border border-transparent hover:border-rose-100">
-            <LogOut size={20} />
-            <span>Terminate_Session</span>
+        <div className="p-6 border-t border-gray-100">
+          <button onClick={logout} className="flex items-center gap-4 px-6 py-4 w-full text-gray-500 hover:text-red-600 transition-all font-semibold text-sm rounded-xl hover:bg-red-50 border border-transparent">
+            <LogOut size={18} />
+            <span>Logout</span>
           </button>
         </div>
       </aside>

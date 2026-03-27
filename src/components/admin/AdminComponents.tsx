@@ -3,15 +3,12 @@ import { History } from 'lucide-react';
 
 export function StatsCard({ label, value, icon }: { label: string, value: string, icon: React.ReactNode }) {
   return (
-    <div className="bg-white/40 backdrop-blur-2xl p-10 rounded-[48px] border border-cocoa-deep/5 shadow-sm flex items-center justify-between hover:shadow-organic hover:-translate-y-2 transition-all duration-700 group overflow-hidden relative">
-      <div className="absolute top-0 right-0 p-8 opacity-[0.02] translate-x-4 -translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-1000">
-        <History size={180} className="text-cocoa-deep rotate-12" />
+    <div className="bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-gold-soft/10 shadow-2xl flex items-center justify-between hover:border-gold-soft/20 transition-all duration-300 group relative">
+      <div className="space-y-1">
+        <p className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.2em]">{label}</p>
+        <p className="text-3xl font-display font-black text-gold-soft">{value}</p>
       </div>
-      <div className="relative z-10 space-y-3">
-        <p className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.6em] mb-1">{label}</p>
-        <p className="text-5xl font-display italic text-cocoa-deep font-black tracking-tighter group-hover:text-burnt-caramel transition-colors">{value}</p>
-      </div>
-      <div className="relative z-10 size-20 rounded-3xl bg-white border border-cocoa-deep/5 flex items-center justify-center text-botanical-green shadow-sm group-hover:bg-botanical-green group-hover:text-white group-hover:rotate-[360deg] transition-all duration-1000">
+      <div className="size-12 rounded-xl bg-gold-soft/5 border border-gold-soft/10 flex items-center justify-center transition-all duration-300 group-hover:bg-gold-soft group-hover:text-black">
         {icon}
       </div>
     </div>
@@ -20,20 +17,20 @@ export function StatsCard({ label, value, icon }: { label: string, value: string
 
 export function InputField({ label, value, onChange, icon, type = 'text', placeholder }: { label: string, value: string, onChange: (v: string) => void, icon: React.ReactNode, type?: string, placeholder?: string }) {
   return (
-    <div className="space-y-4">
-      <label className="font-body text-[9px] font-black text-cocoa-deep/30 uppercase tracking-[0.6em] px-2">
+    <div className="space-y-2">
+      <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-widest px-1">
         {label}
       </label>
       <div className="relative group">
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 text-cocoa-deep/20 group-focus-within:text-burnt-caramel transition-colors">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20 group-focus-within:text-gold-soft transition-colors">
           {icon}
         </div>
         <input 
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-16 bg-ivory-warm border border-cocoa-deep/5 rounded-[20px] pl-16 pr-8 text-[11px] font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel text-cocoa-deep transition-all shadow-inner placeholder:text-cocoa-deep/10"
-          placeholder={placeholder || `ENTER_${label.toUpperCase().replace(/\s+/g, '_')}_ID`}
+          className="w-full h-14 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm focus:outline-none focus:border-gold-soft focus:bg-black/60 text-gold-soft transition-all placeholder:text-gold-soft/10"
+          placeholder={placeholder || `Enter ${label.toLowerCase()}...`}
         />
       </div>
     </div>

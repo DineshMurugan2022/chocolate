@@ -47,157 +47,119 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   return createPortal(
     <AnimatePresence>
-      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-6 pointer-events-none">
-        {/* Backdrop: Cinematic Silk */}
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-cocoa-deep/30 backdrop-blur-xl pointer-events-auto"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm"
         />
 
-        {/* Modal: The Curator Portal */}
         <motion.div
-          initial={{ scale: 0.95, opacity: 0, y: 60 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 60 }}
-          transition={{ type: "spring", damping: 25, stiffness: 120 }}
-          className="relative w-full max-w-[520px] bg-white rounded-[80px] shadow-4xl flex flex-col pointer-events-auto my-auto overflow-hidden border-8 border-white/20"
-        >
-          {/* Internal Grid Motif */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-          <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
-
-          <div className="overflow-y-auto custom-scrollbar p-14 sm:p-20 max-h-[90vh] relative z-10">
-            
-            {/* Logo/Branding Anchor */}
-            <div className="flex justify-center mb-12">
-               <div className="p-6 bg-[#FAF9F6] rounded-[40px] shadow-sm border border-cocoa-deep/[0.03] hover:rotate-6 transition-transform group">
-                  <Logo className="w-32 h-auto opacity-100 filter brightness-90 group-hover:brightness-100 transition-all" variant="dark" />
-               </div>
-            </div>
-
-            {/* Artistic Direction */}
-            <div className="text-center mb-16 space-y-6">
-              <div className="flex items-center justify-center gap-6 text-burnt-caramel/30">
-                 <div className="h-[1px] w-12 bg-burnt-caramel/10" />
-                 <span className="font-body text-[10px] font-black uppercase tracking-[0.8em]">Curatorial_Registry</span>
-                 <div className="h-[1px] w-12 bg-burnt-caramel/10" />
-              </div>
-              <h2 className="text-5xl md:text-6xl font-display font-black text-cocoa-deep leading-[0.85] tracking-tighter uppercase tabular-nums">
-                {isLogin ? 'Bonjour, Curator.' : 'Heritage Induction.'}
-              </h2>
-              <p className="font-serif italic text-xl text-cocoa-deep/40 leading-relaxed max-w-[320px] mx-auto">
-                {isLogin ? 'Identify yourself to access the inheritance matrix.' : 'Enter the private registry of botanical connoisseurs.'}
-              </p>
-            </div>
-
-            {/* Close Pulse */}
+           initial={{ scale: 0.95, opacity: 0 }}
+           animate={{ scale: 1, opacity: 1 }}
+           exit={{ scale: 0.95, opacity: 0 }}
+           className="relative w-full max-w-[400px] bg-black/40 backdrop-blur-3xl border border-gold-soft/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+         >
+          <div className="p-8 sm:p-10">
             <button
-              onClick={onClose}
-              className="absolute top-12 right-12 size-12 rounded-full bg-[#FAF9F6] border border-cocoa-deep/5 text-cocoa-deep/10 hover:text-burnt-caramel hover:shadow-xl transition-all flex items-center justify-center active:scale-95 group"
+               onClick={onClose}
+               className="absolute top-6 right-6 p-2 rounded-full hover:bg-gold-soft/10 text-gold-soft/40 transition-colors"
             >
-              <X size={20} className="group-hover:rotate-90 transition-transform" />
+               <X size={20} />
             </button>
 
-            <form onSubmit={handleSubmit} className="space-y-10">
-              <AnimatePresence mode="wait">
-                {!isLogin && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="space-y-4"
-                  >
-                    <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.6em] ml-4">Curated Name</span>
-                    <div className="relative group">
-                      <User className="absolute left-8 top-1/2 -translate-y-1/2 text-cocoa-deep/5 group-focus-within:text-botanical-green transition-colors" size={20} />
-                      <input
-                        required
-                        type="text"
-                        placeholder="ENTER_IDENTITY"
-                        className="w-full h-20 bg-[#FAF9F6] border border-cocoa-deep/[0.03] rounded-[32px] pl-20 pr-10 text-[12px] font-body font-black uppercase tracking-[0.4em] text-cocoa-deep focus:border-botanical-green focus:outline-none transition-all placeholder:text-cocoa-deep/5 shadow-inner"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className="text-center mb-10">
+               <div className="flex justify-center mb-8">
+                 <Logo className="w-24 h-auto" variant="light" />
+               </div>
+               <h2 className="text-3xl font-display italic text-gold-soft mb-3">
+                 {isLogin ? 'Curatorial Access' : 'Induct New Curator'}
+               </h2>
+               <p className="text-[10px] font-body font-black uppercase tracking-[0.4em] text-gold-soft/30 italic">
+                 {isLogin ? 'Authenticate to manage your heritage collection' : 'Join the elite Asian Chocolate Store registry'}
+               </p>
+            </div>
 
-              <div className="space-y-4">
-                <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.6em] ml-4">Digital Link</span>
-                <div className="relative group">
-                  <Mail className="absolute left-8 top-1/2 -translate-y-1/2 text-cocoa-deep/5 group-focus-within:text-botanical-green transition-colors" size={20} />
-                  <input
-                    required
-                    type="email"
-                    placeholder="ENTER_COMMUNIQUE"
-                    className="w-full h-20 bg-[#FAF9F6] border border-cocoa-deep/[0.03] rounded-[32px] pl-20 pr-10 text-[12px] font-body font-black uppercase tracking-[0.4em] text-cocoa-deep focus:border-botanical-green focus:outline-none transition-all placeholder:text-cocoa-deep/5 shadow-inner"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+               {!isLogin && (
+                 <div className="space-y-1">
+                   <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Authorized Name</label>
+                   <div className="relative">
+                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
+                     <input
+                       required
+                       type="text"
+                       placeholder="HARVEST_NAME"
+                       className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
+                       value={formData.name}
+                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                     />
+                   </div>
+                 </div>
+               )}
 
-              <div className="space-y-4">
-                <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.6em] ml-4">Security Protocol</span>
-                <div className="relative group">
-                  <Lock className="absolute left-8 top-1/2 -translate-y-1/2 text-cocoa-deep/5 group-focus-within:text-botanical-green transition-colors" size={20} />
-                  <input
-                    required
-                    type="password"
-                    placeholder="••••••••••••"
-                    className="w-full h-20 bg-[#FAF9F6] border border-cocoa-deep/[0.03] rounded-[32px] pl-20 pr-10 text-[12px] font-body font-black uppercase tracking-[0.4em] text-cocoa-deep focus:border-botanical-green focus:outline-none transition-all placeholder:text-cocoa-deep/5 shadow-inner"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  />
-                </div>
-              </div>
+               <div className="space-y-1">
+                 <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Digital Frequency</label>
+                 <div className="relative">
+                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
+                   <input
+                     required
+                     type="email"
+                     placeholder="EMAIL_STATION"
+                     className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
+                     value={formData.email}
+                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                   />
+                 </div>
+               </div>
 
-              {error && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} 
-                  className="bg-rose-50 border border-rose-100 p-6 rounded-[24px]"
-                >
-                  <p className="text-rose-500 text-[9px] font-black uppercase tracking-[0.4em] text-center leading-loose">{error}</p>
-                </motion.div>
-              )}
+               <div className="space-y-1">
+                 <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Security Sequence</label>
+                 <div className="relative">
+                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
+                   <input
+                     required
+                     type="password"
+                     placeholder="••••••••"
+                     className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
+                     value={formData.password}
+                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                   />
+                 </div>
+               </div>
 
-              <button
-                disabled={loading}
-                className="w-full h-24 bg-cocoa-deep hover:bg-burnt-caramel text-[#FAF9F6] rounded-[40px] font-body font-black text-[12px] uppercase tracking-[0.6em] shadow-4xl transition-all flex items-center justify-center gap-10 group disabled:opacity-50 relative overflow-hidden active:scale-95"
-              >
-                <span className="relative z-10 flex items-center gap-6">
-                   {loading ? 'Inducting...' : (isLogin ? 'Finalize_Login' : 'Begin_Induction')}
-                   {!loading && <ArrowRight size={24} className="group-hover:translate-x-4 transition-transform shadow-sm" />}
-                </span>
-                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity" />
-              </button>
+               {error && (
+                 <div className="p-3 bg-red-400/10 border border-red-400/20 rounded-xl">
+                   <p className="text-red-400 text-[10px] font-black uppercase tracking-widest text-center italic">{error}</p>
+                 </div>
+               )}
+
+               <button
+                 disabled={loading}
+                 className="w-full h-12 bg-gold-soft hover:bg-gold-soft/80 text-black rounded-xl font-bold font-body text-[10px] uppercase tracking-[0.6em] shadow-2xl transition-all flex items-center justify-center gap-4 mt-6 active:scale-[0.98] disabled:opacity-50"
+               >
+                 {loading ? 'AUTHENTICATING...' : (isLogin ? 'INITIALIZE_ACCESS' : 'INDIVIDUAL_REG_v04')}
+                 {!loading && <ArrowRight size={18} />}
+               </button>
             </form>
 
-            <div className="mt-20 text-center space-y-12">
-              <button
-                onClick={() => setIsLogin(!isLogin)}
-                className="font-body text-[10px] font-black text-cocoa-deep/20 hover:text-burnt-caramel uppercase tracking-[0.6em] transition-all hover:pl-4"
-              >
-                {isLogin ? "Status: Non-Member? Register_Archive" : "Status: Active_Curator? Login_Identity"}
-              </button>
-
-              <div className="flex flex-col items-center gap-6 pb-4">
-                 <div className="flex items-center gap-6 opacity-10">
-                   <div className="h-[1px] w-20 bg-cocoa-deep" />
-                   <Zap size={18} className="text-burnt-caramel" />
-                   <div className="h-[1px] w-20 bg-cocoa-deep" />
-                 </div>
-                 <div className="flex items-center gap-6 opacity-20 filter grayscale">
-                    <ShieldCheck size={24} />
-                    <span className="font-body text-[9px] font-black tracking-[0.8em] uppercase italic">Secure_Inheritance_Protocol_V09</span>
-                 </div>
-              </div>
+             <div className="mt-8 text-center">
+               <button
+                 onClick={() => setIsLogin(!isLogin)}
+                 className="text-[9px] font-black font-body text-gold-soft/30 hover:text-gold-soft uppercase tracking-[0.4em] transition-colors italic"
+               >
+                 {isLogin ? "Lacking Induction Credentials? Induct Here" : "Existing Curator? Access Induction Terminal"}
+               </button>
             </div>
           </div>
+                    <div className="bg-black/40 p-6 flex flex-col items-center gap-3 border-t border-gold-soft/10">
+              <div className="flex items-center gap-4 text-gold-soft/20">
+                 <ShieldCheck size={14} />
+                 <span className="text-[10px] font-black font-body uppercase tracking-[0.8em] text-gold-soft/20">Protocol_RSA_v09_Secured</span>
+              </div>
+           </div>
         </motion.div>
       </div>
     </AnimatePresence>,

@@ -37,7 +37,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         {/* Mobile Menu Toggle */}
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden text-ivory-warm p-2 hover:bg-white/10 rounded-full transition-colors"
+          className="lg:hidden text-gold-soft p-2 hover:bg-white/5 rounded-full transition-colors"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -46,11 +46,11 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         <nav className="hidden lg:flex items-center gap-12 mt-[-5px]">
           {navLinks.slice(0, 2).map((link) => (
             <button
-              key={link.name}
-              onClick={() => navigate(link.path)}
-              className="font-body text-[10px] md:text-[11px] font-black tracking-[0.4em] text-ivory-warm hover:text-burnt-caramel transition-all uppercase drop-shadow-lg"
+               key={link.name}
+               onClick={() => navigate(link.path)}
+               className="font-body text-[10px] md:text-[11px] font-black tracking-[0.4em] text-gold-soft hover:text-white transition-all uppercase drop-shadow-lg italic"
             >
-              {link.name}
+               {link.name}
             </button>
           ))}
         </nav>
@@ -65,36 +65,36 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
         {/* Action Layer */}
         <div className="flex items-center gap-6 md:gap-8 mt-[-5px]">
-          <div className="hidden md:flex items-center gap-6 pr-8 border-r border-ivory-warm/10">
-            <button className="text-ivory-warm hover:scale-110 transition-transform">
+          <div className="hidden md:flex items-center gap-6 pr-8 border-r border-gold-soft/10">
+            <button className="text-gold-soft hover:scale-110 transition-transform">
               <Search size={20} />
             </button>
-            <button onClick={() => setIsWishlistOpen(true)} className="text-ivory-warm hover:scale-110 transition-transform">
+            <button onClick={() => setIsWishlistOpen(true)} className="text-gold-soft hover:scale-110 transition-transform">
               <Heart size={20} />
             </button>
           </div>
 
           <div className="flex items-center gap-4 md:gap-6">
             {!user ? (
-               <button 
-                 onClick={() => setIsAuthModalOpen(true)}
-                 className="hidden sm:block font-body text-[9px] font-black uppercase tracking-[0.4em] text-ivory-warm hover:text-burnt-caramel transition-colors"
-               >
-                 LOG_IN
-               </button>
-            ) : (
-               <button onClick={() => navigate('/profile')} className="text-ivory-warm hover:text-ivory-warm transition-colors">
-                 <User size={20} />
-               </button>
-            )}
+                <button 
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="hidden sm:block font-body text-[9px] font-black uppercase tracking-[0.4em] text-gold-soft hover:text-white transition-colors italic"
+                >
+                  LOG_IN
+                </button>
+             ) : (
+                <button onClick={() => navigate('/profile')} className="text-gold-soft hover:text-white transition-colors">
+                  <User size={20} />
+                </button>
+             )}
 
             <button 
               onClick={() => setIsCartOpen(true)}
               className="relative group flex items-center justify-center scale-75 md:scale-90"
             >
-              <div className="size-12 bg-ivory-warm/10 backdrop-blur-md border border-ivory-warm/20 rounded-full flex items-center justify-center transition-all hover:bg-burnt-caramel hover:border-burnt-caramel">
-                 <ShoppingBag size={20} className="text-ivory-warm" />
-              </div>
+               <div className="size-12 bg-gold-soft/5 backdrop-blur-md border border-gold-soft/10 rounded-full flex items-center justify-center transition-all hover:bg-gold-soft hover:border-gold-soft">
+                  <ShoppingBag size={20} className="text-gold-soft group-hover:text-black transition-colors" />
+               </div>
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 size-5 bg-[#FF1D8E] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg">
                   {cartItemCount}
