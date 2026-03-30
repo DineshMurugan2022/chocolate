@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import axios from 'axios';
+import api from '@/utils/api';
 
 const ProductCatalog = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  interface Product {
+    _id: string;
+    name: string;
+    price: number;
+    image: string;
+    category?: string;
+  }
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await api.get('/products');
       setProducts(res.data);
     } catch (err) {
       console.error('Error fetching products:', err);

@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 import splash1 from '../assets/branding/splash1.jpg';
 import splash2 from '../assets/branding/splash2.jpg';
 import splash3 from '../assets/branding/splash3.jpg';
 
 export default function FloatingSplashes() {
-  const splashes = [
+  const splashes: { src: string; initial: CSSProperties & { rotate: number }; duration: number; scale: number }[] = [
     { src: splash1, initial: { top: '10%', left: '5%', rotate: 10 }, duration: 8, scale: 0.8 },
     { src: splash2, initial: { top: '40%', right: '0%', rotate: -15 }, duration: 12, scale: 1.2 },
     { src: splash3, initial: { top: '70%', left: '10%', rotate: 20 }, duration: 10, scale: 0.9 },
@@ -30,7 +31,7 @@ export default function FloatingSplashes() {
             delay: i * 2
           }}
           className="absolute w-80 h-80 mix-blend-multiply opacity-20 contrast-125"
-          style={s.initial as any}
+          style={s.initial}
         >
           <img src={s.src} alt="" className="w-full h-full object-contain filter drop-shadow-2xl" />
         </motion.div>

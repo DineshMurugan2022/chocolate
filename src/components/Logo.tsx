@@ -7,15 +7,18 @@ interface LogoProps {
 }
 
 export default function Logo({ className = "", variant = 'light' }: LogoProps) {
-  // Since we are using a direct image provided by the user, we will ignore the variant
-  // and prioritize the official brand logo (logooo.png).
+  const variantClass = variant === 'dark'
+    ? 'brightness-90'
+    : variant === 'gold'
+      ? 'sepia-[0.3] saturate-[1.2]'
+      : '';
   
   return (
     <div className={`relative ${className}`}>
        <img 
          src={logooo} 
          alt="Asian Chocolate Store" 
-         className="w-full h-full object-contain filter drop-shadow-lg"
+         className={`w-full h-full object-contain filter drop-shadow-lg ${variantClass}`}
        />
     </div>
   );

@@ -16,15 +16,18 @@ export default function SocialProofToast() {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on('newSale', (data: SaleData) => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const handler = (data: SaleData) => {
       setSale(data);
-      // Auto-hide after 5 seconds
-      const timer = setTimeout(() => setSale(null), 5000);
-      return () => clearTimeout(timer);
-    });
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => setSale(null), 5000);
+    };
+
+    socket.on('newSale', handler);
 
     return () => {
-      socket.off('newSale');
+      if (timer) clearTimeout(timer);
+      socket.off('newSale', handler);
     };
   }, [socket]);
 

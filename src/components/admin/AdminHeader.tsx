@@ -1,9 +1,21 @@
 import { LayoutDashboard, Plus, Search } from 'lucide-react';
 
+interface AdminProduct {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  stock: number;
+  weight: string;
+  image: string;
+  images: string[];
+  description: string;
+}
+
 interface AdminHeaderProps {
   activeTab: string;
   setIsSidebarOpen: (open: boolean) => void;
-  handleOpenModal: (product?: any) => void;
+  handleOpenModal: (product?: AdminProduct) => void;
   newCatName: string;
   setNewCatName: (name: string) => void;
   handleAddCategory: () => void;

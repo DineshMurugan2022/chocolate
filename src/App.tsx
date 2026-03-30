@@ -1,6 +1,6 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from '@/store';
-import type { RootState } from '@/store';
+import type { RootState, AppDispatch } from '@/store';
 import { SocketProvider } from '@/context/SocketContext';
 import { fetchWishlist } from '@/store/wishlistSlice';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
@@ -84,7 +84,7 @@ function PageWrapper() {
 }
 
 function AppContent() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {

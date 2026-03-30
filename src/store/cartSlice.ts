@@ -10,6 +10,12 @@ interface CartItem {
   subItems?: string[];
 }
 
+type CartItemInput = Omit<CartItem, 'id' | 'quantity'> & {
+  id?: string;
+  _id?: string;
+  quantity?: number;
+};
+
 interface CartState {
   items: CartItem[];
   totalPrice: number;
@@ -42,19 +48,28 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItem>) => {
-      console.log('Adding to cart:', action.payload);
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+    addToCart: (state, action: PayloadAction<CartItemInput>) => {
+      const normalizedId = action.payload.id || action.payload._id || `item-${Date.now()}`;
+      const quantity = action.payload.quantity ?? 1;
+      
+      const normalizedItem: CartItem = {
+        ...action.payload,
+        id: normalizedId,
+        quantity,
+      };
+      // Explicitly remove _id if it exists to keep state clean
+      if ('_id' in normalizedItem) delete (normalizedItem as any)._id;
+
+      const existingItem = state.items.find(item => item.id === normalizedId);
       if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += quantity;
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push(normalizedItem);
       }
       state.totalPrice = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-      state.lastAddedItem = { ...action.payload };
+      state.lastAddedItem = { ...normalizedItem };
       localStorage.setItem('cartItems', JSON.stringify(state.items));
       localStorage.setItem('cartTotalPrice', state.totalPrice.toString());
-      console.log('Cart updated:', state.items);
     },
     decrementQuantity: (state, action: PayloadAction<string>) => {
       const existingItem = state.items.find(item => item.id === action.payload);

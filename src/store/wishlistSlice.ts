@@ -1,8 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../utils/api';
 
+interface WishlistItem {
+  _id?: string;
+  id?: string;
+  name?: string;
+  image?: string;
+  price?: number;
+}
+
 interface WishlistState {
-  items: any[];
+  items: WishlistItem[];
   loading: boolean;
   error: string | null;
 }
@@ -19,8 +27,11 @@ export const fetchWishlist = createAsyncThunk(
     try {
       const response = await api.get('/wishlist');
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch wishlist');
+    } catch (error: unknown) {
+      const message = error && typeof error === 'object' && 'response' in error
+        ? (error as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      return rejectWithValue(message || 'Failed to fetch wishlist');
     }
   }
 );
@@ -31,8 +42,11 @@ export const toggleWishlistItem = createAsyncThunk(
     try {
       const response = await api.post('/wishlist/toggle', { productId });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to toggle wishlist');
+    } catch (error: unknown) {
+      const message = error && typeof error === 'object' && 'response' in error
+        ? (error as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      return rejectWithValue(message || 'Failed to toggle wishlist');
     }
   }
 );

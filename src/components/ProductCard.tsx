@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import ProductViewer3D from '@/components/ProductViewer3D';
 import { addToCart } from '@/store/cartSlice';
 import { useDispatch } from 'react-redux';
+import { hashString, createRandom } from '@/utils/random';
 
 interface Product {
   _id: string;
   name: string;
   price: number;
   category: string;
+  image?: string;
   color?: string;
   stock: number;
 }
@@ -24,7 +26,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // Mock real-time viewers for demonstration
-  const randomViewers = Math.floor(Math.random() * 15) + 2;
+  const viewersSeed = hashString(product._id || product.name || 'product');
+  const rand = createRandom(viewersSeed);
+  const randomViewers = Math.floor(rand() * 15) + 2;
 
   return (
     <motion.div
@@ -93,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
                   id: product._id,
                   name: product.name,
                   price: product.price,
-                  image: '', // Needs a proper image or fallback
+                  image: product.image || '',
                   quantity: 1
                 }));
               }}

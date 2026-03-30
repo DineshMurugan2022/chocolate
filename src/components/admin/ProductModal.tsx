@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -13,15 +13,33 @@ import {
 } from 'lucide-react';
 import { InputField } from './AdminComponents';
 
+type UploadMode = 'url' | 'file' | 'camera';
+
+interface Category {
+  _id: string;
+  name: string;
+}
+
+interface ProductFormData {
+  name: string;
+  price: string;
+  category: string;
+  stock: string;
+  weight: string;
+  description: string;
+  image: string;
+  images: string[];
+}
+
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editingProduct: any;
-  formData: any;
-  setFormData: (data: any) => void;
-  categories: any[];
-  uploadMode: 'url' | 'file' | 'camera';
-  setUploadMode: (mode: 'url' | 'file' | 'camera') => void;
+  editingProduct: { _id: string } | null;
+  formData: ProductFormData;
+  setFormData: (data: ProductFormData) => void;
+  categories: Category[];
+  uploadMode: UploadMode;
+  setUploadMode: (mode: UploadMode) => void;
   previewImage: string | null;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   galleryFiles: File[];
@@ -93,7 +111,7 @@ const ProductModal = ({
                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider px-1">Category</label>
                            <select value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="w-full h-12 bg-gray-50 border border-gray-200 rounded-lg px-4 text-sm focus:border-blue-500 focus:bg-white focus:outline-none appearance-none cursor-pointer transition-all">
                               <option value="">Select category...</option>
-                              {categories.map((cat: any) => <option key={cat._id} value={cat.name}>{cat.name}</option>)}
+                              {categories.map((cat) => <option key={cat._id} value={cat.name}>{cat.name}</option>)}
                            </select>
                         </div>
                         <InputField label="Price (₹)" value={formData.price} onChange={(v) => setFormData({...formData, price: v})} icon={<IndianRupee size={14} />} type="number" />
@@ -111,8 +129,8 @@ const ProductModal = ({
                      <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Display Image</span>
                         <div className="flex bg-white border border-gray-200 p-1 rounded-lg gap-1">
-                           {[ {id:'url',icon:Globe}, {id:'file',icon:ImageIcon}, {id:'camera',icon:Camera} ].map(m => (
-                              <button key={m.id} type="button" onClick={() => { setUploadMode(m.id as any); stopCamera(); }} className={`size-8 rounded-md flex items-center justify-center transition-all ${uploadMode === m.id ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}><m.icon size={14} /></button>
+                           {[ {id:'url' as UploadMode,icon:Globe}, {id:'file' as UploadMode,icon:ImageIcon}, {id:'camera' as UploadMode,icon:Camera} ].map(m => (
+                              <button key={m.id} type="button" onClick={() => { setUploadMode(m.id); stopCamera(); }} className={`size-8 rounded-md flex items-center justify-center transition-all ${uploadMode === m.id ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'}`}><m.icon size={14} /></button>
                            ))}
                         </div>
                      </div>
@@ -135,6 +153,7 @@ const ProductModal = ({
                               {!isCameraActive ? <button type="button" onClick={startCamera} className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-6 py-3 border-2 border-dashed border-gray-200 rounded-lg hover:bg-white hover:border-blue-500 transition-all">Start Camera</button> : (
                                  <div className="relative w-full h-full bg-black">
                                     <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+                                    <canvas ref={canvasRef} className="hidden" />
                                     <button type="button" onClick={takePhoto} className="absolute bottom-4 left-1/2 -translate-x-1/2 size-12 bg-white rounded-full p-1 shadow-lg hover:scale-110 transition-all"><div className="size-full rounded-full border-2 border-blue-600 flex items-center justify-center"><div className="size-4 bg-red-600 rounded-full" /></div></button>
                                  </div>
                               )}
@@ -145,10 +164,10 @@ const ProductModal = ({
                      <div className="space-y-4 shrink-0 pt-6 border-t border-gray-200">
                         <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Selection Gallery</p>
                         <div className="flex flex-wrap gap-3">
-                           {formData.images.map((img: string, i: number) => (
+                           {formData.images.map((img, i) => (
                               <div key={i} className="size-16 rounded-xl bg-white border border-gray-200 p-2 relative group shadow-sm transition-all hover:border-blue-500">
                                  <img src={img} className="size-full object-contain rounded-lg" alt="" />
-                                 <button type="button" onClick={() => setFormData({...formData, images: formData.images.filter((_:any,idx:number)=>idx!==i)})} className="absolute -top-2 -right-2 size-6 bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md active:scale-95"><X size={12}/></button>
+                                 <button type="button" onClick={() => setFormData({...formData, images: formData.images.filter((_, idx) => idx !== i)})} className="absolute -top-2 -right-2 size-6 bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md active:scale-95"><X size={12}/></button>
                               </div>
                            ))}
                            {galleryFiles.map((f, i) => (

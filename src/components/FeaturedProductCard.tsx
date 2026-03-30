@@ -1,18 +1,18 @@
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star } from 'lucide-react';
 import MagneticButton from './MagneticButton';
-import liquidRibbons from '../assets/branding/liquid_ribbons.png';
+interface FeaturedProduct {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  rating: number;
+  image: string;
+}
 
 interface FeaturedProductCardProps {
-  product: {
-    _id: string;
-    name: string;
-    description: string;
-    price: number;
-    rating: number;
-    image: string;
-  };
-  onAdd: (product: any) => void;
+  product: FeaturedProduct;
+  onAdd: (product: FeaturedProduct) => void;
 }
 
 export default function FeaturedProductCard({ product, onAdd }: FeaturedProductCardProps) {

@@ -1,34 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
-import axios from 'axios';
-import { motion } from 'framer-motion';
+import api from '@/utils/api';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, MapPin, ChevronRight, User as UserIcon, Mail, ShoppingBag, ShieldCheck, History, Globe, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
 import CartDrawer from '../components/CartDrawer';
 import { OrderSkeleton } from '../components/Skeleton';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { fadeDown, fadeUp, stagger } from '@/utils/motion';
 
 export default function UserProfile() {
   const { user, token } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
 
-  useEffect(() => {
-    if (user && token) {
-      fetchOrders();
-    }
-  }, [user, token]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_URL}/orders/my-orders`, {
+      const response = await api.get('/orders/my-orders', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrders(response.data);
@@ -37,7 +32,13 @@ export default function UserProfile() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (user && token) {
+      fetchOrders();
+    }
+  }, [user, token, fetchOrders]);
 
   if (!user) {
     return (
@@ -68,11 +69,16 @@ export default function UserProfile() {
       <Header setIsCartOpen={setIsCartOpen} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       
-      <main className="pt-48 pb-40 px-6 lg:px-20 relative z-10">
+      <motion.main
+        className="pt-48 pb-40 px-6 lg:px-20 relative z-10"
+        variants={stagger(0.18)}
+        initial={reduceMotion ? false : 'hidden'}
+        animate="show"
+      >
         <div className="max-w-[1400px] mx-auto space-y-32">
           
           {/* Dashboard Header: Personalized Heritage Matrix */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b-2 border-cocoa-deep/5 pb-12">
+          <motion.div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b-2 border-cocoa-deep/5 pb-12" variants={fadeDown}>
             <div className="space-y-8">
               <div className="flex items-center gap-6">
                  <div className="h-[2px] w-16 bg-burnt-caramel" />
@@ -92,12 +98,12 @@ export default function UserProfile() {
                   </div>
                </div>
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
             
             {/* Left Column: Curator Credentials Artifact */}
-            <div className="lg:col-span-4 lg:sticky lg:top-40 h-fit">
+            <motion.div className="lg:col-span-4 lg:sticky lg:top-40 h-fit" variants={fadeUp}>
                <div className="bg-black/40 backdrop-blur-3xl rounded-[80px] p-16 border border-gold-soft/10 shadow-4xl relative overflow-hidden group">
                 <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/graphy.png")' }} />
                 
@@ -136,10 +142,10 @@ export default function UserProfile() {
                    </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: Acquisition Archive Registry */}
-            <div className="lg:col-span-8 space-y-16">
+            <motion.div className="lg:col-span-8 space-y-16" variants={fadeUp} viewport={sectionViewport} initial={reduceMotion ? false : 'hidden'} whileInView="show">
                <div className="flex items-center justify-between border-b border-gold-soft/10 pb-8">
                  <div className="flex items-center gap-6">
                     <Zap size={20} className="text-gold-soft/30" />
@@ -219,7 +225,7 @@ export default function UserProfile() {
 
                        {/* Artifact Breakdown: Reveal on Hover */}
                        <div className="mt-16 pt-12 border-t border-gold-soft/10 grid grid-cols-2 md:grid-cols-4 gap-12 transition-all duration-1000 max-h-0 group-hover:max-h-[300px] overflow-hidden opacity-0 group-hover:opacity-100">
-                          {order.items.slice(0, 4).map((item: any, i: number) => (
+                          {order.items.slice(0, 4).map((item, i: number) => (
                              <div key={i} className="space-y-3 relative group/artifact">
                                 <div className="absolute -left-6 top-1 w-[1px] h-10 bg-gold-soft/20" />
                                 <p className="font-body text-[10px] font-black text-gold-soft uppercase tracking-[0.4em] truncate italic">{item.name}</p>
@@ -235,12 +241,27 @@ export default function UserProfile() {
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
-      </main>
+      </motion.main>
 
       <Footer />
     </div>
   );
+}
+
+interface OrderItem {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  _id: string;
+  items: OrderItem[];
+  shippingAddress: { city: string };
+  totalPrice: number;
+  status: string;
+  createdAt: string;
 }

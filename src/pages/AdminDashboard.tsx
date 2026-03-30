@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Package, X, Tag, ShieldCheck, Zap } from 'lucide-react';
+import { Package, X, Tag } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/store/authSlice';
 import api from '@/utils/api';
@@ -26,11 +26,27 @@ interface Product {
   description: string;
 }
 
+interface OrderItem {
+  product: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface ShippingAddress {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  postalCode: string;
+}
+
 interface Order {
   _id: string;
   user: { _id: string; name: string; email: string; };
-  items: any[];
-  shippingAddress: any;
+  items: OrderItem[];
+  shippingAddress: ShippingAddress;
   totalPrice: number;
   status: string;
   createdAt: string;

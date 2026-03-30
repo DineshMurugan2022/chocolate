@@ -1,9 +1,18 @@
 import { Search, Edit2, Trash2, Package } from 'lucide-react';
 
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  stock: number;
+  image: string;
+}
+
 interface InventoryTableProps {
-  products: any[];
+  products: Product[];
   loading: boolean;
-  handleOpenModal: (product: any) => void;
+  handleOpenModal: (product: Product) => void;
   handleDelete: (id: string) => void;
 }
 

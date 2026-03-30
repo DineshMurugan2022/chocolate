@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
 
 @theme {
   /* Botanical Boutique Palette - Tailwind 4 */
@@ -46,7 +46,6 @@
 .text-cocoa-deep, 
 .text-burnt-caramel, 
 .text-botanical-green,
-.text-\[#1A0F0D\],
 .text-ivory-warm,
 .text-white,
 .text-ivory-warm\/30,

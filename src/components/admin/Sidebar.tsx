@@ -9,9 +9,11 @@ import {
 } from 'lucide-react';
 import Logo from '../Logo';
 
+type AdminTab = 'overview' | 'inventory' | 'orders' | 'categories' | 'analytics';
+
 interface SidebarProps {
   activeTab: string;
-  setActiveTab: (tab: any) => void;
+  setActiveTab: (tab: AdminTab) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (open: boolean) => void;
   logout: () => void;

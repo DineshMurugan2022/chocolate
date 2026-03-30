@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell } from 'lucide-react';
+import { createRandom } from '../utils/random';
 
 interface Notification {
   id: number;
@@ -12,6 +13,7 @@ export default function LiveNotifications() {
 
   useEffect(() => {
     // Simulator for real-time sales feed
+    const random = createRandom(Date.now());
     const items = [
       "Midnight Cocoa Truffle",
       "Golden Caramel Orb",
@@ -23,9 +25,9 @@ export default function LiveNotifications() {
 
     const intervalId = setInterval(() => {
       // 10% chance every 5 seconds to trigger a sale
-      if (Math.random() > 0.9) {
-        const item = items[Math.floor(Math.random() * items.length)];
-        const location = locations[Math.floor(Math.random() * locations.length)];
+      if (random() > 0.9) {
+        const item = items[Math.floor(random() * items.length)];
+        const location = locations[Math.floor(random() * locations.length)];
         
         const newNotif = {
           id: Date.now(),

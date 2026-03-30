@@ -1,27 +1,32 @@
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
+import { createRandom } from '@/utils/random';
+
+const COLORS = [
+  '#FF1D8E', // Vivid Pink
+  '#FF6000', // Bright Orange
+  '#70D000', // Fresh Green
+  '#FFD300', // Sunny Yellow
+  '#FFFFFF'  // Pure White
+];
 
 export default function FallingSprinkles() {
-  const COLORS = [
-    '#FF1D8E', // Vivid Pink
-    '#FF6000', // Bright Orange
-    '#70D000', // Fresh Green
-    '#FFD300', // Sunny Yellow
-    '#FFFFFF'  // Pure White
-  ];
 
   const sprinkles = useMemo(() => {
-    return Array.from({ length: 60 }).map((_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      delay: Math.random() * 8,
-      duration: 8 + Math.random() * 12,
-      width: 4 + Math.random() * 2, 
-      height: 12 + Math.random() * 8, 
-      color: COLORS[Math.floor(Math.random() * COLORS.length)], 
-      glide: (Math.random() - 0.5) * 300,
-      initialRotate: Math.random() * 360
-    }));
+    return Array.from({ length: 60 }).map((_, i) => {
+      const rand = createRandom(1000 + i * 17);
+      return {
+        id: i,
+        left: `${rand() * 100}%`,
+        delay: rand() * 8,
+        duration: 8 + rand() * 12,
+        width: 4 + rand() * 2, 
+        height: 12 + rand() * 8, 
+        color: COLORS[Math.floor(rand() * COLORS.length)], 
+        glide: (rand() - 0.5) * 300,
+        initialRotate: rand() * 360
+      };
+    });
   }, []);
 
   return (

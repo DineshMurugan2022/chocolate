@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/cartSlice';
 import { Sparkles, Star, Package, Trash2, CheckCircle2 } from 'lucide-react';
-import axios from 'axios';
+import api from '@/utils/api';
+import { createRandom } from '@/utils/random';
 
 interface Chocolate {
   _id: string;
@@ -13,15 +14,15 @@ interface Chocolate {
 }
 
 // Particle effect for successful placement
-const SparkleParticle = ({ x, y }: { x: number, y: number }) => (
+const SparkleParticle = ({ x, y, dx, dy, scale, rotate }: { x: number; y: number; dx: number; dy: number; scale: number; rotate: number }) => (
   <motion.div
     initial={{ scale: 0, x, y, opacity: 1 }}
     animate={{ 
-      x: x + (Math.random() - 0.5) * 200, 
-      y: y + (Math.random() - 0.5) * 200, 
-      scale: Math.random() * 1.5,
+      x: x + dx, 
+      y: y + dy, 
+      scale,
       opacity: 0,
-      rotate: Math.random() * 360
+      rotate
     }}
     transition={{ duration: 0.8, ease: "easeOut" }}
     className="absolute pointer-events-none z-50"
@@ -34,13 +35,13 @@ export default function BuildABox() {
   const [boxSlots, setBoxSlots] = useState<(Chocolate | null)[]>([null, null, null, null, null, null]);
   const [availableChocolates, setAvailableChocolates] = useState<Chocolate[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sparkles, setSparkles] = useState<{ id: number, x: number, y: number }[]>([]);
+  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number; dx: number; dy: number; scale: number; rotate: number }[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchChocolates = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products');
+        const { data } = await api.get('/products');
         setAvailableChocolates(data.slice(0, 8)); // Show more options
         setLoading(false);
       } catch (error) {
@@ -53,7 +54,12 @@ export default function BuildABox() {
 
   const triggerSparkle = useCallback((x: number, y: number) => {
     const id = Date.now();
-    setSparkles(prev => [...prev, { id, x, y }]);
+    const rand = createRandom(id);
+    const dx = (rand() - 0.5) * 200;
+    const dy = (rand() - 0.5) * 200;
+    const scale = 0.5 + rand() * 1.5;
+    const rotate = rand() * 360;
+    setSparkles(prev => [...prev, { id, x, y, dx, dy, scale, rotate }]);
     setTimeout(() => {
       setSparkles(prev => prev.filter(s => s.id !== id));
     }, 1000);
@@ -295,7 +301,7 @@ export default function BuildABox() {
       {/* Particle Overlay */}
       <AnimatePresence>
         {sparkles.map(s => (
-          <SparkleParticle key={s.id} x={s.x} y={s.y} />
+          <SparkleParticle key={s.id} x={s.x} y={s.y} dx={s.dx} dy={s.dy} scale={s.scale} rotate={s.rotate} />
         ))}
       </AnimatePresence>
 

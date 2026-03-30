@@ -3,16 +3,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingBag } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
 
+interface Notification {
+  id: number;
+  message: string;
+}
+
+interface SaleData {
+  productName: string;
+  customerName?: string;
+}
+
 const LiveNotification = () => {
   const { socket } = useSocket();
-  const [notifications, setNotifications] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on('newSale', (data) => {
+    socket.on('newSale', (data: SaleData) => {
       const id = Date.now();
-      setNotifications(prev => [{ id, ...data }, ...prev].slice(0, 3));
+      const message = `${data.customerName || 'Someone'} purchased ${data.productName}.`;
+      setNotifications(prev => [{ id, message }, ...prev].slice(0, 3));
       
       setTimeout(() => {
         setNotifications(prev => prev.filter(n => n.id !== id));

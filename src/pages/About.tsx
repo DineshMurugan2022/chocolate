@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -10,6 +10,7 @@ import milestoneImg2 from '../assets/product/WhatsApp Image 2026-03-20 at 12.57.
 import milestoneImg3 from '../assets/product/WhatsApp Image 2026-03-20 at 12.57.15 PM(2).jpeg';
 import milestoneImg4 from '../assets/product/WhatsApp Image 2026-03-20 at 12.57.15 PM(3).jpeg';
 import inheritanceBg from '../assets/artisan-inheritance-bg.png';
+import { fadeDown, fadeUp, stagger } from '@/utils/motion';
 
 const milestones = [
   {
@@ -41,7 +42,9 @@ const milestones = [
 export default function About() {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
+  const reduceMotion = useReducedMotion();
+  const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
+  useScroll({ target: containerRef });
 
   return (
     <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-cocoa-deep relative overflow-hidden">
@@ -53,7 +56,12 @@ export default function About() {
       <Header setIsCartOpen={() => { }} />
 
       {/* Hero: The Heritage Matrix */}
-      <section className="pt-48 pb-20 px-6 lg:px-20 relative overflow-hidden">
+      <motion.section
+        className="pt-48 pb-20 px-6 lg:px-20 relative overflow-hidden"
+        variants={fadeDown}
+        initial={reduceMotion ? false : 'hidden'}
+        animate="show"
+      >
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-20 items-end relative z-10">
           <div className="space-y-12">
             <div className="flex items-center gap-6">
@@ -82,10 +90,16 @@ export default function About() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Animated Timeline Registry */}
-      <main ref={containerRef} className="max-w-[1400px] mx-auto px-6 lg:px-20 py-40 space-y-80 relative z-10">
+      <motion.main
+        ref={containerRef}
+        className="max-w-[1400px] mx-auto px-6 lg:px-20 py-40 space-y-80 relative z-10"
+        variants={stagger(0.12)}
+        initial={reduceMotion ? false : 'hidden'}
+        animate="show"
+      >
         {milestones.map((ms, index) => (
           <div
             key={ms.year}
@@ -176,10 +190,16 @@ export default function About() {
             </motion.div>
           </div>
         ))}
-      </main>
+      </motion.main>
 
       {/* Final Inheritance Call */}
-      <section className="px-6 lg:px-20 pb-20">
+      <motion.section
+        className="px-6 lg:px-20 pb-20"
+        variants={fadeUp}
+        viewport={sectionViewport}
+        initial={reduceMotion ? false : 'hidden'}
+        whileInView="show"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -227,7 +247,7 @@ export default function About() {
             </div>
           </div>
         </motion.div>
-      </section>
+      </motion.section>
 
       <Footer />
     </div>

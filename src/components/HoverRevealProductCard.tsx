@@ -1,11 +1,19 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ShoppingBag, ArrowUpRight, Heart, Star } from 'lucide-react';
+import { ShoppingBag, ArrowUpRight, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
-  product: any;
-  onAddToCart: (p: any) => void;
+  product: Product;
+  onAddToCart: (p: Product) => void;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  category?: string;
 }
 
 export default function HoverRevealProductCard({ product, onAddToCart }: ProductCardProps) {

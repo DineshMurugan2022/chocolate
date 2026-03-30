@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Box, Trash2, Sparkles, RefreshCcw } from 'lucide-react';
-import axios from 'axios';
+import api from '@/utils/api';
 import toast from 'react-hot-toast';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/store/cartSlice';
+import type { AppDispatch } from '@/store';
 
 interface Product {
   _id: string;
@@ -20,11 +21,12 @@ export default function BuildYourBox() {
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [initials, setInitials] = useState('');
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${API_URL}/products`);
+      const response = await api.get('/products');
         setAvailableProducts(response.data.products || response.data);
       } catch (error) {
         console.error("Error fetching available chocolates:", error);
@@ -50,7 +52,23 @@ export default function BuildYourBox() {
 
   const finalizeBox = () => {
     setIsFinalizing(true);
+    
+    // Calculate total box stats
+    const totalBoxPrice = boxItems.reduce((sum, item) => sum + item.price, 0);
+    const itemNames = boxItems.map(item => item.name);
+
     setTimeout(() => {
+      // Add to Redux Cart
+      dispatch(addToCart({
+        id: `crate-${Date.now()}`,
+        name: `Heritage Crate [${initials || 'CH'}]`,
+        price: totalBoxPrice,
+        image: boxItems[0]?.image || '', // Use the first item's image as the box preview
+        quantity: 1,
+        category: 'Custom Collection',
+        subItems: itemNames
+      }));
+
       setIsFinalizing(false);
       setBoxItems([]);
       setInitials('');

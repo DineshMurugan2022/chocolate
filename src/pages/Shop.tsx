@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import api from '@/utils/api';
 import { Search, ShoppingBag, ChevronDown, Filter } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -10,12 +10,11 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import GoldenScrollPath from '../components/GoldenScrollPath';
 import FloatingIngredients from '../components/FloatingIngredients';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { fadeDown, fadeUp, stagger } from '@/utils/motion';
 
 export default function Shop() {
-  const [products, setProducts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -24,42 +23,44 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const dispatch = useDispatch();
+  const reduceMotion = useReducedMotion();
+  const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [selectedCategory, sortBy]);
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_URL}/categories`);
+      const response = await api.get('/categories');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
-  };
+  }, []);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const params: any = {};
+      const params: Record<string, string> = {};
       if (search) params.search = search;
       if (selectedCategory) params.category = selectedCategory;
       if (sortBy === 'priceLow') params.sort = 'priceLow';
       if (sortBy === 'priceHigh') params.sort = 'priceHigh';
       if (sortBy === 'name') params.sort = 'name';
 
-      const response = await axios.get(`${API_URL}/products`, { params });
+      const response = await api.get('/products', { params });
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, selectedCategory, sortBy]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleSearchApply = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +68,12 @@ export default function Shop() {
   };
 
   return (
-    <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-cocoa-deep overflow-x-hidden relative pt-32 px-6 md:px-12 lg:px-16 space-y-12">
+    <motion.div
+      className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-cocoa-deep overflow-x-hidden relative pt-32 px-6 md:px-12 lg:px-16 space-y-12"
+      variants={stagger(0.16)}
+      initial={reduceMotion ? false : 'hidden'}
+      animate="show"
+    >
 
       {/* Background Subtle Organic Texture */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.1]"
@@ -79,28 +85,34 @@ export default function Shop() {
       <GoldenScrollPath />
       <FloatingIngredients />
 
-       {/* Hero Header: Boutique Registry */}
-       <section className="pt-48 pb-10 px-6 lg:px-20 relative overflow-hidden bg-transparent">
-         <div className="max-w-[1400px] mx-auto flex flex-col items-center text-center space-y-10">
-           <div className="flex items-center gap-6">
-             <div className="size-2 rounded-full bg-gold-soft animate-pulse" />
-             <span className="font-body text-[10px] font-black uppercase tracking-[0.6em] text-gold-soft/30">The Artisan Registry 2024</span>
-           </div>
+      {/* Hero Header: Boutique Registry */}
+      <motion.section
+        className="pt-48 pb-10 px-6 lg:px-20 relative overflow-hidden bg-transparent"
+        variants={fadeDown}
+      >
+        <div className="max-w-[1400px] mx-auto flex flex-col items-center text-center space-y-10">
+          <div className="flex items-center gap-6">
+            <div className="size-2 rounded-full bg-gold-soft animate-pulse" />
+            <span className="font-body text-[10px] font-black uppercase tracking-[0.6em] text-gold-soft/30">The Artisan Registry 2024</span>
+          </div>
 
-           <h1 className="text-5xl md:text-[8vw] font-display font-black leading-[0.8] tracking-tighter text-gold-soft">
-             Heritage <br /> <span className="italic font-light text-gold-soft/20 pr-4">Matrix</span> Collection
-           </h1>
+          <h1 className="text-5xl md:text-[8vw] font-display font-black leading-[0.8] tracking-tighter text-gold-soft">
+            Heritage <br /> <span className="italic font-light text-gold-soft/20 pr-4">Matrix</span> Collection
+          </h1>
 
-           <p className="max-w-xl font-serif text-xl md:text-2xl italic text-gold-soft/50 leading-relaxed border-l-2 border-gold-soft/20 pl-10">
-             Witness the full inventory of our Asian estates. From molecular single-origins to botanical floral infusions.
-           </p>
-         </div>
-       </section>
+          <p className="max-w-xl font-serif text-xl md:text-2xl italic text-gold-soft/50 leading-relaxed border-l-2 border-gold-soft/20 pl-10">
+            Witness the full inventory of our Asian estates. From molecular single-origins to botanical floral infusions.
+          </p>
+        </div>
+      </motion.section>
 
       {/* Interactive Toolbar: Search & Filter */}
-      <section className="px-6 lg:px-20 mb-20 sticky top-32 z-50">
+      <motion.section
+        className="px-6 lg:px-20 mb-20 sticky top-32 z-50"
+        variants={fadeUp}
+      >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6">
-           {/* Search Pill */}
+          {/* Search Pill */}
           <div className="flex-1 w-full bg-black/40 backdrop-blur-3xl !rounded-[100px] p-2 flex items-center gap-2 border border-gold-soft/10 hover:border-gold-soft/30 transition-all shadow-xl">
             <form onSubmit={handleSearchApply} className="flex-1 flex items-center px-6 relative group">
               <Search size={16} className="text-gold-soft/20 group-hover:text-gold-soft transition-colors" />
@@ -133,20 +145,26 @@ export default function Shop() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-       {/* Category Registry Bar */}
-       <section className="px-6 lg:px-20 mb-20 overflow-x-auto no-scrollbar">
-         <div className="flex items-center justify-center gap-6 min-w-max pb-4">
-           {categories.map((cat) => (
-             <button
-               key={cat._id}
-               onClick={() => setSelectedCategory(cat.name === selectedCategory ? '' : cat.name)}
-               className={`h-14 px-8 rounded-2xl font-body font-black text-[9px] uppercase tracking-[0.4em] transition-all border ${selectedCategory === cat.name ? 'bg-gold-soft text-black border-transparent shadow-xl' : 'bg-black/40 border-gold-soft/10 text-gold-soft/40 hover:border-gold-soft hover:text-gold-soft'}`}
-             >
-               {cat.name}
-             </button>
-           ))}
+      {/* Category Registry Bar */}
+      <motion.section
+        className="px-6 lg:px-20 mb-20 overflow-x-auto no-scrollbar"
+        variants={fadeUp}
+        viewport={sectionViewport}
+        initial={reduceMotion ? false : 'hidden'}
+        whileInView="show"
+      >
+        <div className="flex items-center justify-center gap-6 min-w-max pb-4">
+          {categories.map((cat) => (
+            <button
+              key={cat._id}
+              onClick={() => setSelectedCategory(cat.name === selectedCategory ? '' : cat.name)}
+              className={`h-14 px-8 rounded-2xl font-body font-black text-[9px] uppercase tracking-[0.4em] transition-all border ${selectedCategory === cat.name ? 'bg-gold-soft text-black border-transparent shadow-xl' : 'bg-black/40 border-gold-soft/10 text-gold-soft/40 hover:border-gold-soft hover:text-gold-soft'}`}
+            >
+              {cat.name}
+            </button>
+          ))}
           <button
             onClick={() => setSelectedCategory('')}
             className={`h-14 px-8 rounded-2xl font-body font-black text-[9px] uppercase tracking-[0.4em] transition-all border ${selectedCategory === '' ? 'bg-gold-soft text-black shadow-xl' : 'bg-black/40 border-gold-soft/10 text-gold-soft/40 hover:border-gold-soft hover:text-gold-soft'}`}
@@ -154,12 +172,18 @@ export default function Shop() {
             ALL_EXHIBITS
           </button>
         </div>
-      </section>
+      </motion.section>
 
       {/* Boutique Results Grid */}
-      <section className="px-6 lg:px-20 pb-40">
+      <motion.section
+        className="px-6 lg:px-20 pb-40"
+        variants={fadeUp}
+        viewport={sectionViewport}
+        initial={reduceMotion ? false : 'hidden'}
+        whileInView="show"
+      >
         <div className="max-w-[1700px] mx-auto">
-           {loading ? (
+          {loading ? (
             <div className="py-40 flex flex-col items-center justify-center gap-10">
               <motion.div
                 animate={{ rotate: 360, scale: [1, 1.1, 1] }}
@@ -191,7 +215,14 @@ export default function Shop() {
                     <HoverRevealProductCard
                       product={p}
                       onAddToCart={(product) => {
-                        dispatch(addToCart({ ...product, quantity: 1 }));
+                        dispatch(addToCart({
+                          id: product._id,
+                          name: product.name,
+                          price: product.price,
+                          image: product.image,
+                          quantity: 1,
+                          category: product.category
+                        }));
                         setIsCartOpen(true);
                       }}
                     />
@@ -201,9 +232,23 @@ export default function Shop() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       <Footer />
-    </div>
+    </motion.div>
   );
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+}
+
+interface Category {
+  _id: string;
+  name: string;
 }

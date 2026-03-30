@@ -1,9 +1,25 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, User, Mail, Phone, MapPin, ShieldCheck, History, Package } from 'lucide-react';
+import { X, Calendar, User, Mail, Phone, MapPin, History, Package } from 'lucide-react';
+
+interface OrderItem {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  _id: string;
+  user: { name: string; email: string };
+  shippingAddress: { phoneNumber: string; address: string; city: string; postalCode: string };
+  items: OrderItem[];
+  totalPrice: number;
+  status: string;
+  createdAt: string;
+}
 
 interface OrderDetailsModalProps {
-  order: any;
+  order: Order | null;
   onClose: () => void;
 }
 
@@ -104,7 +120,7 @@ const OrderDetailsModal = ({ order, onClose }: OrderDetailsModalProps) => {
               </div>
               
               <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                {order.items.map((item: any, idx: number) => (
+                {order.items.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                     <div className="flex items-center gap-3">
                        <div className="size-8 rounded bg-gray-50 flex items-center justify-center text-blue-600"><Package size={14} /></div>

@@ -1,5 +1,6 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { createRandom } from '@/utils/random';
 
 const img1 = "https://images.unsplash.com/photo-1548324741-28956903d35a?auto=format&fit=crop&q=80&w=1200";
 const img2 = "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?auto=format&fit=crop&q=80&w=1200";
@@ -150,9 +151,21 @@ export default function StorytellingScroll() {
 
             {/* DECORATIVE PARTICLES */}
             <div className="absolute inset-0 pointer-events-none">
-               {[...Array(10)].map((_, i) => (
-                  <motion.div key={i} animate={{ y: [0, -100, 0], opacity: [0, 0.2, 0] }} transition={{ duration: 5 + Math.random() * 5, repeat: Infinity }} className="absolute w-1 h-1 bg-burnt-caramel rounded-full blur-[1px]" style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }} />
-               ))}
+               {[...Array(10)].map((_, i) => {
+                  const rand = createRandom(700 + i * 19);
+                  const left = `${rand() * 100}%`;
+                  const top = `${rand() * 100}%`;
+                  const duration = 5 + rand() * 5;
+                  return (
+                    <motion.div
+                      key={i}
+                      animate={{ y: [0, -100, 0], opacity: [0, 0.2, 0] }}
+                      transition={{ duration, repeat: Infinity }}
+                      className="absolute w-1 h-1 bg-burnt-caramel rounded-full blur-[1px]"
+                      style={{ left, top }}
+                    />
+                  );
+               })}
             </div>
 
          </div>

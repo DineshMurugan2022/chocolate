@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { createRandom } from '@/utils/random';
 
 interface LiquidDripDividerProps {
   color?: string;
@@ -32,12 +33,16 @@ export default function LiquidDripDivider({
         />
         
         {/* Floating Botanical Spores instead of drips */}
-        {[...Array(6)].map((_, i) => (
+        {[...Array(6)].map((_, i) => {
+           const rand = createRandom(500 + i * 31);
+           const radius = 2 + rand() * 3;
+           const duration = 8 + rand() * 5;
+           return (
            <motion.circle
              key={i}
              cx={200 + (i * 240)}
              cy={150 + (i * 20)}
-             r={2 + Math.random() * 3}
+             r={radius}
              className="fill-botanical-green/10"
              animate={{ 
                y: [0, -40, 0],
@@ -45,13 +50,13 @@ export default function LiquidDripDivider({
                x: [0, 20, 0]
              }}
              transition={{ 
-               duration: 8 + Math.random() * 5, 
+               duration, 
                repeat: Infinity, 
                delay: i * 1.5,
                ease: "easeInOut"
              }}
            />
-        ))}
+        )})}
       </svg>
       
       {/* Luxury Registry Line */}

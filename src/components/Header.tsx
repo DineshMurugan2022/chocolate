@@ -32,7 +32,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       <HeaderOoze />
 
       {/* NAVBAR CONTENTS - Compact and integrated */}
-      <div className={`max-w-[1400px] mx-auto px-4 md:px-20 flex items-center justify-between transition-all duration-700 relative z-20 pointer-events-auto h-16 md:h-20 lg:h-24`}>
+      <div className={`max-w-[1400px] mx-auto px-6 md:px-20 flex items-center justify-between transition-all duration-700 relative z-20 pointer-events-auto h-16 md:h-20 lg:h-24`}>
         
         {/* Mobile Menu Toggle */}
         <button 

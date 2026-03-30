@@ -1,10 +1,17 @@
-import { ShoppingBag, ChevronRight, History } from 'lucide-react';
+import { ShoppingBag, ChevronRight } from 'lucide-react';
+
+interface Order {
+  _id: string;
+  shippingAddress: { name: string; email: string };
+  totalPrice: number;
+  status: string;
+}
 
 interface OrdersTableProps {
-  orders: any[];
+  orders: Order[];
   loading: boolean;
   handleUpdateOrderStatus: (id: string, status: string) => void;
-  setSelectedOrder: (order: any) => void;
+  setSelectedOrder: (order: Order) => void;
 }
 
 const OrdersTable = ({ orders, loading, handleUpdateOrderStatus, setSelectedOrder }: OrdersTableProps) => {

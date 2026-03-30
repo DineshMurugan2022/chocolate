@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Sparkles, FlaskConical, Beaker, Wand2, ArrowUpRight } from 'lucide-react';
+import { FlaskConical, Beaker, Wand2, ArrowUpRight } from 'lucide-react';
 
 const steps = [
   {

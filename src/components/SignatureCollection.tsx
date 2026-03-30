@@ -1,24 +1,31 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/utils/api';
 import BoutiqueProductCard from './BoutiqueProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/cartSlice';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
 
 const categories = ["ALL HARVESTS", "DARK ORIGINS", "WHITE SILK", "FLORAL INFUSIONS", "SPICE ESTATES"];
 
 export default function SignatureCollection() {
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState("ALL HARVESTS");
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`${API_URL}/products`);
+        const res = await api.get('/products');
         setProducts(res.data);
         setFilteredProducts(res.data);
       } catch (err) {
@@ -27,6 +34,7 @@ export default function SignatureCollection() {
     };
     fetchProducts();
   }, []);
+
 
   const handleFilter = (category: string) => {
     setActiveCategory(category);

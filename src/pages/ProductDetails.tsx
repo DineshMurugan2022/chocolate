@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { ShoppingBag, ChevronLeft, ArrowRight } from 'lucide-react';
-import { addToCart } from '../store/cartSlice';
-import BoutiqueProductCard from '../components/BoutiqueProductCard';
-import CustomerReviews from '../components/CustomerReviews';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import CartDrawer from '../components/CartDrawer';
-import Skeleton from '../components/Skeleton';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import api from '@/utils/api';
+import { ChevronLeft, ArrowRight } from 'lucide-react';
+import { addToCart } from '@/store/cartSlice';
+import BoutiqueProductCard from '@/components/BoutiqueProductCard';
+import CustomerReviews from '@/components/CustomerReviews';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import CartDrawer from '@/components/CartDrawer';
+import Skeleton from '@/components/Skeleton';
+import { fadeIn, fadeUp, slideLeft, slideRight, stagger } from '@/utils/motion';
 
 const ProductDetailsSkeleton = () => (
    <div className="min-h-screen bg-cocoa-deep pt-32 px-6 md:px-12 lg:px-16 space-y-12">
@@ -36,18 +35,20 @@ const ProductDetails = () => {
    const { id } = useParams();
    const navigate = useNavigate();
    const dispatch = useDispatch();
-   const [product, setProduct] = useState<any>(null);
-   const [loading, setLoading] = useState(true);
-   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+   const reduceMotion = useReducedMotion();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
    const [isCartOpen, setIsCartOpen] = useState(false);
    const [activeImage, setActiveImage] = useState<string | null>(null);
+   const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
 
    useEffect(() => {
       const fetchProduct = async () => {
          try {
-            const res = await axios.get(`${API_URL}/products/${id}`);
+            const res = await api.get(`/products/${id}`);
             setProduct(res.data);
-            const relatedRes = await axios.get(`${API_URL}/products/${id}/related`);
+            const relatedRes = await api.get(`/products/${id}/related`);
             setRelatedProducts(relatedRes.data);
          } catch (err) {
             console.error("Error fetching product details:", err);
@@ -69,135 +70,182 @@ const ProductDetails = () => {
    );
 
    return (
-      <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative">
+      <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative overflow-hidden">
+         {/* Background Organic Textures & Glows */}
+         <div className="fixed inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+            <div className="absolute top-[-10%] left-[-10%] w-[60%] aspect-square bg-burnt-caramel/10 blur-[140px] rounded-full" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[60%] aspect-square bg-gold-soft/5 blur-[120px] rounded-full" />
+         </div>
+
          <Header setIsCartOpen={setIsCartOpen} />
+         <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-         <main className="w-full px-6 lg:px-20 pt-32 pb-40 relative z-10 max-w-7xl mx-auto">
-            <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-
+         <motion.main
+            className="w-full px-6 lg:px-20 pt-20 pb-20 relative z-10 max-w-[1400px] mx-auto"
+            variants={stagger(0.18)}
+            initial={reduceMotion ? false : 'hidden'}
+            animate="show"
+         >
             <button
                onClick={() => navigate(-1)}
-               className="flex items-center gap-2 text-gray-400 hover:text-gray-900 transition-colors mb-12 text-sm font-medium group"
+               className="flex items-center gap-4 text-gold-soft/30 hover:text-gold-soft transition-all mb-8 text-[10px] font-black uppercase tracking-[0.5em] group"
             >
-               <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
-               Back to Shop
+               <div className="size-8 rounded-full border border-gold-soft/10 flex items-center justify-center group-hover:border-gold-soft transition-colors">
+                  <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+               </div>
+               Back to Registry_Inventory
             </button>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
-               {/* Left: Visual Showcase */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+               {/* Left: Visual Showcase - Cinematic Aura */}
                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="space-y-8"
+                  variants={slideLeft}
+                  className="space-y-8 relative"
                >
-                  <div className="aspect-square bg-gray-50 rounded-3xl overflow-hidden relative">
+                  <div className="relative aspect-square bg-black/20 backdrop-blur-3xl rounded-[60px] border border-gold-soft/10 flex items-center justify-center overflow-hidden group shadow-2xl">
+                     {/* Product Aura Glow */}
+                     <div className="absolute inset-0 bg-gold-soft/5 group-hover:bg-gold-soft/10 blur-3xl transition-all duration-700 pointer-events-none" />
+                     
                      <AnimatePresence mode="wait">
                         <motion.img
                            key={activeImage || product.image}
-                           initial={{ opacity: 0 }}
-                           animate={{ opacity: 1 }}
-                           exit={{ opacity: 0 }}
-                           transition={{ duration: 0.4 }}
+                           initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+                           animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                           exit={{ opacity: 0, scale: 1.1, rotate: 5 }}
+                           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                            src={activeImage || product.image}
-                           className="w-full h-full object-contain p-12 mix-blend-screen"
+                           className="w-[85%] h-[85%] object-contain relative z-10 drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)] group-hover:scale-105 transition-transform duration-1000 mix-blend-screen"
                            alt={product.name}
                         />
                      </AnimatePresence>
                   </div>
 
-                  {(product.images?.length > 0 || product.image) && (
-                     <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                  {((product.images && product.images.length > 0) || product.image) && (
+                     <div className="flex flex-wrap gap-6 justify-center">
                         {[product.image, ...(product.images || [])].map((img, i) => (
                            <button
                               key={i}
                               onClick={() => setActiveImage(img)}
-                              className={`w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all p-1 bg-white ${
+                              className={`w-24 h-24 rounded-2xl overflow-hidden border transition-all p-4 bg-black/40 backdrop-blur-md ${
                                  (activeImage === img || (!activeImage && img === product.image))
-                                    ? 'border-blue-600 shadow-sm'
-                                    : 'border-transparent hover:border-gray-200'
+                                    ? 'border-gold-soft shadow-[0_0_20px_rgba(212,175,55,0.2)] scale-110'
+                                    : 'border-gold-soft/10 hover:border-gold-soft/30'
                               }`}
                            >
-                              <img src={img} className="w-full h-full object-contain" alt={`Thumbnail ${i + 1}`} />
+                              <img src={img} className="w-full h-full object-contain mix-blend-screen" alt={`Matrix ${i + 1}`} />
                            </button>
                         ))}
                      </div>
                   )}
                </motion.div>
 
-               {/* Right: Product Details */}
+               {/* Right: Product Details - Molecular Registry */}
                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="flex flex-col h-full"
+                  variants={slideRight}
+                  className="flex flex-col space-y-8"
                >
-                   <div className="mb-12">
-                      <span className="text-xs font-bold text-gold-soft uppercase tracking-widest mb-4 block">
-                         {product.category}
-                      </span>
-                      <h1 className="text-4xl md:text-5xl font-bold text-gold-soft mb-6 leading-tight">
+                   <div className="space-y-8">
+                      <div className="flex items-center gap-4">
+                         <div className="h-px w-12 bg-gold-soft/40" />
+                         <span className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.8em]">
+                            {product.category || 'Limited Edition Artifact'}
+                         </span>
+                      </div>
+                      
+                      <h1 className="text-5xl md:text-8xl font-display font-black text-gold-soft leading-[0.9] tracking-tighter italic capitalize">
                          {product.name}
                       </h1>
-                      <div className="flex items-center gap-4 mb-8 text-2xl font-semibold text-gold-soft">
-                         ₹{product.price}
+                      
+                      <div className="flex items-baseline gap-4">
+                         <span className="font-body text-[12px] font-black uppercase tracking-[0.3em] text-gold-soft/30">Valuation:</span>
+                         <span className="text-4xl font-display font-black text-gold-soft">₹{product.price}</span>
                       </div>
-                      <p className="text-lg text-gold-soft/70 leading-relaxed max-w-lg mb-10">
+                      
+                      <p className="text-xl font-serif italic text-gold-soft/60 leading-relaxed max-w-xl border-l-[3px] border-gold-soft/10 pl-8">
                          {product.description}
                       </p>
                    </div>
 
-                  {/* Product Attributes */}
-                  <div className="grid grid-cols-2 gap-8 py-8 border-y border-cocoa-light/20 mb-10">
-                     <div className="space-y-1">
-                        <span className="text-[10px] font-bold text-gold-soft/50 uppercase tracking-wider">Cacao Content</span>
-                        <p className="text-base font-medium text-gold-soft">{product.cacaoContent || 'Heirloom Forastero'}</p>
+                  {/* Molecular Attributes Grid */}
+                  <div className="grid grid-cols-2 gap-y-6 gap-x-12 py-8 border-y border-gold-soft/10">
+                     <div className="space-y-4">
+                        <span className="block text-[9px] font-black text-gold-soft/30 uppercase tracking-[0.4em]">Genetic_Cacao Content</span>
+                        <div className="flex items-center gap-4">
+                           <div className="size-2 rounded-full bg-gold-soft/40" />
+                           <p className="text-xl font-display italic text-gold-soft">{product.cacaoContent || 'Heirloom Forastero'}</p>
+                        </div>
                      </div>
-                     <div className="space-y-1">
-                        <span className="text-[10px] font-bold text-gold-soft/50 uppercase tracking-wider">Flavor Notes</span>
-                        <p className="text-base font-medium text-gold-soft">{product.notes || 'Caramel & Moss'}</p>
+                     <div className="space-y-4">
+                        <span className="block text-[9px] font-black text-gold-soft/30 uppercase tracking-[0.4em]">Flavor_Spectrum Notes</span>
+                        <div className="flex items-center gap-4">
+                           <div className="size-2 rounded-full bg-gold-soft/40" />
+                           <p className="text-xl font-display italic text-gold-soft">{product.notes || 'Caramel & Moss'}</p>
+                        </div>
                      </div>
-                     <div className="space-y-1">
-                        <span className="text-[10px] font-bold text-gold-soft/50 uppercase tracking-wider">Weight</span>
-                        <p className="text-base font-medium text-gold-soft">{product.weight || '100g'}</p>
+                     <div className="space-y-4">
+                        <span className="block text-[9px] font-black text-gold-soft/30 uppercase tracking-[0.4em]">Registry_Weight</span>
+                        <div className="flex items-center gap-4">
+                           <div className="size-2 rounded-full bg-gold-soft/40" />
+                           <p className="text-xl font-display italic text-gold-soft">{product.weight || '100g Artifact'}</p>
+                        </div>
                      </div>
                   </div>
 
-                   <div className="mt-auto">
-                      <button
-                         onClick={() => {
-                            dispatch(addToCart(product));
-                            setIsCartOpen(true);
-                         }}
-                         className="w-full lg:w-max px-12 h-14 bg-gold-soft hover:bg-gold-soft/80 text-black rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-3 active:scale-[0.98] shadow-lg shadow-gold-soft/10"
-                      >
-                         Add to Cart <ArrowRight size={18} />
-                      </button>
-                   </div>
+                   <button
+                      onClick={() => {
+                        dispatch(addToCart({
+                           id: product._id,
+                           name: product.name,
+                           price: product.price,
+                           image: product.image,
+                           quantity: 1,
+                           category: product.category
+                        }));
+                        setIsCartOpen(true);
+                      }}
+                      className="group w-full max-w-md h-20 bg-gold-soft hover:bg-gold-soft/80 text-black rounded-3xl font-body font-black text-[11px] uppercase tracking-[0.6em] transition-all flex items-center justify-center gap-6 active:scale-[0.98] shadow-2xl shadow-gold-soft/20 relative overflow-hidden italic"
+                   >
+                      <span className="relative z-10 flex items-center gap-4">
+                         Finalize Acquisition <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                      </span>
+                   </button>
                </motion.div>
             </div>
 
-            {/* Narrative & Impressions */}
-            <div className="mt-80 pt-40 border-t border-cocoa-deep/5 bg-cocoa-deep/30 -mx-6 lg:-mx-20 px-6 lg:px-20 backdrop-blur-3xl rounded-t-[100px] shadow-2xl">
+            {/* Narrative & Impressions - Glassmorphic Dark Section */}
+            <motion.div
+               className="mt-16 pt-12 border-t border-gold-soft/10 bg-black/20 -mx-6 lg:-mx-20 px-6 lg:px-20 backdrop-blur-3xl rounded-t-[80px] shadow-[0_-40px_80px_rgba(0,0,0,0.4)]"
+               variants={fadeUp}
+               viewport={sectionViewport}
+               initial={reduceMotion ? false : 'hidden'}
+               whileInView="show"
+            >
                <CustomerReviews productId={product._id} />
-            </div>
+            </motion.div>
 
-            {/* Companion Registry */}
+            {/* Companion Registry - Cinematic Dark Flow */}
             {relatedProducts.length > 0 && (
-               <div className="mt-40">
-                  <div className="flex flex-col md:flex-row md:items-end justify-between mb-24">
-                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Related Products</h2>
+               <motion.div
+                  className="mt-20 space-y-12"
+                  variants={fadeIn}
+                  viewport={sectionViewport}
+                  initial={reduceMotion ? false : 'hidden'}
+                  whileInView="show"
+               >
+                  <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gold-soft/10 pb-8">
+                     <div className="space-y-4">
+                        <span className="text-[10px] font-black text-gold-soft/30 uppercase tracking-[0.6em]">Matrix_Discovery</span>
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-gold-soft italic">Related Collectibles</h2>
                      </div>
                      <button
                         onClick={() => navigate('/shop')}
-                        className="mt-10 md:mt-0 px-10 h-16 rounded-2xl border border-cocoa-deep/10 font-body font-black text-[10px] uppercase tracking-[0.8em] flex items-center gap-6 group hover:bg-cocoa-deep hover:text-white transition-all"
+                        className="mt-10 md:mt-0 px-12 h-16 rounded-2xl border border-gold-soft/10 text-gold-soft/40 font-body font-black text-[9px] uppercase tracking-[0.6em] flex items-center gap-6 group hover:bg-gold-soft hover:text-black hover:border-transparent transition-all italic"
                      >
                         Entire Collection <ArrowRight size={16} className="group-hover:translate-x-4 transition-transform" />
                      </button>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
                      {relatedProducts.map((p) => (
                         <BoutiqueProductCard
                            key={p._id}
@@ -208,16 +256,30 @@ const ProductDetails = () => {
                            image={p.image}
                            onAdd={(item) => {
                               dispatch(addToCart({ ...item, quantity: 1 }));
+                              setIsCartOpen(true);
                            }}
                         />
                      ))}
                   </div>
-               </div>
+               </motion.div>
             )}
-         </main>
+         </motion.main>
          <Footer />
       </div>
    );
 };
 
 export default ProductDetails;
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  images?: string[];
+  category?: string;
+  weight?: string;
+  cacaoContent?: string;
+  notes?: string;
+}

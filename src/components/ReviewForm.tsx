@@ -28,8 +28,11 @@ export default function ReviewForm({ productId, onSuccess, onCancel }: ReviewFor
       await api.post(`/reviews/${productId}`, { rating, comment });
       toast.success('Your artisanal feedback has been curated!');
       onSuccess();
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to curate review');
+    } catch (error: unknown) {
+      const message = error && typeof error === 'object' && 'response' in error
+        ? (error as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      toast.error(message || 'Failed to curate review');
     } finally {
       setSubmitting(false);
     }
