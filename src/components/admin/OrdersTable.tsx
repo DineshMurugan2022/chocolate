@@ -2,9 +2,12 @@ import { ShoppingBag, ChevronRight } from 'lucide-react';
 
 interface Order {
   _id: string;
-  shippingAddress: { name: string; email: string };
+  shippingAddress: { name: string; email: string; phoneNumber: string; address: string; city: string; postalCode: string; };
   totalPrice: number;
   status: string;
+  user: { _id: string; name: string; email: string; };
+  items: any[];
+  createdAt: string;
 }
 
 interface OrdersTableProps {

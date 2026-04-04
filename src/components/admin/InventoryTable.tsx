@@ -7,6 +7,11 @@ interface Product {
   category: string;
   stock: number;
   image: string;
+  weight: string;
+  images: string[];
+  description: string;
+  brand?: string;
+  events?: string[];
 }
 
 interface InventoryTableProps {

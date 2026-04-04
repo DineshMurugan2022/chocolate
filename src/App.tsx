@@ -16,6 +16,8 @@ import UserProfile from '@/pages/UserProfile';
 import OrderSuccess from '@/pages/OrderSuccess';
 import About from '@/pages/About';
 import Shop from '@/pages/Shop';
+import Brands from '@/pages/Brands';
+import Events from '@/pages/Events';
 import CartNotification from '@/components/CartNotification';
 import SocialProofToast from '@/components/SocialProofToast';
 import ChocolateDripTransition from '@/components/ChocolateDripTransition';
@@ -43,6 +45,8 @@ function PageWrapper() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
           <Route 

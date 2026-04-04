@@ -48,7 +48,7 @@ export default function GoldenScrollPath() {
       >
         <motion.path
           ref={pathRef}
-          d={pathData}
+          d={pathData || "M 0 0"}
           stroke="#D4AF37"
           strokeWidth="3.5"
           strokeDasharray={pathLength}
@@ -57,7 +57,7 @@ export default function GoldenScrollPath() {
         />
         {/* Deep background shadow for absolute visibility */}
         <path
-          d={pathData}
+          d={pathData || "M 0 0"}
           stroke="#1A0F0D"
           strokeWidth="1.5"
           opacity="0.8"

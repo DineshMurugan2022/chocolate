@@ -24,6 +24,8 @@ interface Product {
   image: string;
   images: string[];
   description: string;
+  brand?: string;
+  events?: string[];
 }
 
 interface OrderItem {
@@ -80,7 +82,9 @@ export default function AdminDashboard() {
     weight: '',
     description: '',
     image: '',
-    images: [] as string[]
+    images: [] as string[],
+    brand: '',
+    events: ''
   });
 
   const [newCatName, setNewCatName] = useState('');
@@ -133,13 +137,15 @@ export default function AdminDashboard() {
         weight: product.weight || '',
         description: product.description,
         image: product.image,
-        images: product.images || []
+        images: product.images || [],
+        brand: product.brand || '',
+        events: product.events ? product.events.join(', ') : ''
       });
       setPreviewImage(product.image);
     } else {
       setEditingProduct(null);
       setFormData({
-        name: '', price: '', category: '', stock: '', weight: '', description: '', image: '', images: []
+        name: '', price: '', category: '', stock: '', weight: '', description: '', image: '', images: [], brand: '', events: ''
       });
       setPreviewImage(null);
     }
@@ -213,7 +219,11 @@ export default function AdminDashboard() {
     e.preventDefault();
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (key !== 'image' && key !== 'images') data.append(key, value as string);
+      if (key === 'events' && typeof value === 'string' && value.trim() !== '') {
+        value.split(',').forEach(e => data.append('events', e.trim()));
+      } else if (key !== 'image' && key !== 'images' && key !== 'events') {
+        data.append(key, value as string);
+      }
     });
     
     if (selectedFile) data.append('image', selectedFile);

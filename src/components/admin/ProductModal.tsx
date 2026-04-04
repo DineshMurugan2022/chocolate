@@ -29,6 +29,8 @@ interface ProductFormData {
   description: string;
   image: string;
   images: string[];
+  brand: string;
+  events: string;
 }
 
 interface ProductModalProps {
@@ -117,6 +119,8 @@ const ProductModal = ({
                         <InputField label="Price (₹)" value={formData.price} onChange={(v) => setFormData({...formData, price: v})} icon={<IndianRupee size={14} />} type="number" />
                         <InputField label="Weight" value={formData.weight} onChange={(v) => setFormData({...formData, weight: v})} icon={<Package size={14} />} placeholder="e.g. 100g" />
                         <InputField label="Stock Units" value={formData.stock} onChange={(v) => setFormData({...formData, stock: v})} icon={<Archive size={14} />} type="number" />
+                        <InputField label="Brand" value={formData.brand} onChange={(v) => setFormData({...formData, brand: v})} icon={<Tag size={14} />} placeholder="e.g. Valrhona" />
+                        <InputField label="Events" value={formData.events} onChange={(v) => setFormData({...formData, events: v})} icon={<Package size={14} />} placeholder="e.g. Wedding, Birthday" />
                      </div>
                      <div className="space-y-2 text-left">
                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider px-1">Description</label>

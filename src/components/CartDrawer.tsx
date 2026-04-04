@@ -120,7 +120,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <div className="space-y-1">
                         <div className="flex items-center justify-between">
                           <span className="font-body text-[8px] font-black text-gold-soft/60 uppercase tracking-[0.2em] italic">{item.category || 'Limited Piece'}</span>
-                          <span className="font-mono text-[9px] text-gold-soft/20 uppercase tracking-tighter italic">REF_{item.id.slice(-4).toUpperCase()}</span>
+                          <span className="font-mono text-[9px] text-gold-soft/20 uppercase tracking-tighter italic">REF_{item.id?.slice(-4).toUpperCase() || 'N/A'}</span>
                         </div>
                         <h4 className="font-display text-xl text-gold-soft italic leading-tight truncate pr-4">{item.name}</h4>
                         <span className="font-display font-black text-lg text-gold-soft shadow-sm">₹{item.price * item.quantity}</span>

@@ -35,34 +35,25 @@
   }
   body {
     background-color: var(--color-cocoa-deep);
-    color: var(--color-gold-soft);
+    color: var(--color-ivory-warm);
     font-family: var(--font-body);
     overflow-x: hidden;
     position: relative;
   }
 }
 
-/* Global Golden Text Override - The "Nuclear" Golden Option */
-.text-cocoa-deep, 
-.text-burnt-caramel, 
-.text-botanical-green,
-.text-ivory-warm,
-.text-white,
-.text-ivory-warm\/30,
-.text-ivory-warm\/40,
-.text-ivory-warm\/50,
-.text-ivory-warm\/60,
-.text-ivory-warm\/20,
-.text-ivory-warm\/10,
-.text-cocoa-deep\/70,
-.text-cocoa-deep\/50,
-.text-cocoa-deep\/30,
-.text-cocoa-deep\/20,
-.text-cocoa-deep\/10,
-.text-white\/40,
-.text-white\/60,
-.text-white\/80 {
-  color: var(--color-gold-soft) !important;
+/* Typography Hierarchy */
+.text-accent {
+  color: var(--color-gold-soft);
+}
+
+.text-muted {
+  color: var(--color-ivory-warm);
+  opacity: 0.5;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
 /* Custom UI Effects */

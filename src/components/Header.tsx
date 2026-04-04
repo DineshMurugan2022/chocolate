@@ -22,7 +22,8 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
   const navLinks = [
     { name: 'STORY', path: '/about' },
     { name: 'BOUTIQUE', path: '/shop' },
-    { name: 'HARVESTS', path: '/shop' }
+    { name: 'BRANDS', path: '/brands' },
+    { name: 'EVENTS', path: '/events' }
   ];
 
   return (
@@ -43,8 +44,8 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         </button>
         
         {/* Navigation - Centered vertically on the compact wave */}
-        <nav className="hidden lg:flex items-center gap-12 mt-[-5px]">
-          {navLinks.slice(0, 2).map((link) => (
+        <nav className="hidden lg:flex items-center gap-8 mt-[-5px]">
+          {navLinks.map((link) => (
             <button
                key={link.name}
                onClick={() => navigate(link.path)}
