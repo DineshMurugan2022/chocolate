@@ -18,6 +18,11 @@ import About from '@/pages/About';
 import Shop from '@/pages/Shop';
 import Brands from '@/pages/Brands';
 import Events from '@/pages/Events';
+import TermsOfService from '@/pages/TermsOfService';
+import ShippingPolicy from '@/pages/ShippingPolicy';
+import RefundPolicy from '@/pages/RefundPolicy';
+import HeavyMetalsInfo from '@/pages/HeavyMetalsInfo';
+import ChocolateColouring from '@/pages/ChocolateColouring';
 import CartNotification from '@/components/CartNotification';
 import SocialProofToast from '@/components/SocialProofToast';
 import ChocolateDripTransition from '@/components/ChocolateDripTransition';
@@ -49,6 +54,11 @@ function PageWrapper() {
           <Route path="/events" element={<Events />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/heavy-metals-info" element={<HeavyMetalsInfo />} />
+          <Route path="/chocolate-colouring" element={<ChocolateColouring />} />
           <Route 
             path="/checkout" 
             element={

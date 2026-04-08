@@ -56,7 +56,7 @@ export default function MeltHero() {
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.5, duration: 2 }}
                style={{ opacity: barOpacity }}
-               className="absolute top-[15%] md:top-[10%] z-40 text-center space-y-4"
+               className="absolute top-[22%] md:top-[18%] z-40 text-center space-y-4"
             >
                <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-gold-soft">The Asian Chocolate Store</p>
                <h1 className="text-4xl md:text-7xl font-display italic font-black text-gold-soft">Crafted with Heritage</h1>
@@ -78,7 +78,7 @@ export default function MeltHero() {
                   <div
                      className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-l-[40px] md:rounded-[80px] border-r-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                      style={{
-                        backgroundImage: `url(${chocolateGate})`,
+                        backgroundImage: `url("${chocolateGate}")`,
                         backgroundPosition: 'left center'
                      }}
                   >
@@ -93,7 +93,7 @@ export default function MeltHero() {
                   <div
                      className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-r-[40px] md:rounded-[80px] border-l-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                      style={{
-                        backgroundImage: `url(${chocolateGate})`,
+                        backgroundImage: `url("${chocolateGate}")`,
                         backgroundPosition: 'right center'
                      }}
                   >
@@ -128,9 +128,9 @@ export default function MeltHero() {
             {/* LAYER 3: MINIMALIST FLOATING GOLDEN TEXT - REDESIGNED & RESPONSIVE */}
             <motion.div
                style={{ opacity: textOpacity, x: textX }}
-               className="absolute left-[5%] md:left-[10%] top-[15%] md:top-1/2 -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-full md:max-w-[650px] z-[40]"
+               className="absolute left-[5%] md:left-[10%] top-[30%] md:top-[60%] -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-full md:max-w-[750px] z-[40]"
             >
-               <div className="space-y-6 md:space-y-16">
+               <div className="space-y-8 md:space-y-16 pt-20 md:pt-0">
                   {/* Floating Minimalist Header */}
                   <div className="flex items-center gap-4 md:gap-10">
                      <div className="h-[1px] w-12 md:w-24 bg-gold-soft/40" />
@@ -139,30 +139,30 @@ export default function MeltHero() {
 
                   {/* Ultra-Large Minimalist Typography */}
                   <div className="space-y-4 md:space-y-6">
-                     <h2 className="text-4xl md:text-[7vw] font-display font-black text-gold-soft leading-[0.8] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
+                     <h2 className="text-4xl md:text-[6.5vw] font-display font-black text-gold-soft leading-[0.85] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
                         Molecular<br />Inheritance
                      </h2>
                      <div className="h-[2px] md:h-[4px] w-16 md:w-32 bg-gold-soft" />
                   </div>
 
                   {/* Floating Quote - No Background */}
-                  <p className="font-serif italic text-lg md:text-5xl text-gold-soft leading-tight font-light max-w-xl">
-                     "Our laboratory extracts the <span className="underline decoration-gold-soft/30 underline-offset-8">genetic essence</span> of the cocoa bean."
+                  <p className="font-serif italic text-lg md:text-4xl text-gold-soft leading-[1.3] font-light max-w-2xl">
+                     "Our laboratory extracts the <span className="underline decoration-gold-soft/30 underline-offset-[12px]">genetic essence</span> of the cocoa bean."
                   </p>
 
                   {/* Minimalist Data Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-20 pt-8 md:pt-16 border-t border-gold-soft/10">
-                     <div className="space-y-2 md:space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 pt-10 md:pt-16 border-t border-gold-soft/10">
+                     <div className="space-y-4 md:space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Registry_Intensity</span>
                         <div className="flex items-baseline gap-2 md:gap-4">
-                           <span className="text-2xl md:text-7xl font-display font-black text-gold-soft">88.4</span>
+                           <span className="text-5xl md:text-7xl font-display font-black text-gold-soft leading-none">88.4</span>
                            <span className="text-[8px] md:text-sm font-body text-gold-soft/40 uppercase tracking-[0.2em] md:tracking-[0.3em]">SRI_UNIT</span>
                         </div>
                      </div>
 
-                     <div className="space-y-2 md:space-y-6">
+                     <div className="space-y-4 md:space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
                         <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Estate_Registry</span>
-                        <span className="block text-xl md:text-6xl font-display font-black text-gold-soft italic">
+                        <span className="block text-3xl md:text-6xl font-display font-black text-gold-soft italic leading-none">
                            Madagascar
                         </span>
                      </div>

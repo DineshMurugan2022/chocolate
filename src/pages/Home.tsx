@@ -8,6 +8,7 @@ import CollectionCard from '@/components/CollectionCard';
 import StorytellingScroll from '@/components/StorytellingScroll';
 import GoldenScrollPath from '@/components/GoldenScrollPath';
 import FloatingIngredients from '@/components/FloatingIngredients';
+import BrandMarquee from '@/components/BrandMarquee';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
@@ -16,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/store';
 import { addToCart } from '@/store/cartSlice';
 import { fadeIn, fadeUp, stagger } from '@/utils/motion';
+import { BRANDS } from '@/data/brands';
 
 interface Product {
    _id: string;
@@ -38,18 +40,13 @@ export default function Home() {
    const reduceMotion = useReducedMotion();
    const sectionViewport = { once: true, margin: '0px 0px -140px 0px' };
 
-   const brandsData = [
-      { title: 'Valrhona', image: '/images/collections/brand_valrhona_1775207323294.png', description: 'Chef Grade Cocoa' },
-      { title: 'Godiva', image: '/images/collections/brand_godiva_1775207303886.png', description: 'Luxury Truffles' },
-      { title: 'Lindt', image: '/images/collections/brand_lindt_1775207270142.png', description: 'Premium Smooth Chocolate' },
-      { title: 'Artisan', image: '/images/collections/brand_artisan_1775207339214.png', description: 'Handcrafted Boutiques' }
-   ];
+   const brandsData = useMemo(() => BRANDS, []);
 
    const eventsData = [
-      { title: 'Wedding', image: '/images/collections/event_wedding_1775207370802.png', description: 'Elegant Assortments' },
-      { title: 'Birthday', image: '/images/collections/event_birthday_1775207386610.png', description: 'Festive Truffles' },
-      { title: 'Corporate', image: '/images/collections/event_corporate_1775207405890.png', description: 'Boardroom Gifts' },
-      { title: 'Gifting', image: '/images/collections/event_gifting_1775207422111.png', description: 'Luxury Hampers' }
+      { title: 'Wedding', image: '/images/collections/event_wedding_1775207370802.png', description: 'Atelier Wedding Truffles' },
+      { title: 'Birthday', image: '/images/collections/event_birthday_1775207386610.png', description: 'Artisan Party Packs' },
+      { title: 'Corporate', image: '/images/collections/event_corporate_1775207405890.png', description: 'Strategic Gifting Boutique' },
+      { title: 'Gifting', image: '/images/collections/event_gifting_1775207422111.png', description: 'Curated Sensory Hampers' }
    ];
 
    useEffect(() => {
@@ -149,35 +146,13 @@ export default function Home() {
                            animate={{ opacity: 1, y: 0 }}
                            exit={{ opacity: 0, scale: 0.95 }}
                            transition={{ duration: 0.6 }}
-                           className="space-y-12"
                         >
-                           <div className="text-center space-y-4">
-                              <span className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-gold-soft opacity-60">The Artisan Guild</span>
-                              <h2 className="text-4xl md:text-7xl font-display italic font-black text-white">Global Partnerships</h2>
-                           </div>
-                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
-                              {brandsData.map((b, i) => (
-                                 <motion.div
-                                    key={b.title}
-                                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, y: i % 2 === 0 ? 0 : 40, scale: 1 }}
-                                    transition={{ duration: 0.8, delay: i * 0.1, type: "spring" }}
-                                    viewport={{ once: true, margin: "-50px" }}
-                                    className="relative"
-                                 >
-                                    <CollectionCard
-                                       title={b.title}
-                                       image={b.image}
-                                       description={b.description}
-                                       shape="portrait"
-                                       onClick={() => {
-                                          setSelectedCollection(b.title);
-                                          document.getElementById('exhibition-registry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                       }}
-                                    />
-                                 </motion.div>
-                              ))}
-                           </div>
+                           <BrandMarquee 
+                              onBrandClick={(brand) => {
+                                 setSelectedCollection(brand);
+                                 document.getElementById('exhibition-registry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }} 
+                           />
                         </motion.div>
                      ) : (
                         <motion.div

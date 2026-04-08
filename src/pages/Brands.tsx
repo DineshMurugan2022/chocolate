@@ -13,21 +13,12 @@ import { addToCart } from '../store/cartSlice';
 import GoldenScrollPath from '../components/GoldenScrollPath';
 import FloatingIngredients from '../components/FloatingIngredients';
 import { fadeDown, fadeUp, stagger } from '@/utils/motion';
+import { BRANDS } from '@/data/brands';
 
 export default function Brands() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // Pre-configured Brands
-  const partnerBrands = ["Valrhona", "Godiva", "Lindt", "Artisan"];
-
-  const brandsData = [
-    { title: 'Valrhona', image: '/images/collections/brand_valrhona_1775207323294.png', description: 'Chef Grade Cocoa' },
-    { title: 'Godiva', image: '/images/collections/brand_godiva_1775207303886.png', description: 'Luxury Truffles' },
-    { title: 'Lindt', image: '/images/collections/brand_lindt_1775207270142.png', description: 'Premium Smooth Chocolate' },
-    { title: 'Artisan', image: '/images/collections/brand_artisan_1775207339214.png', description: 'Handcrafted Boutiques' }
-  ];
 
   // Search and Filter State
   const [searchParams] = useSearchParams();
@@ -51,7 +42,7 @@ export default function Brands() {
       if (sortBy === 'name') params.sort = 'name';
 
       const response = await api.get('/products', { params });
-      setProducts(response.data);
+      setProducts(response.data.products || response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
@@ -153,13 +144,13 @@ export default function Brands() {
         whileInView="show"
       >
         <div className="flex items-center justify-center gap-6 min-w-max pb-4">
-          {partnerBrands.map((brandName) => (
+          {BRANDS.map((b) => (
             <button
-              key={brandName}
-              onClick={() => setSelectedBrand(brandName === selectedBrand ? '' : brandName)}
-              className={`h-14 px-8 rounded-2xl font-body font-black text-[9px] uppercase tracking-[0.4em] transition-all border ${selectedBrand === brandName ? 'bg-gold-soft text-black border-transparent shadow-xl' : 'bg-black/40 border-gold-soft/10 text-gold-soft/40 hover:border-gold-soft hover:text-gold-soft'}`}
+              key={b.shortName}
+              onClick={() => setSelectedBrand(b.title === selectedBrand ? '' : b.title)}
+              className={`h-14 px-8 rounded-2xl font-body font-black text-[9px] uppercase tracking-[0.4em] transition-all border ${selectedBrand === b.title ? 'bg-gold-soft text-black border-transparent shadow-xl' : 'bg-black/40 border-gold-soft/10 text-gold-soft/40 hover:border-gold-soft hover:text-gold-soft'}`}
             >
-              {brandName}
+              {b.shortName}
             </button>
           ))}
           <button
@@ -182,12 +173,13 @@ export default function Brands() {
         <div className="max-w-[1700px] mx-auto">
           {!search && !selectedBrand ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {brandsData.map((b, i) => (
-                   <motion.div key={b.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+                {BRANDS.map((b, i) => (
+                   <motion.div key={b.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                       <CollectionCard 
                          title={b.title} 
                          image={b.image} 
                          description={b.description} 
+                         isLogo={true}
                          onClick={() => setSelectedBrand(b.title)} 
                       />
                    </motion.div>
@@ -247,6 +239,15 @@ export default function Brands() {
       <Footer />
     </motion.div>
   );
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
 }
 
 interface Product {
