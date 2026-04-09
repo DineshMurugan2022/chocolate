@@ -20,7 +20,13 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, logout }: SidebarProps) => {
-  const tabs = [
+  interface Tab {
+    id: AdminTab;
+    icon: any;
+    label: string;
+  }
+
+  const tabs: Tab[] = [
     { id: 'overview', icon: LayoutDashboard, label: 'REGISTRY_STATUS' },
     { id: 'inventory', icon: Package, label: 'HERITAGE_COLLECTION' },
     { id: 'orders', icon: ShoppingCart, label: 'CUSTOMER_MANIFESTS' },

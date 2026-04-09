@@ -42,7 +42,7 @@ export default function BoutiqueProductCard({ id, name, price, image, onAdd }: P
            <button 
              onClick={(e) => {
                e.stopPropagation();
-               dispatch(toggleWishlistItem({ id, name, price, image }));
+                dispatch(toggleWishlistItem(id));
              }}
              className={`w-12 h-12 rounded-2xl flex items-center justify-center backdrop-blur-xl border transition-all duration-300 ${
                isWishlisted 

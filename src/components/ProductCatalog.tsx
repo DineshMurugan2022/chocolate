@@ -9,8 +9,10 @@ const ProductCatalog = () => {
     _id: string;
     name: string;
     price: number;
-    image: string;
-    category?: string;
+    category: string;
+    image?: string;
+    stock: number;
+    color?: string;
   }
 
   const fetchProducts = async () => {

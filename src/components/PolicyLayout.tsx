@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import CartDrawer from './CartDrawer';
+import { useState } from 'react';
 
 interface PolicyLayoutProps {
   title: string;
@@ -13,10 +15,11 @@ interface PolicyLayoutProps {
 
 export default function PolicyLayout({ title, subtitle, children }: PolicyLayoutProps) {
   const navigate = useNavigate();
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-cocoa-deep text-ivory-warm selection:bg-gold-soft selection:text-cocoa-deep">
-      <Header />
+      <Header setIsCartOpen={setIsCartOpen} />
       
       <main className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
         <motion.button
@@ -69,6 +72,7 @@ export default function PolicyLayout({ title, subtitle, children }: PolicyLayout
       </main>
 
       <Footer />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 }

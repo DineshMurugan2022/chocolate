@@ -91,7 +91,7 @@ export default function WishlistDrawer({ isOpen, onClose }: WishlistDrawerProps)
                         <div className="flex items-center justify-between">
                            <span className="font-body text-[8px] font-black text-burnt-caramel uppercase tracking-[0.2em]">High Estate</span>
                            <button 
-                             onClick={() => dispatch(toggleWishlistItem(item._id))}
+                             onClick={() => item._id && dispatch(toggleWishlistItem(item._id))}
                              className="text-cocoa-deep/10 hover:text-rose-400 transition-colors"
                            >
                              <Trash2 size={12} />
@@ -104,7 +104,16 @@ export default function WishlistDrawer({ isOpen, onClose }: WishlistDrawerProps)
                       <div className="flex items-center gap-3 pt-4">
                         <button 
                           onClick={() => {
-                            dispatch(addToCart({ ...item, id: item._id, quantity: 1 }));
+                            if (item._id && item.name && item.price !== undefined && item.image) {
+                              dispatch(addToCart({ 
+                                ...item, 
+                                id: item._id, 
+                                name: item.name,
+                                price: item.price,
+                                image: item.image,
+                                quantity: 1 
+                              }));
+                            }
                           }}
                           className="flex-1 h-10 bg-botanical-green hover:bg-burnt-caramel text-ivory-warm font-body text-[9px] font-black uppercase tracking-[0.3em] rounded-xl flex items-center justify-center gap-3 transition-all shadow-md active:scale-95"
                         >

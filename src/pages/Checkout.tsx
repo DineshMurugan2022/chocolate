@@ -123,7 +123,7 @@ const Checkout = () => {
         }
       };
 
-      const rzp = new (window as WindowWithRazorpay).Razorpay(options);
+      const rzp = new (window as unknown as WindowWithRazorpay).Razorpay(options);
       rzp.open();
     } catch (error) {
       console.error('Acquisition failed:', error);

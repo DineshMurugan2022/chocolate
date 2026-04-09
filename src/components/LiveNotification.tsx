@@ -6,6 +6,7 @@ import { useSocket } from '../context/SocketContext';
 interface Notification {
   id: number;
   message: string;
+  productName: string;
 }
 
 interface SaleData {
@@ -23,7 +24,7 @@ const LiveNotification = () => {
     socket.on('newSale', (data: SaleData) => {
       const id = Date.now();
       const message = `${data.customerName || 'Someone'} purchased ${data.productName}.`;
-      setNotifications(prev => [{ id, message }, ...prev].slice(0, 3));
+      setNotifications(prev => [{ id, message, productName: data.productName }, ...prev].slice(0, 3));
       
       setTimeout(() => {
         setNotifications(prev => prev.filter(n => n.id !== id));
