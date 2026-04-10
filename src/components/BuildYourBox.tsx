@@ -1,41 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Box, Trash2, Sparkles, RefreshCcw } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import api from '@/utils/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/store/cartSlice';
 import type { AppDispatch } from '@/store';
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
+import type { Product } from '@/types';
 
 export default function BuildYourBox() {
-  const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [boxItems, setBoxItems] = useState<Product[]>([]);
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [initials, setInitials] = useState('');
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
+  const { data: availableProducts = [], isLoading: loading } = useQuery<Product[]>({
+    queryKey: ['products'],
+    queryFn: async () => {
       const response = await api.get('/products');
-        setAvailableProducts(response.data.products || response.data);
-      } catch (error) {
-        console.error("Error fetching available chocolates:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+      return response.data.products || response.data;
+    }
+  });
 
   const addItem = (product: Product) => {
     if (boxItems.length < 9) {

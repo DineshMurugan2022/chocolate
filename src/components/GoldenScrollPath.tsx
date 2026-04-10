@@ -37,7 +37,7 @@ export default function GoldenScrollPath() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-full pointer-events-none z-[5] opacity-60 hidden md:block">
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-full pointer-events-none z-[5] opacity-60 hidden md:block" style={{ position: 'absolute' }}>
       <svg
         width="100%"
         height="100%"
@@ -48,7 +48,7 @@ export default function GoldenScrollPath() {
       >
         <motion.path
           ref={pathRef}
-          d={pathData || "M 0 0"}
+          d={pathData || "M0 0"}
           stroke="#D4AF37"
           strokeWidth="3.5"
           strokeDasharray={pathLength}
@@ -57,7 +57,7 @@ export default function GoldenScrollPath() {
         />
         {/* Deep background shadow for absolute visibility */}
         <path
-          d={pathData || "M 0 0"}
+          d={pathData || "M0 0"}
           stroke="#1A0F0D"
           strokeWidth="1.5"
           opacity="0.8"

@@ -54,7 +54,7 @@ export default function SocialProofToast() {
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] font-bold text-taupe-muted uppercase tracking-widest mb-0.5">Live from Boutique</p>
+            <p className="text-[10px] font-bold text-taupe-muted uppercase tracking-widest mb-0.5">Live from Store</p>
             <p className="text-xs text-umber-text leading-tight">
               <span className="font-bold">{sale.customerName || 'Someone'}</span> recently curated the <span className="font-display italic text-gold-accent">"{sale.productName}"</span>
             </p>

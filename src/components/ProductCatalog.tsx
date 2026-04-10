@@ -1,32 +1,20 @@
-import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import api from '@/utils/api';
+import { useProducts } from '@/hooks/useProducts';
 
 const ProductCatalog = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { products, loading, error } = useProducts();
 
-  interface Product {
-    _id: string;
-    name: string;
-    price: number;
-    category: string;
-    image?: string;
-    stock: number;
-    color?: string;
-  }
+  if (loading) return (
+    <div className="py-32 flex justify-center items-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-satin-gold"></div>
+    </div>
+  );
 
-  const fetchProducts = async () => {
-    try {
-      const res = await api.get('/products');
-      setProducts(res.data);
-    } catch (err) {
-      console.error('Error fetching products:', err);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  if (error) return (
+    <div className="py-32 text-center text-burnt-orange font-display">
+      {error}
+    </div>
+  );
 
   return (
     <section className="py-32 px-8 bg-transparent relative overflow-hidden">

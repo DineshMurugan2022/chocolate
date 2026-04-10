@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star } from 'lucide-react';
 import MagneticButton from './MagneticButton';
@@ -15,7 +16,7 @@ interface FeaturedProductCardProps {
   onAdd: (product: FeaturedProduct) => void;
 }
 
-export default function FeaturedProductCard({ product, onAdd }: FeaturedProductCardProps) {
+const FeaturedProductCard = memo(({ product, onAdd }: FeaturedProductCardProps) => {
   return (
     <div className="relative w-full h-[700px] rounded-[40px] overflow-hidden group">
       {/* Background Texture & Gradient */}
@@ -87,4 +88,6 @@ export default function FeaturedProductCard({ product, onAdd }: FeaturedProductC
       </div>
     </div>
   );
-}
+});
+
+export default FeaturedProductCard;

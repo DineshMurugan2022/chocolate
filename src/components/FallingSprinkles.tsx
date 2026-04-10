@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useMemo, memo } from 'react';
 import { createRandom } from '@/utils/random';
 
 const COLORS = [
@@ -10,10 +10,12 @@ const COLORS = [
   '#FFFFFF'  // Pure White
 ];
 
-export default function FallingSprinkles() {
-
+const FallingSprinkles = memo(function FallingSprinkles() {
+  const shouldReduceMotion = useReducedMotion();
   const sprinkles = useMemo(() => {
-    return Array.from({ length: 60 }).map((_, i) => {
+    // If reduced motion is preferred, significantly reduce count or disable
+    const count = shouldReduceMotion ? 0 : 60;
+    return Array.from({ length: count }).map((_, i) => {
       const rand = createRandom(1000 + i * 17);
       return {
         id: i,
@@ -27,7 +29,9 @@ export default function FallingSprinkles() {
         initialRotate: rand() * 360
       };
     });
-  }, []);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[1000] overflow-hidden">
@@ -52,7 +56,6 @@ export default function FallingSprinkles() {
              width: `${s.width}px`,
              height: `${s.height}px`,
              backgroundColor: s.color,
-             // Add a subtle 3D highlight/shading effect like the image
              background: `linear-gradient(135deg, ${s.color}FF 0%, ${s.color}DD 40%, rgba(0,0,0,0.15) 100%)`,
              border: '1px solid rgba(255,255,255,0.2)'
            }}
@@ -60,4 +63,6 @@ export default function FallingSprinkles() {
       ))}
     </div>
   );
-}
+});
+
+export default FallingSprinkles;

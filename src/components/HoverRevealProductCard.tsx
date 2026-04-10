@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ShoppingBag, ArrowUpRight, Heart } from 'lucide-react';
@@ -16,7 +17,7 @@ interface Product {
   category?: string;
 }
 
-export default function HoverRevealProductCard({ product, onAddToCart }: ProductCardProps) {
+const HoverRevealProductCard = memo(({ product, onAddToCart }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
@@ -101,4 +102,6 @@ export default function HoverRevealProductCard({ product, onAddToCart }: Product
       </div>
     </motion.div>
   );
-}
+});
+
+export default HoverRevealProductCard;

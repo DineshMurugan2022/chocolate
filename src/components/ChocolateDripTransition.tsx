@@ -21,7 +21,7 @@ const ChocolateDripTransition: React.FC<ChocolateDripTransitionProps> = ({ isVis
             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
             className="absolute w-[300vw] h-[300vw] text-[60vw] font-display font-black text-cocoa-deep/[0.015] select-none pointer-events-none italic whitespace-nowrap"
           >
-            ESTATE_REGISTRY_HERITAGE_ATELIER_BOTANICAL_BOUTIQUE_ESTATE
+            ESTATE_REGISTRY_HERITAGE_ATELIER_BOTANICAL_SHOP_ESTATE
           </motion.div>
 
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-botanical-green/5 rounded-full blur-[120px] pointer-events-none" />
@@ -40,7 +40,7 @@ const ChocolateDripTransition: React.FC<ChocolateDripTransitionProps> = ({ isVis
 
             <div className="space-y-4">
               <h1 className="text-cocoa-deep text-8xl md:text-[14rem] font-display font-black tracking-[-0.04em] leading-[0.8] italic select-none">
-                Boutique<span className="text-botanical-green">.</span>
+                Shop<span className="text-botanical-green">.</span>
               </h1>
               <div className="flex items-center justify-center gap-4 py-6 border-y border-cocoa-deep/5 mt-8">
                  <span className="font-body text-[9px] font-black text-cocoa-deep/40 uppercase tracking-[0.6em]">ESTATE_42/B_REGISTRY</span>

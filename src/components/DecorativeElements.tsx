@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 import floatingGold from '../assets/branding/floating_gold.png';
 import cocoaBeans from '../assets/branding/cocoa_beans.png';
 
-export default function DecorativeElements() {
+const DecorativeElements = memo(function DecorativeElements() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none">
       {/* Top Left Floating Bean */}
@@ -57,4 +58,6 @@ export default function DecorativeElements() {
       <div className="absolute inset-0 opacity-[0.03] contrast-125 brightness-100 pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]"></div>
     </div>
   );
-}
+});
+
+export default DecorativeElements;

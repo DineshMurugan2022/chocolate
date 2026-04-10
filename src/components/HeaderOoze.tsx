@@ -6,7 +6,7 @@ export default function HeaderOoze() {
       <svg 
         viewBox="0 0 1200 100" 
         preserveAspectRatio="none" 
-        className="w-full h-[90px] md:h-[120px]"
+        className="w-full h-[100px] md:h-[130px] lg:h-[160px]"
       >
         <defs>
           <linearGradient id="solid-choco-gradient" x1="0%" y1="0%" x2="0%" y2="100%">

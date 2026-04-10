@@ -4,25 +4,33 @@ import type { RootState, AppDispatch } from '@/store';
 import { SocketProvider } from '@/context/SocketContext';
 import { fetchWishlist } from '@/store/wishlistSlice';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 
-import Home from '@/pages/Home';
-import AdminDashboard from '@/pages/AdminDashboard';
-import ProductDetails from '@/pages/ProductDetails';
-import Checkout from '@/pages/Checkout';
-import UserProfile from '@/pages/UserProfile';
-import OrderSuccess from '@/pages/OrderSuccess';
-import About from '@/pages/About';
-import Shop from '@/pages/Shop';
-import Brands from '@/pages/Brands';
-import Events from '@/pages/Events';
-import TermsOfService from '@/pages/TermsOfService';
-import ShippingPolicy from '@/pages/ShippingPolicy';
-import RefundPolicy from '@/pages/RefundPolicy';
-import HeavyMetalsInfo from '@/pages/HeavyMetalsInfo';
-import ChocolateColouring from '@/pages/ChocolateColouring';
+const Home = lazy(() => import('@/pages/Home'));
+const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
+const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
+const Checkout = lazy(() => import('@/pages/Checkout'));
+const UserProfile = lazy(() => import('@/pages/UserProfile'));
+const OrderSuccess = lazy(() => import('@/pages/OrderSuccess'));
+const About = lazy(() => import('@/pages/About'));
+const Shop = lazy(() => import('@/pages/Shop'));
+const Brands = lazy(() => import('@/pages/Brands'));
+const Events = lazy(() => import('@/pages/Events'));
+const TermsOfService = lazy(() => import('@/pages/TermsOfService'));
+const ShippingPolicy = lazy(() => import('@/pages/ShippingPolicy'));
+const RefundPolicy = lazy(() => import('@/pages/RefundPolicy'));
+const HeavyMetalsInfo = lazy(() => import('@/pages/HeavyMetalsInfo'));
+const ChocolateColouring = lazy(() => import('@/pages/ChocolateColouring'));
+const Accessories = lazy(() => import('@/pages/Accessories'));
+const Workshop = lazy(() => import('@/pages/Workshop'));
+const Subscription = lazy(() => import('@/pages/Subscription'));
+const DietChocolates = lazy(() => import('@/pages/DietChocolates'));
+const WeddingEvent = lazy(() => import('@/pages/events/Wedding'));
+const BirthdayEvent = lazy(() => import('@/pages/events/Birthday'));
+const FamilyEvent = lazy(() => import('@/pages/events/Family'));
+const GiftsEvent = lazy(() => import('@/pages/events/Gifts'));
 import CartNotification from '@/components/CartNotification';
 import SocialProofToast from '@/components/SocialProofToast';
 import ChocolateDripTransition from '@/components/ChocolateDripTransition';
@@ -46,53 +54,63 @@ function PageWrapper() {
     <>
       <DecorativeElements />
       <ChocolateDripTransition isVisible={isTransitioning} />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/brands" element={<Brands />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/shipping-policy" element={<ShippingPolicy />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/heavy-metals-info" element={<HeavyMetalsInfo />} />
-          <Route path="/chocolate-colouring" element={<ChocolateColouring />} />
-          <Route 
-            path="/checkout" 
-            element={
-              <ProtectedRoute>
-                <Checkout />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/admin" 
-            element={
-              <ProtectedRoute adminOnly>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/order-success" 
-            element={
-              <ProtectedRoute>
-                <OrderSuccess />
-              </ProtectedRoute>
-            } 
-          />
-        </Routes>
-      </AnimatePresence>
+      <Suspense fallback={<div className="h-screen w-full bg-[#1A0F0D]" />}>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/brands" element={<Brands />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/heavy-metals-info" element={<HeavyMetalsInfo />} />
+            <Route path="/chocolate-colouring" element={<ChocolateColouring />} />
+            <Route path="/accessories" element={<Accessories />} />
+            <Route path="/workshop" element={<Workshop />} />
+            <Route path="/subscription" element={<Subscription />} />
+            <Route path="/diet" element={<DietChocolates />} />
+            <Route path="/events/wedding" element={<WeddingEvent />} />
+            <Route path="/events/birthday" element={<BirthdayEvent />} />
+            <Route path="/events/family" element={<FamilyEvent />} />
+            <Route path="/events/gifts" element={<GiftsEvent />} />
+            <Route 
+              path="/checkout" 
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/order-success" 
+              element={
+                <ProtectedRoute>
+                  <OrderSuccess />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </AnimatePresence>
+      </Suspense>
     </>
   );
 }
@@ -124,11 +142,15 @@ function AppContent() {
   );
 }
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <AppContent />
+      </Provider>
+    </HelmetProvider>
   );
 }
 

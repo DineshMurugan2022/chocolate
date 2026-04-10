@@ -31,6 +31,8 @@ const ProductDetailsSkeleton = () => (
    </div>
 );
 
+import SEO from '@/components/SEO';
+
 const ProductDetails = () => {
    const { id } = useParams();
    const navigate = useNavigate();
@@ -65,12 +67,17 @@ const ProductDetails = () => {
    if (!product) return (
       <div className="min-h-screen bg-ivory-warm flex flex-col items-center justify-center text-cocoa-deep space-y-6">
          <h1 className="text-5xl font-display italic text-burnt-caramel">Harvest missing</h1>
-         <button onClick={() => navigate('/')} className="font-body text-[10px] uppercase font-black text-cocoa-deep/20 hover:text-cocoa-deep transition-all">Go Back to Boutique</button>
+         <button onClick={() => navigate('/')} className="font-body text-[10px] uppercase font-black text-cocoa-deep/20 hover:text-cocoa-deep transition-all">Go Back to Shop</button>
       </div>
    );
 
    return (
       <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative overflow-hidden">
+         <SEO 
+            title={`${product.name} | Artisanal Chocolate`}
+            description={product.description}
+            image={product.image}
+         />
          {/* Background Organic Textures & Glows */}
          <div className="fixed inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
             <div className="absolute top-[-10%] left-[-10%] w-[60%] aspect-square bg-burnt-caramel/10 blur-[140px] rounded-full" />

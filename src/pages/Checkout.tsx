@@ -13,7 +13,7 @@ import { fadeDown, fadeUp, stagger } from '@/utils/motion';
 
 const Checkout = () => {
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
@@ -101,8 +101,7 @@ const Checkout = () => {
 
             const { data: result } = await api.post(
               `/orders/razorpay/verify`,
-              verificationData,
-              { headers: { Authorization: `Bearer ${token}` } }
+              verificationData
             );
 
             if (result.status === 'success') {

@@ -32,6 +32,7 @@ export default function BoutiqueProductCard({ id, name, price, image, onAdd }: P
         <motion.img 
           src={image} 
           alt={name} 
+          loading="lazy"
           className="w-full h-full object-contain p-10 mix-blend-screen transition-all duration-1000 group-hover:scale-115 drop-shadow-[0_20px_40px_rgba(212,175,55,0.15)]"
         />
         

@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
 import api from '@/utils/api';
+import type { Product } from '@/types';
 import { Search, ShoppingBag, ChevronDown, Filter } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -16,8 +18,6 @@ import { fadeDown, fadeUp, stagger } from '@/utils/motion';
 import { BRANDS } from '@/data/brands';
 
 export default function Brands() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Search and Filter State
@@ -31,9 +31,9 @@ export default function Brands() {
   const reduceMotion = useReducedMotion();
   const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
 
-  const fetchProducts = useCallback(async () => {
-    setLoading(true);
-    try {
+  const { data: products = [], isLoading: loading, refetch } = useQuery<Product[]>({
+    queryKey: ['products', { search, selectedBrand, sortBy }],
+    queryFn: async () => {
       const params: Record<string, string> = {};
       if (search) params.search = search;
       if (selectedBrand) params.brand = selectedBrand;
@@ -42,21 +42,13 @@ export default function Brands() {
       if (sortBy === 'name') params.sort = 'name';
 
       const response = await api.get('/products', { params });
-      setProducts(response.data.products || response.data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    } finally {
-      setLoading(false);
+      return response.data.products || response.data;
     }
-  }, [search, selectedBrand, sortBy]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+  });
 
   const handleSearchApply = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchProducts();
+    refetch();
   };
 
   return (
@@ -66,6 +58,10 @@ export default function Brands() {
       initial={reduceMotion ? false : 'hidden'}
       animate="show"
     >
+      <SEO 
+        title={selectedBrand ? `${selectedBrand} Collection` : "Our Partner Brands"}
+        description={`Discover exquisite creations from ${selectedBrand || "the world's finest chocolate houses"}. Artisanal chocolates curated for the connoisseurs of Tamil Nadu.`}
+      />
       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.1]"
         style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
 
@@ -113,7 +109,12 @@ export default function Brands() {
                 className="w-full bg-transparent border-none focus:ring-0 text-[11px] font-body font-black uppercase tracking-[0.4em] py-4 pl-6 placeholder:text-gold-soft/10 text-gold-soft"
               />
             </form>
-            <button className="h-14 px-8 bg-gold-soft rounded-[100px] text-black font-body font-black text-[9px] uppercase tracking-[0.4em] hover:bg-gold-soft/80 transition-all shadow-2xl">Search</button>
+            <button 
+              onClick={handleSearchApply}
+              className="h-14 px-8 bg-gold-soft rounded-[100px] text-black font-body font-black text-[9px] uppercase tracking-[0.4em] hover:bg-gold-soft/80 transition-all shadow-2xl"
+            >
+              Search
+            </button>
           </div>
 
           <div className="bg-black/40 backdrop-blur-3xl !rounded-[100px] p-2 flex items-center border border-gold-soft/10 min-w-[240px]">
@@ -124,10 +125,10 @@ export default function Brands() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="appearance-none bg-transparent border-none focus:ring-0 text-[9px] font-body font-black uppercase tracking-[0.2em] pr-10 cursor-pointer text-gold-soft"
               >
-                <option value="newest" className="bg-cocoa-deep">NEW_ARRIVAL</option>
-                <option value="priceLow" className="bg-cocoa-deep">PRICE_ASC</option>
-                <option value="priceHigh" className="bg-cocoa-deep">PRICE_DESC</option>
-                <option value="name" className="bg-cocoa-deep">ALPHABETIC</option>
+                <option value="newest" className="bg-cocoa-deep text-white">NEW_ARRIVAL</option>
+                <option value="priceLow" className="bg-cocoa-deep text-white">PRICE_ASC</option>
+                <option value="priceHigh" className="bg-cocoa-deep text-white">PRICE_DESC</option>
+                <option value="name" className="bg-cocoa-deep text-white">ALPHABETIC</option>
               </select>
               <ChevronDown size={14} className="text-gold-soft/20 pointer-events-none -ml-8" />
             </div>
@@ -200,7 +201,12 @@ export default function Brands() {
             <div className="py-40 flex flex-col items-center justify-center gap-8 bg-black/20 rounded-[60px] border border-dashed border-gold-soft/10">
               <ShoppingBag size={48} className="text-gold-soft/5" />
               <p className="font-display text-2xl italic text-gold-soft/20">No creations found for this brand.</p>
-              <button onClick={() => { setSearch(''); setSelectedBrand(''); }} className="font-body text-[9px] uppercase font-black tracking-[0.4em] text-gold-soft border-b border-gold-soft pb-1 italic hover:text-white hover:border-white transition-all">Clear Selection</button>
+              <button 
+                onClick={() => { setSearch(''); setSelectedBrand(''); }} 
+                className="font-body text-[9px] uppercase font-black tracking-[0.4em] text-gold-soft border-b border-gold-soft pb-1 italic hover:text-white hover:border-white transition-all shadow-none bg-transparent"
+              >
+                Clear Selection
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
@@ -215,7 +221,11 @@ export default function Brands() {
                     transition={{ duration: 0.8, delay: (idx % 4) * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <HoverRevealProductCard
-                      product={p}
+                      product={{
+                        ...p,
+                        image: p.image || '',
+                        color: '' // Add default color if missing
+                      }}
                       onAddToCart={(product) => {
                         dispatch(addToCart({
                           id: product._id,
@@ -239,22 +249,4 @@ export default function Brands() {
       <Footer />
     </motion.div>
   );
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  category: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  category: string;
 }

@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { useState, useEffect, memo } from 'react';
+import { motion, useSpring, useReducedMotion } from 'framer-motion';
 
-export default function ChocolateCursor() {
+const ChocolateCursor = memo(function ChocolateCursor() {
+  const shouldReduceMotion = useReducedMotion();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isSealArea, setIsSealArea] = useState(false);
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -33,11 +36,13 @@ export default function ChocolateCursor() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [shouldReduceMotion]);
 
   const springConfig = { damping: 20, stiffness: 150 };
   const x = useSpring(mousePosition.x - 12, springConfig);
   const y = useSpring(mousePosition.y - 12, springConfig);
+
+  if (shouldReduceMotion) return null;
 
   return (
     <motion.div
@@ -67,10 +72,12 @@ export default function ChocolateCursor() {
              <motion.div 
                initial={{ opacity: 0, scale: 0.5 }}
                animate={{ opacity: 1, scale: 1.2 }}
-               className="absolute inset-0 rounded-full border-2 border-burnt-caramel/40"
+               className="absolute inset-0 rounded-full border-2 border-primary/40"
              />
           )}
        </div>
     </motion.div>
   );
-}
+});
+
+export default ChocolateCursor;

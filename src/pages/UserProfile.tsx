@@ -1,250 +1,430 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store/authSlice';
 import type { RootState } from '../store';
 import api from '@/utils/api';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Calendar, MapPin, ChevronRight, User as UserIcon, Mail, ShoppingBag, ShieldCheck, History, Globe, Zap } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Calendar, MapPin, ChevronRight, User as UserIcon, Mail, 
+  ShoppingBag, ShieldCheck, History, Globe, Zap, Cpu, Terminal, 
+  Box, CreditCard, LogOut, X, Package, CheckCircle2, Hash
+} from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
 import CartDrawer from '../components/CartDrawer';
+import CelestialBackground from '../components/CelestialBackground';
 import { OrderSkeleton } from '../components/Skeleton';
-import { fadeDown, fadeUp, stagger } from '@/utils/motion';
+import { fadeUp, stagger } from '@/utils/motion';
 
 export default function UserProfile() {
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
+  const [activeTab, setActiveTab] = useState<'archives' | 'security' | 'intelligence'>('archives');
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const fetchOrders = useCallback(async () => {
     try {
-      const response = await api.get('/orders/my-orders', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get('/orders/my-orders');
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
-    if (user && token) {
+    if (user) {
       fetchOrders();
     }
-  }, [user, token, fetchOrders]);
+  }, [user, fetchOrders]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+  };
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-cocoa-deep flex items-center justify-center p-6 text-center relative overflow-hidden">
-        <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.2] mix-blend-multiply" 
-             style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
+      <div className="min-h-screen bg-celestial-bg flex items-center justify-center p-6 text-center relative overflow-hidden">
+        <CelestialBackground />
         
-        <div className="space-y-12 max-w-md relative z-10">
-           <Logo className="w-48 h-auto mx-auto opacity-20" variant="dark" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-12 max-w-md relative z-10"
+        >
+           <Logo className="w-48 h-auto mx-auto opacity-20 brightness-200" variant="light" />
            <div className="space-y-6">
-              <h2 className="text-5xl font-display text-cocoa-deep italic font-black uppercase tracking-tighter">Authorized <span className="text-burnt-caramel font-light">Induction</span> Required.</h2>
-              <p className="font-serif text-xl italic text-cocoa-deep/40 leading-relaxed px-10 border-l border-burnt-caramel/20 ml-10">Please identify yourself as a heritage curator to access the private acquisition archives.</p>
+              <h2 className="text-5xl font-display text-white font-black uppercase tracking-tighter">
+                LOGIN <span className="text-aurora-cyan font-thin">REQUIRED</span>
+              </h2>
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-aurora-cyan/40 leading-relaxed px-10 border-l border-aurora-cyan/20 ml-10">
+                Please log in to your account to view your orders and profile.
+              </p>
            </div>
-        </div>
+           <button 
+             onClick={() => navigate('/')} 
+             className="h-14 px-12 bg-aurora-cyan/10 border border-aurora-cyan/20 text-aurora-cyan rounded-2xl font-mono text-[10px] uppercase tracking-widest hover:bg-aurora-cyan hover:text-white transition-all"
+           >
+             BACK TO HOME
+           </button>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative overflow-x-hidden">
-      
-      {/* Heritage Grid Motif & Texture */}
-       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{ backgroundImage: 'radial-gradient(#D4AF37 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.2] mix-blend-multiply" 
-           style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
+    <div className="min-h-screen bg-celestial-bg text-white selection:bg-aurora-cyan selection:text-black relative overflow-x-hidden pt-32 celestial-theme">
+      <CelestialBackground />
 
       <Header setIsCartOpen={setIsCartOpen} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       
       <motion.main
-        className="pt-48 pb-40 px-6 lg:px-20 relative z-10"
-        variants={stagger(0.18)}
-        initial={reduceMotion ? false : 'hidden'}
+        className="px-6 lg:px-20 relative z-10"
+        variants={stagger(0.1)}
+        initial="hidden"
         animate="show"
       >
-        <div className="max-w-[1400px] mx-auto space-y-32">
+        <div className="max-w-[1500px] mx-auto">
           
-          {/* Dashboard Header: Personalized Heritage Matrix */}
-          <motion.div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b-2 border-cocoa-deep/5 pb-12" variants={fadeDown}>
-            <div className="space-y-8">
-              <div className="flex items-center gap-6">
-                 <div className="h-[2px] w-16 bg-burnt-caramel" />
-                 <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-burnt-caramel/60">Curatorial_Dashboard_v04</span>
+          {/* Futuristic Dashboard Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-20 lg:mb-32">
+            <motion.div className="lg:col-span-3 space-y-6" variants={fadeUp}>
+              <div className="flex items-center gap-4">
+                <div className="h-[1px] w-12 bg-aurora-cyan/40" />
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.5em] text-aurora-cyan">USER ACCOUNT PROFILE</span>
               </div>
-               <h1 className="text-6xl md:text-[8vw] font-display font-black leading-[0.8] tracking-tighter uppercase text-gold-soft">
-                  Bonjour, <br /> <span className="italic font-light text-gold-soft/20 pr-4">{user.name.split(' ')[0]}</span> <span className="text-gold-soft/60">Curator</span>
-               </h1>
-            </div>
+              <h1 className="text-6xl md:text-8xl font-display font-black leading-tight tracking-tight uppercase">
+                Welcome, <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-aurora-cyan via-aurora-purple to-aurora-cyan bg-[length:200%_auto] animate-gradient-x italic font-light drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
+                  {user.name.split(' ')[0]}
+                </span>
+              </h1>
+            </motion.div>
             
-            <div className="pb-4 space-y-6 text-right">
-               <Logo className="w-40 h-auto opacity-10 ml-auto hidden md:block" variant="dark" />
-               <div className="flex items-center gap-6 justify-end">
-                  <div className="px-8 py-3 bg-botanical-green text-ivory-warm rounded-[20px] font-body text-[9px] font-black uppercase tracking-[0.5em] shadow-2xl transform hover:scale-105 transition-transform">Registry_Active</div>
-                  <div className="size-14 rounded-full border border-cocoa-deep/5 flex items-center justify-center bg-white shadow-sm hover:rotate-180 transition-transform duration-700">
-                     <History size={20} className="text-burnt-caramel/30" />
-                  </div>
-               </div>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
-            
-            {/* Left Column: Curator Credentials Artifact */}
-            <motion.div className="lg:col-span-4 lg:sticky lg:top-40 h-fit" variants={fadeUp}>
-               <div className="bg-black/40 backdrop-blur-3xl rounded-[80px] p-16 border border-gold-soft/10 shadow-4xl relative overflow-hidden group">
-                <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/graphy.png")' }} />
-                
-                <h3 className="text-3xl font-display italic text-gold-soft mb-12 border-b border-gold-soft/10 pb-8">Personal <span className="text-gold-soft font-black not-italic tracking-tighter">Registry</span></h3>
-                
-                <div className="space-y-12">
-                   <div className="flex items-start gap-8 group/item">
-                    <div className="size-20 rounded-[28px] bg-black/40 border border-gold-soft/10 flex items-center justify-center text-gold-soft shadow-sm group-hover/item:bg-gold-soft group-hover/item:text-black transition-all duration-700">
-                       <UserIcon size={24} />
-                    </div>
-                    <div className="space-y-2">
-                       <p className="font-body text-[9px] font-black text-gold-soft/20 uppercase tracking-[0.6em] ml-1">Identity</p>
-                       <p className="text-3xl font-display italic text-gold-soft leading-tight">{user.name}</p>
-                    </div>
-                  </div>
-
-                   <div className="flex items-start gap-8 group/item">
-                    <div className="size-20 rounded-[28px] bg-black/40 border border-gold-soft/10 flex items-center justify-center text-gold-soft/60 shadow-sm group-hover/item:bg-gold-soft group-hover/item:text-black transition-all duration-700">
-                       <Mail size={24} />
-                    </div>
-                    <div className="space-y-2">
-                       <p className="font-body text-[9px] font-black text-gold-soft/20 uppercase tracking-[0.6em] ml-1">Communique</p>
-                       <p className="text-xl font-display italic text-gold-soft truncate max-w-[200px] border-b border-gold-soft/10 pb-1">{user.email}</p>
-                    </div>
-                  </div>
+            <motion.div className="flex flex-col justify-end items-end gap-6 h-full" variants={fadeUp}>
+              <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[32px] p-6 w-full flex items-center justify-between group hover:border-aurora-cyan/30 transition-all">
+                <div className="space-y-1">
+                  <p className="font-mono text-[8px] uppercase text-white/40 tracking-widest">Account Status</p>
+                  <p className="font-mono text-xs text-aurora-cyan font-bold tracking-widest">ACTIVE</p>
                 </div>
+                <div className="size-10 rounded-2xl bg-aurora-cyan/10 flex items-center justify-center text-aurora-cyan animate-pulse">
+                  <Cpu size={18} />
+                </div>
+              </div>
+              <button 
+                onClick={handleLogout}
+                className="w-full h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center gap-4 hover:bg-red-500/10 hover:border-red-500/20 text-white/20 hover:text-red-400 transition-all font-mono text-[9px] uppercase tracking-widest group"
+              >
+                LOGOUT <LogOut size={14} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
+          </div>
 
-                <div className="mt-20 pt-12 border-t border-cocoa-deep/5 flex flex-col gap-6">
-                   <div className="flex items-center gap-4 opacity-20">
-                      <ShieldCheck size={16} />
-                      <span className="font-body text-[8px] font-black uppercase tracking-[0.4em]">Protocol_v09_Secured</span>
-                   </div>
-                   <div className="flex items-center gap-4 opacity-20">
-                      <Globe size={16} />
-                      <span className="font-body text-[8px] font-black uppercase tracking-[0.4em]">Asian_Estate_Access_L3</span>
-                   </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+            
+            {/* Sidebar Navigation - Glass Tabs */}
+            <motion.div className="lg:col-span-3 lg:sticky lg:top-40 space-y-6" variants={fadeUp}>
+              <div className="bg-white/5 backdrop-blur-2xl rounded-[40px] p-6 border border-white/10 space-y-3">
+                {[
+                  { id: 'archives', icon: Box, label: 'ORDER HISTORY' },
+                  { id: 'security', icon: ShieldCheck, label: 'SECURITY SETTINGS' },
+                  { id: 'intelligence', icon: Terminal, label: 'NOTIFICATIONS' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as any)}
+                    className={`w-full h-16 rounded-3xl flex items-center gap-6 px-6 transition-all duration-500 group relative overflow-hidden ${
+                      activeTab === tab.id ? 'bg-aurora-cyan text-black' : 'hover:bg-white/5 text-white/40 hover:text-white'
+                    }`}
+                  >
+                    <tab.icon size={20} className={activeTab === tab.id ? '' : 'group-hover:rotate-12 transition-transform'} />
+                    <span className="font-mono text-[9px] font-black uppercase tracking-widest">{tab.label}</span>
+                    {activeTab === tab.id && (
+                      <div className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none" />
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* User Identity Artifact */}
+              <div className="bg-gradient-to-br from-aurora-purple/10 to-transparent backdrop-blur-2xl rounded-[40px] p-10 border border-aurora-purple/20 relative overflow-hidden group">
+                <div className="absolute -right-10 -bottom-10 size-40 bg-aurora-purple/10 blur-3xl rounded-full" />
+                <p className="font-mono text-[8px] uppercase tracking-[0.5em] text-aurora-purple/60 mb-6">User Details</p>
+                <div className="space-y-6">
+                  <div>
+                    <p className="text-xl font-display italic text-white">{user.name}</p>
+                    <p className="font-mono text-[9px] text-white/20 uppercase tracking-widest mt-1 italic">{user.email}</p>
+                  </div>
+                  <div className="flex gap-4 pt-4">
+                    <div className="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 hover:text-aurora-cyan transition-colors">
+                      <CreditCard size={18} />
+                    </div>
+                    <div className="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/20 hover:text-aurora-cyan transition-colors">
+                      <MapPin size={18} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Right Column: Acquisition Archive Registry */}
-            <motion.div className="lg:col-span-8 space-y-16" variants={fadeUp} viewport={sectionViewport} initial={reduceMotion ? false : 'hidden'} whileInView="show">
-               <div className="flex items-center justify-between border-b border-gold-soft/10 pb-8">
-                 <div className="flex items-center gap-6">
-                    <Zap size={20} className="text-gold-soft/30" />
-                    <h3 className="text-4xl font-display italic text-gold-soft">Acquisition <span className="text-gold-soft font-black not-italic tracking-tighter">Archives</span></h3>
-                 </div>
-                 <span className="font-body text-[10px] font-black uppercase tracking-[0.6em] text-gold-soft/20 italic">{orders.length} Batch_Logs</span>
-               </div>
+            {/* Main Content Area: Data Archives */}
+            <motion.div className="lg:col-span-9" variants={fadeUp}>
+              <AnimatePresence mode="wait">
+                {activeTab === 'archives' && (
+                  <motion.div
+                    key="archives"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-12"
+                  >
+                    <div className="flex items-center justify-between border-b border-white/10 pb-8">
+                      <h3 className="text-4xl font-display font-black tracking-tight uppercase flex items-center gap-6">
+                        Order <span className="text-aurora-cyan italic font-light">History</span>
+                        <div className="size-2 rounded-full bg-aurora-cyan animate-ping" />
+                      </h3>
+                      <span className="font-mono text-[9px] uppercase tracking-widest text-white/20">{orders.length} Orders Found</span>
+                    </div>
 
-              {loading ? (
-                <div className="space-y-10">
-                  <OrderSkeleton />
-                  <OrderSkeleton />
-                  <OrderSkeleton />
-                </div>
-              ) : orders.length === 0 ? (
-                <div className="p-40 text-center rounded-[100px] bg-black/40 border-2 border-dashed border-gold-soft/10 flex flex-col items-center gap-10 py-60 group">
-                  <div className="size-32 rounded-full border border-gold-soft/10 flex items-center justify-center text-gold-soft/10 group-hover:bg-gold-soft group-hover:text-black transition-all duration-1000 shadow-sm relative overflow-hidden">
-                     <ShoppingBag size={48} strokeWidth={1} />
-                  </div>
-                  <div className="space-y-6">
-                    <p className="font-display text-4xl italic text-gold-soft/30 max-w-sm mx-auto">Your curatorial archive is currently vacant.</p>
-                    <p className="font-body text-[10px] font-black uppercase tracking-[0.4em] text-gold-soft/10">Extract artifacts to begin your heritage log.</p>
-                  </div>
-                  <button onClick={() => navigate('/shop')} className="h-20 px-16 bg-black/40 border border-gold-soft/10 text-gold-soft rounded-[32px] font-body font-black text-[11px] uppercase tracking-[0.6em] hover:bg-gold-soft hover:text-black transition-all shadow-3xl transform active:scale-95 flex items-center gap-6">
-                     Initiate_Harvest <ChevronRight size={18} />
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-12">
-                  {orders.map((order, idx) => (
-                    <motion.div 
-                      key={order._id}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * idx, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                      viewport={{ once: true }}
-                      className="group bg-black/40 backdrop-blur-3xl rounded-[60px] border border-gold-soft/10 p-12 hover:shadow-4xl transition-all duration-700 relative overflow-hidden"
-                    >
-                       {/* High-End Archive Marker */}
-                       <div className="absolute top-[-50px] right-[-30px] text-[20vw] font-display font-black text-gold-soft/[0.02] select-none pointer-events-none italic tracking-tighter">
-                          {String(idx + 1).padStart(2, '0')}
-                       </div>
+                    {loading ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="h-[300px] bg-white/5 rounded-[40px] animate-pulse" />
+                        <div className="h-[300px] bg-white/5 rounded-[40px] animate-pulse" />
+                      </div>
+                    ) : orders.length === 0 ? (
+                      <div className="p-40 text-center rounded-[60px] bg-white/5 border border-dashed border-white/10 flex flex-col items-center gap-10 overflow-hidden relative group">
+                        <div className="absolute inset-0 bg-aurora-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity blur-3xl rounded-full translate-y-1/2" />
+                        <div className="size-32 rounded-[40px] bg-white/5 border border-white/10 flex items-center justify-center text-white/10 group-hover:text-aurora-cyan transition-all duration-700 relative z-10">
+                          <ShoppingBag size={48} strokeWidth={1} />
+                        </div>
+                        <div className="space-y-4 relative z-10">
+                          <p className="font-display text-4xl italic text-white/30">Your order list is empty.</p>
+                          <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/10">Start shopping to see your orders here.</p>
+                        </div>
+                        <button 
+                          onClick={() => navigate('/shop')} 
+                          className="h-16 px-12 bg-aurora-cyan text-black rounded-2xl font-mono font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all relative z-10 shadow-[0_0_30px_rgba(0,245,255,0.3)]"
+                        >
+                          SHOP NOW
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {orders.map((order, idx) => (
+                          <motion.div 
+                            key={order._id}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: idx * 0.1 }}
+                            viewport={{ once: true }}
+                            className="group bg-white/5 backdrop-blur-3xl rounded-[40px] border border-white/10 p-10 hover:border-aurora-cyan/40 transition-all duration-700 relative overflow-hidden"
+                          >
+                            <div className="absolute -right-4 -top-4 text-[120px] font-display font-black text-white/[0.02] select-none pointer-events-none italic tracking-tighter">
+                              {String(idx + 1).padStart(2, '0')}
+                            </div>
 
-                       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 relative z-10">
-                          <div className="space-y-10">
-                             <div className="flex flex-wrap items-center gap-8">
-                                <span className={`h-10 px-8 flex items-center bg-gold-soft/5 text-gold-soft border border-gold-soft/10 rounded-full font-body text-[10px] font-black uppercase tracking-[0.4em] ${order.status !== 'Delivered' ? 'text-gold-soft/40 bg-gold-soft/5 border-gold-soft/10' : ''}`}>
+                            <div className="space-y-10 relative z-10">
+                              <div className="flex items-center justify-between">
+                                <div className="space-y-1">
+                                  <p className="font-mono text-[8px] uppercase text-white/40 tracking-[0.5em]">Order ID</p>
+                                  <p className="font-mono text-[10px] text-white font-bold">#{order._id.slice(-8).toUpperCase()}</p>
+                                </div>
+                                <div className={`px-4 py-2 rounded-xl text-[8px] font-mono font-black uppercase tracking-widest ${
+                                  order.status === 'Delivered' ? 'bg-aurora-cyan/10 text-aurora-cyan' : 'bg-aurora-purple/10 text-aurora-purple'
+                                }`}>
                                   {order.status}
-                                </span>
-                                <div className="h-[1px] w-12 bg-gold-soft/10" />
-                                <p className="font-mono text-[10px] text-gold-soft/30 uppercase tracking-tighter font-bold">BATCH_LOG_{order._id.slice(-12).toUpperCase()}</p>
-                             </div>
-                             
-                             <div className="space-y-4">
-                                <h4 className="text-4xl md:text-5xl font-display text-gold-soft italic leading-none group-hover:pl-6 transition-all duration-1000">
-                                   {order.items.length} Curated <span className="font-black text-gold-soft not-italic">Artifacts</span>
-                                </h4>
-                                <p className="font-serif italic text-xl text-gold-soft/40 pl-6 border-l border-gold-soft/10">Extraction completed from estate HQ</p>
-                             </div>
-                             
-                             <div className="flex flex-wrap items-center gap-12 pt-4">
-                                <span className="flex items-center gap-4 font-body text-[10px] font-black uppercase tracking-[0.5em] text-gold-soft/20"><Calendar size={16} className="text-gold-soft/40" /> {new Date(order.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
-                                <span className="flex items-center gap-4 font-body text-[10px] font-black uppercase tracking-[0.5em] text-gold-soft/20"><MapPin size={16} className="text-gold-soft/40" /> {order.shippingAddress.city.toUpperCase()}</span>
-                             </div>
-                          </div>
-                          
-                          <div className="flex items-end lg:items-center justify-between lg:justify-end gap-16 lg:text-right border-t lg:border-t-0 lg:border-l border-gold-soft/10 pt-12 lg:pt-0 lg:pl-16">
-                             <div className="space-y-3">
-                                <p className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] italic">Net_Valuation</p>
-                                <p className="text-5xl md:text-7xl font-display font-black text-gold-soft tracking-tighter tabular-nums shadow-sm">₹{order.totalPrice.toFixed(0)}</p>
-                             </div>
-                             <div className="size-24 rounded-[40px] bg-black/40 border border-gold-soft/10 flex items-center justify-center text-gold-soft/10 group-hover:bg-gold-soft group-hover:text-black transition-all shadow-3xl transform active:scale-95 cursor-pointer">
-                                <ChevronRight size={32} className="group-hover:translate-x-3 transition-transform" />
-                             </div>
-                          </div>
-                       </div>
+                                </div>
+                              </div>
 
-                       {/* Artifact Breakdown: Reveal on Hover */}
-                       <div className="mt-16 pt-12 border-t border-gold-soft/10 grid grid-cols-2 md:grid-cols-4 gap-12 transition-all duration-1000 max-h-0 group-hover:max-h-[300px] overflow-hidden opacity-0 group-hover:opacity-100">
-                          {order.items.slice(0, 4).map((item, i: number) => (
-                             <div key={i} className="space-y-3 relative group/artifact">
-                                <div className="absolute -left-6 top-1 w-[1px] h-10 bg-gold-soft/20" />
-                                <p className="font-body text-[10px] font-black text-gold-soft uppercase tracking-[0.4em] truncate italic">{item.name}</p>
-                                <div className="flex items-center justify-between">
-                                   <p className="font-mono text-[9px] text-gold-soft/40 font-bold uppercase">Qty: {item.quantity}</p>
-                                   <p className="font-mono text-[9px] text-gold-soft font-black">₹{item.price}</p>
-                                 </div>
-                                 <div className="w-0 h-[1px] bg-gold-soft/40 group-hover/artifact:w-full transition-all duration-700" />
-                             </div>
-                          ))}
-                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
+                              <div className="space-y-4">
+                                <h4 className="text-4xl font-display text-white italic group-hover:translate-x-3 transition-transform duration-700">
+                                  {order.items.length} <span className="text-white/30 not-italic font-black">Items Purchase</span>
+                                </h4>
+                                <div className="flex items-center gap-6 text-white/20">
+                                   <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest"><Calendar size={12}/> {new Date(order.createdAt).toLocaleDateString()}</div>
+                                   <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest"><MapPin size={12}/> {order.shippingAddress.city.toUpperCase()}</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-end justify-between pt-6 border-t border-white/5">
+                                <div className="space-y-1">
+                                  <p className="font-mono text-[8px] uppercase text-white/40 tracking-[0.5em]">Total Bill</p>
+                                  <p className="text-4xl font-display font-black text-aurora-cyan tabular-nums drop-shadow-[0_0_10px_rgba(0,245,255,0.2)]">₹{order.totalPrice.toFixed(0)}</p>
+                                </div>
+                                <button 
+                                  onClick={() => setSelectedOrder(order)}
+                                  className="size-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-aurora-cyan hover:text-black transition-all shadow-xl group-hover:rotate-45"
+                                >
+                                  <ChevronRight size={24} />
+                                </button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {activeTab === 'security' && (
+                  <motion.div
+                    key="security"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="p-20 text-center space-y-8 bg-white/5 rounded-[40px] border border-white/10"
+                  >
+                    <div className="size-24 rounded-full bg-aurora-purple/10 flex items-center justify-center text-aurora-purple mx-auto animate-pulse">
+                      <ShieldCheck size={40} />
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-display italic font-black uppercase">Security <span className="text-aurora-purple font-light">Protected</span></h3>
+                      <p className="font-mono text-[10px] text-white/30 uppercase tracking-[0.4em] max-w-sm mx-auto">Your account is secured with encryption for your safety.</p>
+                    </div>
+                    <button className="h-14 px-12 bg-white/5 border border-white/10 text-aurora-purple rounded-2xl font-mono text-[10px] uppercase tracking-widest hover:bg-aurora-purple hover:text-black transition-all">
+                      CHANGE PASSWORD
+                    </button>
+                  </motion.div>
+                )}
+
+                {activeTab === 'intelligence' && (
+                  <motion.div
+                    key="intelligence"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="p-20 text-center space-y-8 bg-white/5 rounded-[40px] border border-white/10"
+                  >
+                    <div className="size-24 rounded-full bg-aurora-cyan/10 flex items-center justify-center text-aurora-cyan mx-auto">
+                      <Terminal size={40} />
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-3xl font-display italic font-black uppercase">Service <span className="text-aurora-cyan font-light">Notifications</span></h3>
+                      <p className="font-mono text-[10px] text-white/30 uppercase tracking-[0.4em] max-w-sm mx-auto">Latest updates and offers from ChocoLux will appear here.</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
         </div>
       </motion.main>
+
+      {/* Order Details Modal - Decrypted Shard */}
+      <AnimatePresence>
+        {selectedOrder && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] flex items-center justify-center px-6 py-10 bg-black/60 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-[#050510]/90 border border-aurora-cyan/30 rounded-[48px] w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col relative shadow-[0_0_100px_rgba(0,245,255,0.1)]"
+            >
+              {/* Modal Header */}
+              <div className="p-10 border-b border-white/10 flex items-center justify-between shrink-0">
+                <div className="space-y-1">
+                  <p className="font-mono text-[8px] uppercase text-aurora-cyan tracking-[0.5em]">ITEM DETAILS</p>
+                  <h2 className="text-3xl font-display font-black text-white italic">Order Summary</h2>
+                </div>
+                <button 
+                  onClick={() => setSelectedOrder(null)}
+                  className="size-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="flex-1 overflow-y-auto p-10 space-y-12 custom-scrollbar" data-lenis-prevent>
+                
+                {/* Status & ID */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white/5 rounded-3xl p-6 border border-white/10">
+                    <p className="font-mono text-[8px] uppercase text-white/20 tracking-widest mb-2 flex items-center gap-2">
+                       <Hash size={10} /> Order ID
+                    </p>
+                    <p className="font-mono text-xs text-white font-bold">{selectedOrder._id}</p>
+                  </div>
+                  <div className="bg-white/5 rounded-3xl p-6 border border-white/10">
+                    <p className="font-mono text-[8px] uppercase text-white/20 tracking-widest mb-2 flex items-center gap-2">
+                       <ShieldCheck size={10} /> Delivery Status
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="size-2 rounded-full bg-aurora-cyan animate-pulse" />
+                      <p className="font-mono text-xs text-aurora-cyan font-bold uppercase">{selectedOrder.status}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Items List */}
+                <div className="space-y-6">
+                  <p className="font-mono text-[9px] uppercase text-white/20 tracking-[0.4em] flex items-center gap-4">
+                    <div className="h-[1px] flex-1 bg-white/5" /> 
+                    Ordered Items
+                    <div className="h-[1px] flex-1 bg-white/5" />
+                  </p>
+                  <div className="space-y-4">
+                    {selectedOrder.items.map((item, i) => (
+                      <div key={i} className="flex items-center justify-between p-6 bg-white/5 rounded-2xl border border-white/5 group hover:border-aurora-cyan/20 transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className="size-12 rounded-xl bg-aurora-cyan/10 flex items-center justify-center text-aurora-cyan">
+                            <Package size={20} />
+                          </div>
+                          <div>
+                            <p className="font-display text-lg text-white group-hover:pl-2 transition-all">{item.name}</p>
+                            <p className="font-mono text-[9px] text-white/20 uppercase tracking-widest">Quantity: {item.quantity}</p>
+                          </div>
+                        </div>
+                        <p className="text-xl font-display font-black text-white/80 shrink-0">₹{item.price}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Shipping Intel */}
+                <div className="bg-gradient-to-br from-aurora-cyan/5 to-transparent rounded-[40px] p-8 border border-white/10 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <MapPin className="text-aurora-cyan" size={18} />
+                    <p className="font-mono text-[10px] uppercase text-white font-black tracking-widest">Delivery Address</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xl font-display italic text-white/60">
+                      {selectedOrder.shippingAddress.address}, <span className="text-white">{selectedOrder.shippingAddress.city}</span>
+                    </p>
+                    <p className="font-mono text-[9px] text-white/20 uppercase tracking-widest">Pincode: {selectedOrder.shippingAddress.postalCode}</p>
+                  </div>
+                </div>
+
+                {/* Total */}
+                <div className="flex items-center justify-between py-10 border-t border-white/10 px-4">
+                   <div className="space-y-1">
+                      <p className="font-mono text-[9px] uppercase text-white/20 tracking-[0.6em]">NET TOTAL</p>
+                      <p className="text-5xl font-display font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">₹{selectedOrder.totalPrice}</p>
+                   </div>
+                   <div className="flex items-center gap-3 text-aurora-cyan bg-aurora-cyan/10 px-6 py-3 rounded-2xl border border-aurora-cyan/20">
+                      <CheckCircle2 size={16} />
+                      <span className="font-mono text-[9px] font-black uppercase tracking-widest">Payment Secure</span>
+                   </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
@@ -260,7 +440,11 @@ interface OrderItem {
 interface Order {
   _id: string;
   items: OrderItem[];
-  shippingAddress: { city: string };
+  shippingAddress: { 
+    address: string;
+    city: string;
+    postalCode: string;
+  };
   totalPrice: number;
   status: string;
   createdAt: string;

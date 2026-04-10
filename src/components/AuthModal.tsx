@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Lock, User, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, Mail, Lock, User, ArrowRight, ShieldCheck, Cpu, Fingerprint } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../store/authSlice';
 import api from '@/utils/api';
@@ -33,14 +33,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
       const res = await api.post(endpoint, formData);
 
-      const { token, ...user } = res.data as { token: string; _id: string; name: string; email: string; role?: 'user' | 'admin' };
-      dispatch(setCredentials({ user, token }));
+      const user = res.data as { _id: string; name: string; email: string; role?: 'user' | 'admin' };
+      dispatch(setCredentials({ user }));
       onClose();
     } catch (err: unknown) {
       const message = err && typeof err === 'object' && 'response' in err
         ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
         : undefined;
-      setError(message || 'Something went wrong');
+      setError(message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -51,116 +51,144 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   return createPortal(
     <AnimatePresence>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+        {/* Deep Space Overlay */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 bg-[#030308]/80 backdrop-blur-md"
         />
 
         <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          className="relative w-full max-w-[400px] bg-black/40 backdrop-blur-3xl border border-gold-soft/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          initial={{ scale: 0.9, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.9, opacity: 0, y: 20 }}
+          className="relative w-full max-w-[440px] bg-deep-space/60 backdrop-blur-3xl border border-aurora-cyan/20 rounded-[32px] shadow-[0_0_50px_rgba(0,245,255,0.1)] flex flex-col overflow-hidden celestial-theme"
+          data-lenis-prevent
         >
-          <div className="p-8 sm:p-10">
+          {/* Animated Aurora Glow inside card */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-aurora-cyan to-transparent opacity-50" />
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div 
+              animate={{ 
+                x: ['-50%', '50%', '-50%'],
+                opacity: [0.1, 0.2, 0.1]
+              }}
+              transition={{ duration: 10, repeat: Infinity }}
+              className="absolute -top-1/2 -left-1/2 w-full h-full bg-aurora-purple/20 blur-[100px] rounded-full"
+            />
+          </div>
+
+          <div className="p-8 sm:p-12 relative z-10">
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 p-2 rounded-full hover:bg-gold-soft/10 text-gold-soft/40 transition-colors"
+              className="absolute top-6 right-6 p-2 rounded-full hover:bg-aurora-cyan/10 text-aurora-cyan transition-all"
             >
               <X size={20} />
             </button>
 
             <div className="text-center mb-10">
-              <div className="flex justify-center mb-8">
-                <Logo className="w-24 h-auto" variant="light" />
+              <div className="flex justify-center mb-6">
+                <div className="p-4 rounded-3xl bg-aurora-cyan/5 border border-aurora-cyan/10 relative group">
+                  <div className="absolute inset-0 bg-aurora-cyan/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Logo className="w-20 h-auto relative z-10 brightness-200 contrast-125" variant="light" />
+                </div>
               </div>
-              <h2 className="text-3xl font-display italic text-gold-soft mb-3">
-                {isLogin ? 'Curatorial Access' : 'Induct New Curator'}
+              <h2 className="text-4xl font-display font-black tracking-tight text-white mb-2">
+                {isLogin ? 'Sign In' : 'Create Account'}
               </h2>
-              <p className="text-[10px] font-body font-black uppercase tracking-[0.4em] text-gold-soft/30 italic">
-                {isLogin ? 'Authenticate to manage your heritage collection' : 'Join the elite Asian Chocolate Store registry'}
+              <p className="text-[9px] font-mono uppercase tracking-[0.5em] text-aurora-cyan/60">
+                {isLogin ? 'Enter your details to access your account' : 'Join ChocoLux to start your journey'}
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {!isLogin && (
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Authorized Name</label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
-                    <input
-                      required
-                      type="text"
-                      placeholder="HARVEST_NAME"
-                      className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <label className="text-[9px] font-mono font-bold text-aurora-cyan/40 uppercase tracking-widest flex items-center gap-2">
+                    <User size={12} /> Full Name
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Enter your name"
+                    className="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-6 text-sm text-white focus:border-aurora-cyan/50 focus:bg-white/10 focus:outline-none transition-all placeholder:text-white/10 font-mono"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
                 </div>
               )}
 
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Digital Frequency</label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
-                  <input
-                    required
-                    type="email"
-                    placeholder="EMAIL_STATION"
-                    className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
+              <div className="space-y-2">
+                <label className="text-[9px] font-mono font-bold text-aurora-cyan/40 uppercase tracking-widest flex items-center gap-2">
+                  <Mail size={12} /> Email Address
+                </label>
+                <input
+                  required
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-6 text-sm text-white focus:border-aurora-cyan/50 focus:bg-white/10 focus:outline-none transition-all placeholder:text-white/10 font-mono"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold text-gold-soft/40 uppercase tracking-[0.4em] px-1 italic">Security Sequence</label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20" size={18} />
-                  <input
-                    required
-                    type="password"
-                    placeholder="••••••••"
-                    className="w-full h-12 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm text-gold-soft focus:border-gold-soft focus:bg-black/60 focus:outline-none transition-all placeholder:text-gold-soft/10"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  />
-                </div>
+              <div className="space-y-2">
+                <label className="text-[9px] font-mono font-bold text-aurora-cyan/40 uppercase tracking-widest flex items-center gap-2">
+                  <Lock size={12} /> Password
+                </label>
+                <input
+                  required
+                  type="password"
+                  placeholder="••••••••"
+                  className="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-6 text-sm text-white focus:border-aurora-cyan/50 focus:bg-white/10 focus:outline-none transition-all placeholder:text-white/10 font-mono"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                />
               </div>
 
               {error && (
-                <div className="p-3 bg-red-400/10 border border-red-400/20 rounded-xl">
-                  <p className="text-red-400 text-[10px] font-black uppercase tracking-widest text-center italic">{error}</p>
-                </div>
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }} 
+                  animate={{ opacity: 1, x: 0 }}
+                  className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl"
+                >
+                  <p className="text-red-400 text-[10px] font-mono uppercase tracking-wide text-center">{error}</p>
+                </motion.div>
               )}
 
               <button
                 disabled={loading}
-                className="w-full h-12 bg-gold-soft hover:bg-gold-soft/80 text-black rounded-xl font-bold font-body text-[10px] uppercase tracking-[0.6em] shadow-2xl transition-all flex items-center justify-center gap-4 mt-6 active:scale-[0.98] disabled:opacity-50"
+                className="group relative w-full h-14 bg-aurora-cyan text-black rounded-2xl font-black text-[11px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 overflow-hidden"
               >
-                {loading ? 'AUTHENTICATING...' : (isLogin ? 'INITIALIZE_ACCESS' : 'INDIVIDUAL_REG_v04')}
-                {!loading && <ArrowRight size={18} />}
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <span className="relative z-10 flex items-center justify-center gap-4">
+                  {loading ? 'PROCESSING...' : (isLogin ? 'SIGN IN' : 'CREATE ACCOUNT')}
+                  {!loading && <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />}
+                </span>
               </button>
             </form>
 
             <div className="mt-8 text-center">
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-[9px] font-black font-body text-gold-soft/30 hover:text-gold-soft uppercase tracking-[0.4em] transition-colors italic"
+                className="text-[10px] font-mono font-bold text-white/30 hover:text-aurora-cyan uppercase tracking-widest transition-colors"
               >
-                {isLogin ? "Lacking Induction Credentials? Induct Here" : "Existing Curator? Access Induction Terminal"}
+                {isLogin ? "New user? Register here" : "Already have an account? Sign In"}
               </button>
             </div>
           </div>
-          <div className="bg-black/40 p-6 flex flex-col items-center gap-3 border-t border-gold-soft/10">
-            <div className="flex items-center gap-4 text-gold-soft/20">
-              <ShieldCheck size={14} />
-              <span className="text-[10px] font-black font-body uppercase tracking-[0.8em] text-gold-soft/20">Protocol_RSA_v09_Secured</span>
+          
+          <div className="bg-white/5 p-6 flex items-center justify-center gap-12 border-t border-white/5 overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-aurora-cyan/30 to-transparent" />
+            <div className="flex items-center gap-3 opacity-20">
+               <Fingerprint size={12} className="text-aurora-cyan" />
+               <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">SECURE LOGIN</span>
+            </div>
+            <div className="flex items-center gap-3 opacity-20">
+               <Cpu size={12} className="text-aurora-purple" />
+               <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">ENCRYPTED</span>
             </div>
           </div>
         </motion.div>

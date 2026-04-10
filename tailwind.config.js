@@ -8,24 +8,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        "noir": {
-          900: "#120A08",
-          950: "#0C0706",
-        },
-        "burnt-orange": "#B3530F",
-        "gold-accent": "#D4AF37",
-        "gold-deep": "#967527",
-        "cream-text": "#F5E6D3",
-        "chocolate-rich": "#1A0F0D",
-        "chocolate-dark": "#0C0706",
-        "chocolate-nest": "#2A1B17",
-        "primary": "#B3530F",
-        "secondary": "#D4AF37",
-        "ivory-bg": "var(--ivory-bg)",
-        "ivory-panel": "var(--ivory-panel)",
-        "umber-text": "var(--umber-text)",
-        "taupe-muted": "var(--taupe-muted)",
-        "cocoa-noir": "var(--cocoa-noir)",
+        "burnt-orange": "var(--color-burnt-orange)",
+        "gold-accent": "var(--color-gold-accent)",
+        "gold-deep": "var(--color-gold-deep)",
+        "cream-text": "var(--color-cream-text)",
+        "chocolate-rich": "var(--color-chocolate-rich)",
+        "chocolate-dark": "var(--color-chocolate-dark)",
+        "ivory-bg": "var(--color-ivory-warm)",
+        "ivory-panel": "rgba(255, 252, 247, 0.4)",
+        "botanical-green": "var(--color-botanical-green)",
       },
       fontFamily: {
         "display": ["Fraunces", "serif"],

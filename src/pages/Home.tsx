@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import MeltHero from '@/components/MeltHero';
@@ -29,6 +29,8 @@ interface Product {
    events?: string[];
 }
 
+import SEO from '@/components/SEO';
+
 export default function Home() {
    const navigate = useNavigate();
    const [isCartOpen, setIsCartOpen] = useState(false);
@@ -40,13 +42,35 @@ export default function Home() {
    const reduceMotion = useReducedMotion();
    const sectionViewport = { once: true, margin: '0px 0px -140px 0px' };
 
+   const handleAddToCart = useCallback((p: Product) => {
+      dispatch(addToCart({
+         id: p._id,
+         name: p.name,
+         price: p.price,
+         image: p.image,
+         quantity: 1,
+         category: p.category
+      }));
+      setIsCartOpen(true);
+   }, [dispatch]);
+
+   const handleBrandClick = useCallback((brand: string) => {
+      setSelectedCollection(brand);
+      document.getElementById('exhibition-registry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   }, []);
+
+   const handleEventClick = useCallback((eventTitle: string) => {
+      const path = `/events/${eventTitle.toLowerCase().replace(' ', '-')}`;
+      navigate(path);
+   }, [navigate]);
+
    const brandsData = useMemo(() => BRANDS, []);
 
    const eventsData = [
       { title: 'Wedding', image: '/images/collections/event_wedding_1775207370802.png', description: 'Atelier Wedding Truffles' },
-      { title: 'Birthday', image: '/images/collections/event_birthday_1775207386610.png', description: 'Artisan Party Packs' },
-      { title: 'Corporate', image: '/images/collections/event_corporate_1775207405890.png', description: 'Strategic Gifting Boutique' },
-      { title: 'Gifting', image: '/images/collections/event_gifting_1775207422111.png', description: 'Curated Sensory Hampers' }
+      { title: 'Family', image: '/images/collections/event_birthday_1775207386610.png', description: 'Artisan Party Packs' },
+      { title: 'Birthday', image: '/images/collections/event_corporate_1775207405890.png', description: 'Strategic Gifting Boutique' },
+      { title: 'Gifts', image: '/images/collections/event_gifting_1775207422111.png', description: 'Curated Sensory Hampers' }
    ];
 
    useEffect(() => {
@@ -80,6 +104,10 @@ export default function Home() {
          initial={reduceMotion ? false : 'hidden'}
          animate="show"
       >
+         <SEO 
+            title="ChocoLux | Premium Chocolate Shop in Tamil Nadu"
+            description="Experience the finest artisanal chocolates in India. Crafted with heritage ingredients like Karupatti and Himalayan Honey. Your luxury chocolate destination in Chennai and beyond."
+         />
          <Header setIsCartOpen={setIsCartOpen} />
 
          <GoldenScrollPath />
@@ -148,10 +176,7 @@ export default function Home() {
                            transition={{ duration: 0.6 }}
                         >
                            <BrandMarquee 
-                              onBrandClick={(brand) => {
-                                 setSelectedCollection(brand);
-                                 document.getElementById('exhibition-registry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                              }} 
+                              onBrandClick={handleBrandClick} 
                            />
                         </motion.div>
                      ) : (
@@ -183,10 +208,7 @@ export default function Home() {
                                        image={eData.image}
                                        description={eData.description}
                                        shape="landscape"
-                                       onClick={() => {
-                                          setSelectedCollection(eData.title);
-                                          document.getElementById('exhibition-registry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                       }}
+                                       onClick={() => handleEventClick(eData.title)}
                                     />
                                  </motion.div>
                               ))}
@@ -229,17 +251,7 @@ export default function Home() {
                            <HoverRevealProductCard
                               key={product._id}
                               product={product}
-                              onAddToCart={(p) => {
-                                 dispatch(addToCart({
-                                    id: p._id,
-                                    name: p.name,
-                                    price: p.price,
-                                    image: p.image,
-                                    quantity: 1,
-                                    category: p.category
-                                 }));
-                                 setIsCartOpen(true);
-                              }}
+                              onAddToCart={handleAddToCart}
                            />
                         ))}
                      </div>

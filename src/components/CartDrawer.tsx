@@ -78,7 +78,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             </div>
 
             {/* Cart Items */}
-            <div className="relative z-10 flex-1 overflow-y-auto p-8 flex flex-col gap-6 custom-scrollbar bg-black/20">
+            <div className="relative z-10 flex-1 overflow-y-auto p-8 flex flex-col gap-6 custom-scrollbar bg-black/20" data-lenis-prevent>
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center space-y-10 text-center px-4">
                   <div className="relative size-32 bg-black/40 rounded-full flex items-center justify-center border border-gold-soft/10 shadow-2xl">
@@ -99,7 +99,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     onClick={() => { onClose(); navigate('/shop'); }}
                     className="h-14 px-10 bg-black/40 border border-gold-soft/10 text-gold-soft font-body font-black text-[9px] uppercase tracking-[0.5em] rounded-xl hover:bg-gold-soft hover:text-black transition-all shadow-md group italic"
                   >
-                    Enter the Boutique <ArrowRight size={14} className="inline ml-3 group-hover:translate-x-2 transition-transform" />
+                    Enter the Shop <ArrowRight size={14} className="inline ml-3 group-hover:translate-x-2 transition-transform" />
                   </button>
                 </div>
               ) : (

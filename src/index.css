@@ -9,11 +9,26 @@
   --color-botanical-green: #14211A;
   --color-gold-soft: #D4AF37;
   
+  /* Celestial Aurora Redesign Palette */
+  --color-celestial-bg: #030308;
+  --color-aurora-cyan: #00F5FF;
+  --color-aurora-purple: #BD93F9;
+  --color-chrome-silver: #E0E0E0;
+  --color-deep-space: #0A0A10;
+  
+  --scrollbar-thumb: var(--color-burnt-caramel);
+  --scrollbar-track: var(--color-ivory-warm);
+  
   --font-display: "Cormorant Garamond", serif;
   --font-serif: "Cormorant Garamond", serif;
   --font-body: "Outfit", sans-serif;
   
   --shadow-organic: 0 30px 60px -12px rgba(26, 15, 13, 0.12), 0 18px 36px -18px rgba(0, 0, 0, 0.2);
+}
+
+.celestial-theme {
+  --scrollbar-thumb: var(--color-aurora-cyan);
+  --scrollbar-track: var(--color-deep-space);
 }
 
 .grid-bg {
@@ -81,15 +96,37 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-ivory-warm);
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-burnt-caramel);
+  background: var(--scrollbar-thumb);
   border-radius: 20px;
-  border: 3px solid var(--color-ivory-warm);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 20px;
+  opacity: 0.3;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
 }
 
 /* Animations */

@@ -1,20 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  category?: string;
-  subItems?: string[];
-}
-
-type CartItemInput = Omit<CartItem, 'id' | 'quantity'> & {
-  id?: string;
-  _id?: string;
-  quantity?: number;
-};
+import type { CartItem, CartItemInput } from '@/types';
 
 interface CartState {
   items: CartItem[];
@@ -22,17 +7,31 @@ interface CartState {
   lastAddedItem: CartItem | null;
 }
 
+const STORAGE_KEYS = {
+  ITEMS: 'cartItems',
+  TOTAL: 'cartTotalPrice',
+};
+
 const getPersistedCart = () => {
   try {
-    const items = localStorage.getItem('cartItems');
-    const total = localStorage.getItem('cartTotalPrice');
+    const itemsJson = localStorage.getItem(STORAGE_KEYS.ITEMS);
+    const totalJson = localStorage.getItem(STORAGE_KEYS.TOTAL);
     return {
-      items: items ? JSON.parse(items) : [],
-      total: total ? parseFloat(total) : 0
+      items: itemsJson ? JSON.parse(itemsJson) : [],
+      total: totalJson ? parseFloat(totalJson) : 0
     };
   } catch (err) {
     console.error('Error loading cart from localStorage:', err);
     return { items: [], total: 0 };
+  }
+};
+
+const persistCart = (items: CartItem[], total: number) => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.ITEMS, JSON.stringify(items));
+    localStorage.setItem(STORAGE_KEYS.TOTAL, total.toString());
+  } catch (err) {
+    console.error('Error persisting cart:', err);
   }
 };
 
@@ -56,9 +55,7 @@ const cartSlice = createSlice({
         ...action.payload,
         id: normalizedId,
         quantity,
-      };
-      // Explicitly remove _id if it exists to keep state clean
-      if ('_id' in normalizedItem) delete (normalizedItem as any)._id;
+      } as CartItem;
 
       const existingItem = state.items.find(item => item.id === normalizedId);
       if (existingItem) {
@@ -66,10 +63,10 @@ const cartSlice = createSlice({
       } else {
         state.items.push(normalizedItem);
       }
+      
       state.totalPrice = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
       state.lastAddedItem = { ...normalizedItem };
-      localStorage.setItem('cartItems', JSON.stringify(state.items));
-      localStorage.setItem('cartTotalPrice', state.totalPrice.toString());
+      persistCart(state.items, state.totalPrice);
     },
     decrementQuantity: (state, action: PayloadAction<string>) => {
       const existingItem = state.items.find(item => item.id === action.payload);
@@ -81,15 +78,14 @@ const cartSlice = createSlice({
         }
       }
       state.totalPrice = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-      localStorage.setItem('cartItems', JSON.stringify(state.items));
-      localStorage.setItem('cartTotalPrice', state.totalPrice.toString());
+      persistCart(state.items, state.totalPrice);
     },
     clearCart: (state) => {
       state.items = [];
       state.totalPrice = 0;
       state.lastAddedItem = null;
-      localStorage.removeItem('cartItems');
-      localStorage.removeItem('cartTotalPrice');
+      localStorage.removeItem(STORAGE_KEYS.ITEMS);
+      localStorage.removeItem(STORAGE_KEYS.TOTAL);
     },
     clearNotification: (state) => {
       state.lastAddedItem = null;
