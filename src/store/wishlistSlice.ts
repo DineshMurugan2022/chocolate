@@ -9,7 +9,7 @@ interface WishlistItem {
   price?: number;
 }
 
-interface WishlistState {
+export interface WishlistState {
   items: WishlistItem[];
   loading: boolean;
   error: string | null;

@@ -1,1 +1,1 @@
-export * from '../../../shared/types/index';
+export * from '@chocolux/shared/types';
