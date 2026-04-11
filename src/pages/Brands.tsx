@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
 import HoverRevealProductCard from '../components/HoverRevealProductCard';
 import CollectionCard from '../components/CollectionCard';
+import SEO from '@/components/SEO';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import GoldenScrollPath from '../components/GoldenScrollPath';
@@ -224,7 +225,6 @@ export default function Brands() {
                       product={{
                         ...p,
                         image: p.image || '',
-                        color: '' // Add default color if missing
                       }}
                       onAddToCart={(product) => {
                         dispatch(addToCart({
