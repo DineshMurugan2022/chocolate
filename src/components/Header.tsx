@@ -10,6 +10,12 @@ import HeaderOoze from './HeaderOoze';
 import Logo from './Logo';
 import LiveViewerCount from './LiveViewerCount';
 
+interface NavItem {
+  name: string;
+  path: string;
+  dropdown?: { name: string; path: string; }[];
+}
+
 export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolean) => void }) {
   const { items } = useSelector((state: RootState) => state.cart);
   const { user } = useSelector((state: RootState) => state.auth);
@@ -23,7 +29,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
   const isCelestialTheme = location.pathname === '/profile';
 
-  const leftLinks = [
+  const leftLinks: NavItem[] = [
     { name: 'STORY', path: '/about' },
     { name: 'SHOP', path: '/shop' },
     { name: 'DIET', path: '/diet' },
@@ -40,7 +46,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
     { name: 'SUBSCRIPTION', path: '/subscription' }
   ];
 
-  const rightLinks = [
+  const rightLinks: NavItem[] = [
     { name: 'GIFTING', path: '/events/gifts' },
     { name: 'ACCESSORIES', path: '/accessories' },
     { name: 'WORKSHOP', path: '/workshop' }
