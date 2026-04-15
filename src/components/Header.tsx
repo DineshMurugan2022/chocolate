@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Heart, ShoppingBag, Search, Menu, X } from 'lucide-react';
+import { User, Heart, ShoppingBag, Search, Menu, X, ChevronDown, BookOpen, Store, Sprout, Calendar, RefreshCw, Gift, Sparkles, Hammer } from 'lucide-react';
 import AuthModal from '@/components/AuthModal';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import HeaderOoze from './HeaderOoze';
@@ -13,6 +13,7 @@ import LiveViewerCount from './LiveViewerCount';
 interface NavItem {
   name: string;
   path: string;
+  icon?: React.ReactNode;
   dropdown?: { name: string; path: string; }[];
 }
 
@@ -30,12 +31,13 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
   const isCelestialTheme = location.pathname === '/profile';
 
   const leftLinks: NavItem[] = [
-    { name: 'STORY', path: '/about' },
-    { name: 'SHOP', path: '/shop' },
-    { name: 'DIET', path: '/diet' },
+    { name: 'STORY', path: '/about', icon: <BookOpen size={18} /> },
+    { name: 'SHOP', path: '/shop', icon: <Store size={18} /> },
+    { name: 'DIET', path: '/diet', icon: <Sprout size={18} /> },
      { 
       name: 'OCCASION', 
       path: '#',
+      icon: <Calendar size={18} />,
       dropdown: [
         { name: 'EVENTS', path: '/events' },
         { name: 'WEDDING', path: '/events/wedding' },
@@ -43,13 +45,13 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         { name: 'FAMILY', path: '/events/family' }
       ]
     },
-    { name: 'SUBSCRIPTION', path: '/subscription' }
+    { name: 'SUBSCRIPTION', path: '/subscription', icon: <RefreshCw size={18} /> }
   ];
 
   const rightLinks: NavItem[] = [
-    { name: 'GIFTING', path: '/events/gifts' },
-    { name: 'ACCESSORIES', path: '/accessories' },
-    { name: 'WORKSHOP', path: '/workshop' }
+    { name: 'GIFTING', path: '/events/gifts', icon: <Gift size={18} /> },
+    { name: 'ACCESSORIES', path: '/accessories', icon: <Sparkles size={18} /> },
+    { name: 'WORKSHOP', path: '/workshop', icon: <Hammer size={18} /> }
   ];
 
   const themeColors = isCelestialTheme 
@@ -75,7 +77,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       {!isCelestialTheme && <HeaderOoze />}
 
       {/* NAVBAR CONTENTS - Robust Grid Layout for Perfect Centering */}
-      <div className={`max-w-[2000px] mx-auto px-6 md:px-10 lg:px-14 h-20 md:h-24 lg:h-32 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
+      <div className={`max-w-[2000px] mx-auto px-4 md:px-8 lg:px-14 h-16 md:h-24 lg:h-32 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
         
         {/* Left Section: Nav Group 1 */}
         <div className="flex items-center justify-start h-full">
@@ -119,12 +121,12 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         </div>
 
         {/* Center Section: Centered Logo Cell */}
-        <div className="flex items-center justify-center px-4 md:px-8 lg:px-12 min-w-[160px] lg:min-w-[240px]">
+        <div className="flex items-center justify-center px-4 md:px-8 lg:px-12 min-w-[120px] md:min-w-[160px] lg:min-w-[240px]">
           <div 
             onClick={() => navigate('/')}
-            className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[20%]"
+            className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[10%] md:-translate-y-[20%]"
           >
-             <Logo className={`w-32 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
+             <Logo className={`w-28 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
           </div>
         </div>
 
@@ -212,32 +214,59 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Backdrop */}
       {isMobileMenuOpen && (
-        <div className={`fixed inset-0 z-[110] p-10 flex flex-col pointer-events-auto lg:hidden ${isCelestialTheme ? 'bg-[#030308] text-white' : 'bg-cocoa-deep text-ivory-warm'}`}>
-          <div className="flex justify-between items-center mb-20">
-            <Logo className="w-40" variant="light" />
-            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/10 rounded-full">
-              <X size={24} />
-            </button>
-          </div>
-          
-          <nav className="flex flex-col gap-6">
-            {[...leftLinks, ...rightLinks].map((link) => (
-              <div key={link.name} className="flex flex-col gap-4">
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1050] lg:hidden transition-opacity duration-300" 
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu Drawer */}
+      <div 
+        className={`fixed top-0 left-0 bottom-0 w-[80%] max-w-sm z-[1100] flex flex-col pointer-events-auto lg:hidden transition-transform duration-300 ease-in-out transform ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } ${isCelestialTheme ? 'bg-[#030308] border-r border-white/10 text-white' : 'bg-ivory-warm shadow-2xl text-cocoa-deep rounded-r-3xl'}`}
+      >
+        <div className="flex justify-between items-center p-6 border-b border-black/5">
+          <Logo className="w-28" variant={isCelestialTheme ? "light" : "dark"} />
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)} 
+            className={`p-2 rounded-full transition-colors ${isCelestialTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-cocoa-deep/5 hover:bg-cocoa-deep/10'}`}
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        <nav className="flex flex-col flex-1 overflow-y-auto py-6 px-6 gap-2">
+          {[...leftLinks, ...rightLinks].map((link) => {
+            const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+            return (
+              <div key={link.name} className="flex flex-col border-b border-black/5 last:border-0 pb-2 mb-2">
                 <button
                   onClick={() => {
-                    if (!link.dropdown) {
+                    if (link.dropdown) {
+                      setIsDropdownOpen(!isDropdownOpen);
+                    } else {
                       navigate(link.path);
                       setIsMobileMenuOpen(false);
                     }
                   }}
-                  className={`text-4xl font-display italic font-black text-left transition-colors ${isCelestialTheme ? 'hover:text-aurora-cyan' : 'hover:text-gold-accent'} ${link.dropdown ? 'cursor-default pointer-events-none opacity-50 text-sm tracking-[0.5em] uppercase not-italic mb-2' : ''}`}
+                  className={`flex items-center justify-between py-3 font-display font-bold text-lg transition-colors
+                    ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-gold-accent'}`}
                 >
-                  {link.name}
+                  <div className="flex items-center gap-3">
+                    {link.icon && <span className={isCelestialTheme ? 'text-aurora-cyan' : 'text-gold-accent'}>{link.icon}</span>}
+                    <span className="capitalize">{link.name.toLowerCase()}</span>
+                  </div>
+                  {link.dropdown && (
+                    <ChevronDown size={18} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  )}
                 </button>
                 {link.dropdown && (
-                  <div className="flex flex-col gap-4 pl-4 border-l border-white/10 ml-2">
+                  <div className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 pl-11
+                    ${isDropdownOpen ? 'max-h-96 opacity-100 pb-2' : 'max-h-0 opacity-0'}`}
+                  >
                     {link.dropdown.map(subItem => (
                       <button
                         key={subItem.name}
@@ -245,27 +274,27 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                           navigate(subItem.path);
                           setIsMobileMenuOpen(false);
                         }}
-                        className={`text-3xl font-display italic font-black text-left transition-colors ${isCelestialTheme ? 'hover:text-aurora-cyan' : 'hover:text-gold-accent'}`}
+                        className={`text-left font-body font-medium text-base transition-colors py-1 ${isCelestialTheme ? 'text-white/70 hover:text-aurora-cyan' : 'text-cocoa-medium hover:text-gold-accent'}`}
                       >
-                        {subItem.name}
+                        {subItem.name.charAt(0) + subItem.name.slice(1).toLowerCase()}
                       </button>
                     ))}
                   </div>
                 )}
               </div>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
 
-          <div className={`mt-auto pt-10 border-t ${isCelestialTheme ? 'border-white/5' : 'border-white/10'} flex flex-col gap-6`}>
-            <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className="flex items-center gap-4 text-xl font-body font-bold tracking-widest">
-              <Heart size={20} /> WISHLIST
-            </button>
-            <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="flex items-center gap-4 text-xl font-body font-bold tracking-widest">
-              <User size={20} /> {user ? 'PROFILE' : 'LOG_IN'}
-            </button>
-          </div>
+        <div className={`mt-auto p-6 bg-black/5 flex flex-col gap-4 rounded-br-3xl`}>
+          <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-gold-accent'}`}>
+            <Heart size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-gold-accent'} /> Wishlist
+          </button>
+          <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-gold-accent'}`}>
+            <User size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-gold-accent'} /> {user ? 'Profile' : 'Log In'}
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 }
