@@ -27,11 +27,21 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
     { name: 'STORY', path: '/about' },
     { name: 'SHOP', path: '/shop' },
     { name: 'DIET', path: '/diet' },
+     { 
+      name: 'OCCASION', 
+      path: '#',
+      dropdown: [
+        { name: 'EVENTS', path: '/events' },
+        { name: 'WEDDING', path: '/events/wedding' },
+        { name: 'BIRTHDAY', path: '/events/birthday' },
+        { name: 'FAMILY', path: '/events/family' }
+      ]
+    },
     { name: 'SUBSCRIPTION', path: '/subscription' }
   ];
 
   const rightLinks = [
-    { name: 'EVENTS', path: '/events' },
+    { name: 'GIFTING', path: '/events/gifts' },
     { name: 'ACCESSORIES', path: '/accessories' },
     { name: 'WORKSHOP', path: '/workshop' }
   ];
@@ -58,11 +68,11 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       {/* COMPACT SOLID CHOCOLATE WAVE BACKGROUND - Hidden on Celestial Profile */}
       {!isCelestialTheme && <HeaderOoze />}
 
-      {/* NAVBAR CONTENTS - Perfectly Aligned and Balanced */}
-      <div className={`max-w-[1700px] mx-auto px-6 md:px-10 lg:px-14 h-20 md:h-24 lg:h-32 flex items-center justify-between transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
+      {/* NAVBAR CONTENTS - Robust Grid Layout for Perfect Centering */}
+      <div className={`max-w-[2000px] mx-auto px-6 md:px-10 lg:px-14 h-20 md:h-24 lg:h-32 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
         
         {/* Left Section: Nav Group 1 */}
-        <div className="flex-1 flex items-center justify-start h-full">
+        <div className="flex items-center justify-start h-full">
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -73,40 +83,74 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pr-8 xl:pr-12">
             {leftLinks.map((link) => (
-              <button
-                 key={link.name}
-                 onClick={() => navigate(link.path)}
-                 className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap 
-                 ${(link.name === 'STORY' || link.name === 'SUBSCRIPTION') ? 'hidden 2xl:block' : ''}
-                 ${(link.name === 'SUBSCRIPTION') ? 'hidden xl:block' : ''}`}
-              >
-                 {link.name}
-              </button>
+              <div key={link.name} className="relative group/dropdown">
+                <button
+                   onClick={() => link.path !== '#' && navigate(link.path)}
+                   className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap 
+                   ${(link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                >
+                   {link.name}
+                </button>
+
+                {link.dropdown && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
+                    <div className={`min-w-[160px] ${isCelestialTheme ? 'bg-[#030308]/90 border-white/10' : 'bg-[#1a0f0d]/95 border-gold-soft/20'} backdrop-blur-xl border rounded-2xl p-4 shadow-2xl flex flex-col gap-3`}>
+                      {link.dropdown.map(subItem => (
+                        <button
+                          key={subItem.name}
+                          onClick={() => navigate(subItem.path)}
+                          className={`text-left font-body text-[9px] font-black tracking-widest uppercase ${themeColors.text} hover:text-white transition-colors`}
+                        >
+                          {subItem.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
         </div>
 
-        {/* Center Section: Absolute Logo (Mathematical perfection) */}
-        <div 
-          onClick={() => navigate('/')}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[60%] flex items-center justify-center cursor-pointer group z-30"
-        >
-           <Logo className={`w-32 md:w-44 lg:w-52 xl:w-60 2xl:w-72 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
+        {/* Center Section: Centered Logo Cell */}
+        <div className="flex items-center justify-center px-4 md:px-8 lg:px-12 min-w-[160px] lg:min-w-[240px]">
+          <div 
+            onClick={() => navigate('/')}
+            className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[20%]"
+          >
+             <Logo className={`w-32 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
+          </div>
         </div>
 
         {/* Right Section: Nav Group 2 + Actions */}
-        <div className="flex-1 flex items-center justify-end h-full">
+        <div className="flex items-center justify-end h-full">
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pl-8 xl:pl-12 mr-6 xl:mr-14">
             {rightLinks.map((link) => (
-              <button
-                 key={link.name}
-                 onClick={() => navigate(link.path)}
-                 className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap
-                 ${(link.name === 'ACCESSORIES' || link.name === 'WORKSHOP') ? 'hidden 2xl:block' : ''}
-                 ${(link.name === 'WORKSHOP') ? 'hidden xl:block' : ''}`}
-              >
-                 {link.name}
-              </button>
+              <div key={link.name} className="relative group/dropdown">
+                <button
+                   onClick={() => link.path !== '#' && navigate(link.path)}
+                   className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap
+                   ${(link.name === 'ACCESSORIES' || link.name === 'WORKSHOP' || link.name === 'GIFTING' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                >
+                   {link.name}
+                </button>
+                
+                {link.dropdown && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
+                    <div className={`min-w-[160px] ${isCelestialTheme ? 'bg-[#030308]/90 border-white/10' : 'bg-[#1a0f0d]/95 border-gold-soft/20'} backdrop-blur-xl border rounded-2xl p-4 shadow-2xl flex flex-col gap-3`}>
+                      {link.dropdown.map(subItem => (
+                        <button
+                          key={subItem.name}
+                          onClick={() => navigate(subItem.path)}
+                          className={`text-left font-body text-[9px] font-black tracking-widest uppercase ${themeColors.text} hover:text-white transition-colors`}
+                        >
+                          {subItem.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
@@ -172,18 +216,37 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             </button>
           </div>
           
-          <nav className="flex flex-col gap-8">
+          <nav className="flex flex-col gap-6">
             {[...leftLinks, ...rightLinks].map((link) => (
-              <button
-                key={link.name}
-                onClick={() => {
-                  navigate(link.path);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-4xl font-display italic font-black text-left transition-colors ${isCelestialTheme ? 'hover:text-aurora-cyan' : 'hover:text-gold-accent'}`}
-              >
-                {link.name}
-              </button>
+              <div key={link.name} className="flex flex-col gap-4">
+                <button
+                  onClick={() => {
+                    if (!link.dropdown) {
+                      navigate(link.path);
+                      setIsMobileMenuOpen(false);
+                    }
+                  }}
+                  className={`text-4xl font-display italic font-black text-left transition-colors ${isCelestialTheme ? 'hover:text-aurora-cyan' : 'hover:text-gold-accent'} ${link.dropdown ? 'cursor-default pointer-events-none opacity-50 text-sm tracking-[0.5em] uppercase not-italic mb-2' : ''}`}
+                >
+                  {link.name}
+                </button>
+                {link.dropdown && (
+                  <div className="flex flex-col gap-4 pl-4 border-l border-white/10 ml-2">
+                    {link.dropdown.map(subItem => (
+                      <button
+                        key={subItem.name}
+                        onClick={() => {
+                          navigate(subItem.path);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`text-3xl font-display italic font-black text-left transition-colors ${isCelestialTheme ? 'hover:text-aurora-cyan' : 'hover:text-gold-accent'}`}
+                      >
+                        {subItem.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 

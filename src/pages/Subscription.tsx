@@ -100,7 +100,7 @@ export default function Subscription() {
             transition={{ delay: 0.2 }}
             className="text-6xl md:text-[8vw] font-display font-black leading-[0.85] tracking-tighter"
           >
-            A Monthly <br /> <span className="italic font-light text-gold-soft/30 uppercase tracking-[0.2em]">Devotion</span>
+            Monthly <br /> <span className="italic font-light text-gold-soft/30 uppercase tracking-[0.2em]">Subscription</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
