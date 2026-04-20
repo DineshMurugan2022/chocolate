@@ -14,6 +14,25 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const liquidVariants = {
+    closed: {
+      clipPath: "circle(0% at 100% 0%)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
+    } as const,
+    opened: {
+      clipPath: "circle(150% at 100% 0%)",
+      transition: {
+        type: "spring",
+        stiffness: 40,
+        restDelta: 2,
+        damping: 10
+      }
+    } as const
+  };
 
   return (
     <AnimatePresence>
@@ -30,10 +49,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
           {/* Drawer Panel */}
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            variants={liquidVariants}
+            initial="closed"
+            animate="opened"
+            exit="closed"
             className="w-full max-w-md bg-cocoa-deep h-full shadow-[-30px_0_60px_rgba(0,0,0,0.4)] relative z-10 flex flex-col border-l border-gold-soft/10 overflow-hidden"
           >
             {/* Soft Organic Glows */}

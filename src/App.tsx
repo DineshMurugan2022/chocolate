@@ -128,6 +128,7 @@ function AppContent() {
   return (
     <SocketProvider>
       <div className="relative w-full">
+        <div className="noise-bg" />
         <SmoothScroll />
         <ChocolateCursor />
         <FallingSprinkles />
@@ -143,13 +144,25 @@ function AppContent() {
 }
 
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
     <HelmetProvider>
-      <Provider store={store}>
-        <AppContent />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <AppContent />
+        </Provider>
+      </QueryClientProvider>
     </HelmetProvider>
   );
 }

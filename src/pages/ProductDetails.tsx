@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import api from '@/utils/api';
 import { ChevronLeft, ArrowRight } from 'lucide-react';
 import { addToCart } from '@/store/cartSlice';
@@ -12,6 +13,8 @@ import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import Skeleton from '@/components/Skeleton';
 import { fadeIn, fadeUp, slideLeft, slideRight, stagger } from '@/utils/motion';
+import SEO from '@/components/SEO';
+import { type Product } from '@/../../shared/types';
 
 const ProductDetailsSkeleton = () => (
    <div className="min-h-screen bg-cocoa-deep pt-32 px-6 md:px-12 lg:px-16 space-y-12">
@@ -31,38 +34,38 @@ const ProductDetailsSkeleton = () => (
    </div>
 );
 
-import SEO from '@/components/SEO';
-
 const ProductDetails = () => {
    const { id } = useParams();
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const reduceMotion = useReducedMotion();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
    const [isCartOpen, setIsCartOpen] = useState(false);
    const [activeImage, setActiveImage] = useState<string | null>(null);
    const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
 
+   const { data: product, isLoading: isProductLoading } = useQuery<Product>({
+      queryKey: ['product', id],
+      queryFn: async () => {
+         const res = await api.get(`/products/${id}`);
+         return res.data;
+      },
+      enabled: !!id,
+   });
+
+   const { data: relatedProducts = [] } = useQuery<Product[]>({
+      queryKey: ['product', id, 'related'],
+      queryFn: async () => {
+         const res = await api.get(`/products/${id}/related`);
+         return res.data;
+      },
+      enabled: !!id,
+   });
+
    useEffect(() => {
-      const fetchProduct = async () => {
-         try {
-            const res = await api.get(`/products/${id}`);
-            setProduct(res.data);
-            const relatedRes = await api.get(`/products/${id}/related`);
-            setRelatedProducts(relatedRes.data);
-         } catch (err) {
-            console.error("Error fetching product details:", err);
-         } finally {
-            setLoading(false);
-         }
-      };
-      fetchProduct();
       window.scrollTo(0, 0);
    }, [id]);
 
-   if (loading) return <ProductDetailsSkeleton />;
+   if (isProductLoading) return <ProductDetailsSkeleton />;
 
    if (!product) return (
       <div className="min-h-screen bg-ivory-warm flex flex-col items-center justify-center text-cocoa-deep space-y-6">
@@ -277,16 +280,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  images?: string[];
-  category?: string;
-  weight?: string;
-  cacaoContent?: string;
-  notes?: string;
-}

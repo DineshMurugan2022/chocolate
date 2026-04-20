@@ -3,9 +3,11 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, ArrowRight, ShieldCheck, Cpu, Fingerprint } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
 import { setCredentials } from '../store/authSlice';
 import api from '@/utils/api';
 import Logo from './Logo';
+import toast from 'react-hot-toast';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -19,31 +21,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     email: '',
     password: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
+  const mutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
-      const res = await api.post(endpoint, formData);
-
-      const user = res.data as { _id: string; name: string; email: string; role?: 'user' | 'admin' };
+      const res = await api.post(endpoint, data);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      const user = data as { _id: string; name: string; email: string; role?: 'user' | 'admin' };
       dispatch(setCredentials({ user }));
+      toast.success(isLogin ? 'Welcome back!' : 'Account created successfully!');
       onClose();
-    } catch (err: unknown) {
-      const message = err && typeof err === 'object' && 'response' in err
-        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
-        : undefined;
-      setError(message || 'Login failed. Please check your credentials.');
-    } finally {
-      setLoading(false);
     }
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    mutation.mutate(formData);
   };
 
   if (!isOpen) return null;
@@ -148,24 +145,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 />
               </div>
 
-              {error && (
-                <motion.div 
-                  initial={{ opacity: 0, x: -10 }} 
-                  animate={{ opacity: 1, x: 0 }}
-                  className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl"
-                >
-                  <p className="text-red-400 text-[10px] font-mono uppercase tracking-wide text-center">{error}</p>
-                </motion.div>
-              )}
-
               <button
-                disabled={loading}
+                disabled={mutation.isPending}
                 className="group relative w-full h-14 bg-aurora-cyan text-black rounded-2xl font-black text-[11px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <span className="relative z-10 flex items-center justify-center gap-4">
-                  {loading ? 'PROCESSING...' : (isLogin ? 'SIGN IN' : 'CREATE ACCOUNT')}
-                  {!loading && <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />}
+                  {mutation.isPending ? 'PROCESSING...' : (isLogin ? 'SIGN IN' : 'CREATE ACCOUNT')}
+                  {!mutation.isPending && <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />}
                 </span>
               </button>
             </form>

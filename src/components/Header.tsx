@@ -9,6 +9,7 @@ import WishlistDrawer from '@/components/WishlistDrawer';
 import HeaderOoze from './HeaderOoze';
 import Logo from './Logo';
 import LiveViewerCount from './LiveViewerCount';
+import Magnetic from './Magnetic';
 
 interface NavItem {
   name: string;
@@ -92,13 +93,15 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pr-8 xl:pr-12">
             {leftLinks.map((link) => (
               <div key={link.name} className="relative group/dropdown">
-                <button
-                   onClick={() => link.path !== '#' && navigate(link.path)}
-                   className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap 
-                   ${(link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
-                >
-                   {link.name}
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={() => link.path !== '#' && navigate(link.path)}
+                    className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap 
+                    ${(link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                  >
+                    {link.name}
+                  </button>
+                </Magnetic>
 
                 {link.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
@@ -120,14 +123,15 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           </nav>
         </div>
 
-        {/* Center Section: Centered Logo Cell */}
         <div className="flex items-center justify-center px-4 md:px-8 lg:px-12 min-w-[120px] md:min-w-[160px] lg:min-w-[240px]">
-          <div 
-            onClick={() => navigate('/')}
-            className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[10%] md:-translate-y-[20%]"
-          >
-             <Logo className={`w-28 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
-          </div>
+          <Magnetic>
+            <div 
+              onClick={() => navigate('/')}
+              className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[10%] md:-translate-y-[20%]"
+            >
+              <Logo className={`w-28 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
+            </div>
+          </Magnetic>
         </div>
 
         {/* Right Section: Nav Group 2 + Actions */}
@@ -135,13 +139,15 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pl-8 xl:pl-12 mr-6 xl:mr-14">
             {rightLinks.map((link) => (
               <div key={link.name} className="relative group/dropdown">
-                <button
-                   onClick={() => link.path !== '#' && navigate(link.path)}
-                   className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap
-                   ${(link.name === 'ACCESSORIES' || link.name === 'WORKSHOP' || link.name === 'GIFTING' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
-                >
-                   {link.name}
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={() => link.path !== '#' && navigate(link.path)}
+                    className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap
+                    ${(link.name === 'ACCESSORIES' || link.name === 'WORKSHOP' || link.name === 'GIFTING' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                  >
+                    {link.name}
+                  </button>
+                </Magnetic>
                 
                 {link.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
@@ -168,12 +174,16 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             </div>
             
             <div className={`hidden md:flex items-center gap-4 xl:gap-6 pr-6 xl:pr-8 border-r ${themeColors.border}`}>
-              <button className={`${themeColors.text} hover:scale-110 transition-transform`}>
-                <Search size={18} />
-              </button>
-              <button onClick={() => setIsWishlistOpen(true)} className={`${themeColors.text} hover:scale-110 transition-transform`}>
-                <Heart size={18} />
-              </button>
+              <Magnetic>
+                <button className={`${themeColors.text} hover:scale-110 transition-transform`}>
+                  <Search size={18} />
+                </button>
+              </Magnetic>
+              <Magnetic>
+                <button onClick={() => setIsWishlistOpen(true)} className={`${themeColors.text} hover:scale-110 transition-transform`}>
+                  <Heart size={18} />
+                </button>
+              </Magnetic>
             </div>
 
             <div className="flex items-center gap-3 md:gap-6">
@@ -193,19 +203,21 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                   </button>
                )}
 
-              <button 
-                onClick={() => setIsCartOpen(true)}
-                className="relative group flex items-center justify-center"
-              >
-                 <div className={`size-9 md:size-11 lg:size-12 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} rounded-full flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
-                    <ShoppingBag size={18} className={`${themeColors.text} group-hover:text-black transition-colors`} />
-                 </div>
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 size-5 bg-[#FF1D8E] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                    {cartItemCount}
-                  </span>
-                )}
-              </button>
+              <Magnetic>
+                <button 
+                  onClick={() => setIsCartOpen(true)}
+                  className="relative group flex items-center justify-center"
+                >
+                  <div className={`size-9 md:size-11 lg:size-12 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} rounded-full flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
+                      <ShoppingBag size={18} className={`${themeColors.text} group-hover:text-black transition-colors`} />
+                  </div>
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 size-5 bg-[#FF1D8E] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </button>
+              </Magnetic>
             </div>
           </div>
         </div>

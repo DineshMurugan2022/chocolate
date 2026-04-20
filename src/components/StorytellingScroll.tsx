@@ -1,11 +1,12 @@
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
+import { useWindowSize } from '@/hooks/useWindowSize';
 import { createRandom } from '@/utils/random';
 
-import img1 from '../assets/product/WhatsApp Image 2026-03-24 at 5.42.48 PM.jpeg';
-import img2 from '../assets/product/WhatsApp Image 2026-03-24 at 5.43.48 PM.jpeg';
-import img3 from '../assets/product/WhatsApp Image 2026-03-24 at 6.47.47 PM.jpeg';
-import img4 from '../assets/product/WhatsApp Image 2026-03-25 at 10.12.14 AM.jpeg';
+import img1 from '../assets/product/cocoa-selection.jpg';
+import img2 from '../assets/product/cocoa-drying.jpg';
+import img3 from '../assets/product/cocoa-sorting.jpg';
+import img4 from '../assets/product/cocoa-fermentation.jpg';
 import imgStage3 from '../assets/product/stage3.jpeg';
 import beanImg from '../assets/cocoa-bean.png';
 import podImg from '../assets/cacao-pod.png';
@@ -138,6 +139,9 @@ function PhaseIndicator({ progress }: { progress: any }) {
 // ─────────────────────────────────────────────────────────────────────────────
 export default function StorytellingScroll() {
    const containerRef = useRef<HTMLDivElement>(null);
+   const { width: windowWidth } = useWindowSize();
+   const isMobile = windowWidth < 768;
+
    const { scrollYProgress } = useScroll({
       target: containerRef,
       offset: ['start start', 'end end'],
@@ -150,9 +154,13 @@ export default function StorytellingScroll() {
    const headlineY       = useTransform(smoothProgress, [0.10, 0.22], [0, -80]);
    const headlineScale   = useTransform(smoothProgress, [0.10, 0.22], [1, 0.92]);
 
-   // Phase 1
+   // Phase 1 - Responsive X offset
    const phase1Opacity = useTransform(smoothProgress, [0.22, 0.35, 0.45], [0, 1, 0]);
-   const phase1X       = useTransform(smoothProgress, [0.22, 0.45], [typeof window !== 'undefined' && window.innerWidth < 768 ? -20 : -60, typeof window !== 'undefined' && window.innerWidth < 768 ? 40 : 120]);
+   const phase1X = useTransform(
+      smoothProgress, 
+      [0.22, 0.45], 
+      [isMobile ? -20 : -60, isMobile ? 40 : 120]
+   );
    const peelProgress  = useTransform(smoothProgress, [0.22, 0.42], ['inset(0% 0% 0% 0%)', 'inset(0% 0% 100% 0%)']);
 
    // Phase 2
@@ -425,32 +433,38 @@ export default function StorytellingScroll() {
             <motion.img 
                src={beanImg} 
                style={{ 
-                  y: useTransform(smoothProgress, [0.2, 0.5], [100, -200]),
-                  rotate: useTransform(smoothProgress, [0.2, 0.5], [45, 120]),
-                  opacity: useTransform(smoothProgress, [0.2, 0.3, 0.4, 0.5], [0, 0.2, 0.2, 0]),
-                  filter: 'blur(4px)',
+                  y: useTransform(smoothProgress, [0, 1], [200, -400]),
+                  rotate: useTransform(smoothProgress, [0, 1], [0, 180]),
+                  rotateX: useTransform(smoothProgress, [0, 1], [0, 45]),
+                  opacity: useTransform(smoothProgress, [0.1, 0.3, 0.6, 0.8], [0, 0.4, 0.4, 0]),
+                  filter: 'blur(3px)',
+                  scale: useTransform(smoothProgress, [0, 1], [0.8, 1.2]),
                }}
-               className="absolute left-[5%] top-[20%] w-32 md:w-64 z-10 pointer-events-none hidden sm:block"
+               className="absolute left-[2%] top-[15%] w-40 md:w-80 z-10 pointer-events-none hidden sm:block"
             />
             <motion.img 
                src={podImg} 
                style={{ 
-                  y: useTransform(smoothProgress, [0.4, 0.8], [200, -300]),
-                  rotate: useTransform(smoothProgress, [0.4, 0.8], [-20, 45]),
-                  opacity: useTransform(smoothProgress, [0.4, 0.5, 0.7, 0.8], [0, 0.15, 0.15, 0]),
-                  filter: 'blur(8px)',
+                  y: useTransform(smoothProgress, [0, 1], [300, -600]),
+                  rotate: useTransform(smoothProgress, [0, 1], [-30, 90]),
+                  rotateY: useTransform(smoothProgress, [0, 1], [0, 30]),
+                  opacity: useTransform(smoothProgress, [0.3, 0.5, 0.8, 0.95], [0, 0.3, 0.3, 0]),
+                  filter: 'blur(6px)',
+                  scale: useTransform(smoothProgress, [0, 1], [1, 1.5]),
                }}
-               className="absolute right-[10%] top-[30%] w-48 md:w-96 z-10 pointer-events-none hidden sm:block"
+               className="absolute right-[5%] top-[25%] w-64 md:w-[500px] z-10 pointer-events-none hidden sm:block"
             />
             <motion.img 
                src={mintImg} 
                style={{ 
-                  y: useTransform(smoothProgress, [0.7, 1], [0, -100]),
-                  rotate: useTransform(smoothProgress, [0.7, 1], [0, 360]),
-                  opacity: useTransform(smoothProgress, [0.7, 0.8, 1], [0, 0.2, 0.2]),
+                  y: useTransform(smoothProgress, [0, 1], [0, -300]),
+                  rotate: useTransform(smoothProgress, [0, 1], [0, 720]),
+                  rotateZ: useTransform(smoothProgress, [0, 1], [0, 45]),
+                  opacity: useTransform(smoothProgress, [0.6, 0.8, 1], [0, 0.4, 0.4]),
                   filter: 'blur(2px)',
+                  scale: useTransform(smoothProgress, [0, 1], [0.7, 1.1]),
                }}
-               className="absolute left-[8%] bottom-[15%] w-24 md:w-48 z-10 pointer-events-none hidden sm:block"
+               className="absolute left-[12%] bottom-[10%] w-32 md:w-64 z-10 pointer-events-none hidden sm:block"
             />
 
             {/* Particles */}

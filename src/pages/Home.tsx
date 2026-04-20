@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import MeltHero from '@/components/MeltHero';
 import HoverRevealProductCard from '@/components/HoverRevealProductCard';
-import BuildYourBox from '@/components/BuildYourBox';
+import UnifiedBoxBuilder from '@/components/UnifiedBoxBuilder';
 import CollectionCard from '@/components/CollectionCard';
 import StorytellingScroll from '@/components/StorytellingScroll';
 import GoldenScrollPath from '@/components/GoldenScrollPath';
@@ -14,21 +14,12 @@ import Footer from '@/components/Footer';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import api from '@/utils/api';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import type { AppDispatch } from '@/store';
 import { addToCart } from '@/store/cartSlice';
 import { fadeIn, fadeUp, stagger } from '@/utils/motion';
 import { BRANDS } from '@/data/brands';
-
-interface Product {
-   _id: string;
-   name: string;
-   price: number;
-   image: string;
-   category?: string;
-   brand?: string;
-   events?: string[];
-}
-
+import { type Product } from '@/../../shared/types';
 import SEO from '@/components/SEO';
 
 export default function Home() {
@@ -36,11 +27,19 @@ export default function Home() {
    const [isCartOpen, setIsCartOpen] = useState(false);
    const [activeTab, setActiveTab] = useState<'brands' | 'events'>('brands');
    const [selectedCollection, setSelectedCollection] = useState<string>('');
-   const [products, setProducts] = useState<Product[]>([]);
    const containerRef = useRef<HTMLDivElement>(null);
    const dispatch = useDispatch<AppDispatch>();
    const reduceMotion = useReducedMotion();
    const sectionViewport = { once: true, margin: '0px 0px -140px 0px' };
+
+   const { data: products = [] } = useQuery<Product[]>({
+      queryKey: ['products'],
+      queryFn: async () => {
+         const response = await api.get('/products');
+         const data = response.data.products || response.data;
+         return Array.isArray(data) ? data : [];
+      }
+   });
 
    const handleAddToCart = useCallback((p: Product) => {
       dispatch(addToCart({
@@ -72,20 +71,6 @@ export default function Home() {
       { title: 'Birthday', image: '/images/collections/event_corporate_1775207405890.png', description: 'Strategic Gifting Boutique' },
       { title: 'Gifts', image: '/images/collections/event_gifting_1775207422111.png', description: 'Curated Sensory Hampers' }
    ];
-
-   useEffect(() => {
-      const fetchProducts = async () => {
-         try {
-            const response = await api.get('/products');
-            const data = response.data.products || response.data;
-            setProducts(Array.isArray(data) ? data : []);
-         } catch (error) {
-            console.error("Error fetching botanical artifacts:", error);
-            setProducts([]);
-         }
-      };
-      fetchProducts();
-   }, []);
 
    const filteredProducts = useMemo(() => {
       if (!selectedCollection) return products;
@@ -273,10 +258,15 @@ export default function Home() {
             >
                <div className="max-w-[1400px] mx-auto">
                   <div className="mb-20 text-center space-y-4">
-                     <h2 className="text-5xl md:text-8xl font-display italic font-black text-white">The Crate Architect</h2>
+                     <h2 className="text-5xl md:text-8xl font-display italic font-black text-white">The Heritage Crate</h2>
                      <p className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-gold-soft">Design Your Personal Collection</p>
                   </div>
-                  <BuildYourBox />
+                  <UnifiedBoxBuilder 
+                     size={9} 
+                     title="Heritage Crate" 
+                     description="Design Your Personal Collection"
+                     priceMode="dynamic"
+                  />
                </div>
             </motion.section>
 

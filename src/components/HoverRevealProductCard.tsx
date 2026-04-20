@@ -4,17 +4,11 @@ import { useState } from 'react';
 import { ShoppingBag, ArrowUpRight, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+import { type Product } from '@/../../shared/types';
+
 interface ProductCardProps {
   product: Product;
   onAddToCart: (p: Product) => void;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  category?: string;
 }
 
 const HoverRevealProductCard = memo(({ product, onAddToCart }: ProductCardProps) => {

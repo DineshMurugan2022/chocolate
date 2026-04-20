@@ -2,21 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, User, Mail, Phone, MapPin, History, Package } from 'lucide-react';
 
-interface OrderItem {
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-interface Order {
-  _id: string;
-  user: { name: string; email: string };
-  shippingAddress: { phoneNumber: string; address: string; city: string; postalCode: string };
-  items: OrderItem[];
-  totalPrice: number;
-  status: string;
-  createdAt: string;
-}
+import { type Order, type User as SharedUser } from '@/../../shared/types';
 
 interface OrderDetailsModalProps {
   order: Order | null;
@@ -74,14 +60,14 @@ const OrderDetailsModal = ({ order, onClose }: OrderDetailsModalProps) => {
                     <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><User size={18} /></div>
                     <div>
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Full Name</p>
-                      <p className="text-sm font-semibold text-gray-900">{order.user.name}</p>
+                      <p className="text-sm font-semibold text-gray-900">{(order.user as SharedUser).name || 'N/A'}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><Mail size={18} /></div>
                     <div>
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Email Address</p>
-                      <p className="text-sm font-semibold text-gray-900 truncate max-w-[180px]">{order.user.email}</p>
+                      <p className="text-sm font-semibold text-gray-900 truncate max-w-[180px]">{(order.user as SharedUser).email || 'N/A'}</p>
                     </div>
                   </div>
                 </div>

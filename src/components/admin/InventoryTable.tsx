@@ -1,18 +1,6 @@
 import { Search, Edit2, Trash2, Package } from 'lucide-react';
 
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  category: string;
-  stock: number;
-  image: string;
-  weight: string;
-  images: string[];
-  description: string;
-  brand?: string;
-  events?: string[];
-}
+import { type Product } from '@/../../shared/types';
 
 interface InventoryTableProps {
   products: Product[];
@@ -80,9 +68,9 @@ const InventoryTable = ({ products, loading, handleOpenModal, handleDelete }: In
                 <td className="px-8 py-6 font-display font-black text-gold-soft text-xl italic">₹{p.price}</td>
                 <td className="px-8 py-6">
                   <span className={`px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider border ${
-                    p.stock > 10 ? 'bg-gold-soft/10 border-gold-soft/20 text-gold-soft' : 'bg-red-900/40 border-red-500/50 text-red-400'
+                    (p.stock ?? 0) > 10 ? 'bg-gold-soft/10 border-gold-soft/20 text-gold-soft' : 'bg-red-900/40 border-red-500/50 text-red-400'
                   }`}>
-                    {p.stock} Units
+                    {p.stock ?? 0} Units
                   </span>
                 </td>
                 <td className="px-8 py-6 text-right">

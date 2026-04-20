@@ -4,6 +4,9 @@ import { Package, X, Tag } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/store/authSlice';
 import api from '@/utils/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { type Product, type Order, type Category } from '@/../../shared/types';
+import toast from 'react-hot-toast';
 
 // Sub-components
 import Sidebar from '@/components/admin/Sidebar';
@@ -14,53 +17,10 @@ import ProductModal from '@/components/admin/ProductModal';
 import OrderDetailsModal from '@/components/admin/OrderDetailsModal';
 import { StatsCard } from '@/components/admin/AdminComponents';
 
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  category: string;
-  stock: number;
-  weight: string;
-  image: string;
-  images: string[];
-  description: string;
-  brand?: string;
-  events?: string[];
-}
-
-interface OrderItem {
-  product: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-interface ShippingAddress {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  postalCode: string;
-}
-
-interface Order {
-  _id: string;
-  user: { _id: string; name: string; email: string; };
-  items: OrderItem[];
-  shippingAddress: ShippingAddress;
-  totalPrice: number;
-  status: string;
-  createdAt: string;
-}
-
 export default function AdminDashboard() {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'inventory' | 'orders' | 'categories' | 'overview' | 'analytics'>('inventory');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<{_id: string, name: string}[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -75,55 +35,53 @@ export default function AdminDashboard() {
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
 
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    category: '',
-    stock: '',
-    weight: '',
-    description: '',
-    image: '',
-    images: [] as string[],
-    brand: '',
-    events: ''
+    name: '', price: '', category: '', stock: '', weight: '', description: '', image: '', images: [] as string[], brand: '', events: ''
   });
 
   const [newCatName, setNewCatName] = useState('');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // Queries
+  const { data: products = [], isLoading: isProductsLoading } = useQuery<Product[]>({
+    queryKey: ['products'],
+    queryFn: async () => (await api.get('/products')).data
+  });
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const results = await Promise.allSettled([
-        api.get('/products'),
-        api.get('/categories'),
-        api.get('/orders')
-      ]);
+  const { data: categories = [], isLoading: isCategoriesLoading } = useQuery<Category[]>({
+    queryKey: ['categories'],
+    queryFn: async () => (await api.get('/categories')).data
+  });
 
-      if (results[0].status === 'fulfilled') setProducts(results[0].value.data);
-      if (results[1].status === 'fulfilled') setCategories(results[1].value.data);
-      if (results[2].status === 'fulfilled') {
-        setOrders(results[2].value.data);
-      } else {
-        console.warn('Orders currently inaccessible (Authorized protocol required)');
-        setOrders([]);
-      }
-    } catch (error) {
-      console.error('Core synchronization failure:', error);
-    } finally {
-      setLoading(false);
+  const { data: orders = [], isLoading: isOrdersLoading } = useQuery<Order[]>({
+    queryKey: ['orders'],
+    queryFn: async () => (await api.get('/orders')).data
+  });
+
+  const loading = isProductsLoading || isCategoriesLoading || isOrdersLoading;
+
+  // Mutations
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => 
+      await api.patch(`/orders/${id}/status`, { status }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+      toast.success('Order status updated');
     }
-  };
+  });
 
-  const handleUpdateOrderStatus = async (id: string, status: string) => {
-    try {
-      await api.patch(`/orders/${id}/status`, { status });
-      fetchData();
-    } catch (error) {
-      console.error('Error updating order status:', error);
+  const productMutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      if (editingProduct) return await api.put(`/products/${editingProduct._id}`, data);
+      return await api.post('/products', data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setIsModalOpen(false);
+      toast.success(editingProduct ? 'Product updated' : 'Product created');
     }
+  });
+
+  const handleUpdateOrderStatus = (id: string, status: string) => {
+    updateStatusMutation.mutate({ id, status });
   };
 
   const handleOpenModal = (product?: Product) => {
@@ -133,7 +91,7 @@ export default function AdminDashboard() {
         name: product.name,
         price: product.price.toString(),
         category: product.category,
-        stock: product.stock.toString(),
+        stock: (product.stock ?? 0).toString(),
         weight: product.weight || '',
         description: product.description,
         image: product.image,
@@ -232,45 +190,49 @@ export default function AdminDashboard() {
     formData.images.forEach(img => data.append('images', img));
     galleryFiles.forEach(file => data.append('images', file));
 
-    try {
-      if (editingProduct) await api.put(`/products/${editingProduct._id}`, data);
-      else await api.post('/products', data);
-      setIsModalOpen(false);
-      fetchData();
-    } catch (error) {
-      console.error('Error saving product:', error);
-    }
+    galleryFiles.forEach(file => data.append('images', file));
+
+    productMutation.mutate(data);
   };
 
-  const handleAddCategory = async () => {
-    if (!newCatName.trim()) return;
-    try {
-      await api.post('/categories', { name: newCatName });
+  const categoryMutation = useMutation({
+    mutationFn: async (name: string) => await api.post('/categories', { name }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
       setNewCatName('');
-      fetchData();
-    } catch (error) {
-      console.error('Error adding category:', error);
+      toast.success('Category added');
     }
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: async (id: string) => await api.delete(`/categories/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success('Category deleted');
+    }
+  });
+
+  const deleteProductMutation = useMutation({
+    mutationFn: async (id: string) => await api.delete(`/products/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success('Product deleted');
+    }
+  });
+
+  const handleAddCategory = () => {
+    if (!newCatName.trim()) return;
+    categoryMutation.mutate(newCatName);
   };
 
-  const handleDeleteCategory = async (id: string) => {
+  const handleDeleteCategory = (id: string) => {
     if (!window.confirm('Delete this category?')) return;
-    try {
-      await api.delete(`/categories/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error('Error deleting category:', error);
-    }
+    deleteCategoryMutation.mutate(id);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      try {
-        await api.delete(`/products/${id}`);
-        fetchData();
-      } catch (error) {
-        console.error('Error deleting product:', error);
-      }
+      deleteProductMutation.mutate(id);
     }
   };
 
