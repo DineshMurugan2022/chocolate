@@ -26,9 +26,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@shared/*": ["../shared/*"]
+      "@shared/types": ["../shared/types/index.ts"]
     }
   },
-  "include": ["src", "../shared"]
+  "include": ["src", "../shared/types"],
+  "references": [
+    { "path": "../shared" }
+  ]
 }
 
