@@ -172,15 +172,15 @@ export default function Accessories() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }} className="space-y-12 relative z-10">
-          <div className="flex items-center justify-center gap-6">
-            <div className="h-[1px] w-12 bg-gold-soft/30" />
-            <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-gold-soft/60">The Artisan Hardware Registry</span>
-            <div className="h-[1px] w-12 bg-gold-soft/30" />
+          <div className="flex items-center justify-center gap-4 md:gap-6">
+            <div className="hidden sm:block h-[1px] w-12 bg-gold-soft/30" />
+            <span className="font-body text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-gold-soft/60">The Artisan Hardware Registry</span>
+            <div className="hidden sm:block h-[1px] w-12 bg-gold-soft/30" />
           </div>
-          <h1 className="text-6xl md:text-[10vw] font-display font-black leading-[0.8] tracking-tighter text-white">
+          <h1 className="text-5xl sm:text-6xl md:text-[10vw] font-display font-black leading-[0.8] tracking-tighter text-white">
             Precision <br /> <span className="italic font-light text-gold-soft/20 uppercase tracking-widest pl-4">Hardware</span>
           </h1>
-          <p className="max-w-xl mx-auto font-serif text-xl md:text-3xl italic text-gold-soft/40">
+          <p className="max-w-xl mx-auto font-serif text-lg md:text-xl lg:text-3xl italic text-gold-soft/40 px-4">
             The structural instruments required to master the alchemical properties of cacao.
           </p>
           <div className="pt-20">

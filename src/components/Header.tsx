@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -18,6 +17,63 @@ interface NavItem {
   dropdown?: { name: string; path: string; }[];
 }
 
+const MobileNavItem = ({ 
+  link, 
+  isCelestialTheme, 
+  navigate, 
+  setIsMobileMenuOpen 
+}: { 
+  link: NavItem, 
+  isCelestialTheme: boolean, 
+  navigate: (path: string) => void, 
+  setIsMobileMenuOpen: (open: boolean) => void 
+}) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <div className="flex flex-col border-b border-black/5 last:border-0 pb-2 mb-2">
+      <button
+        onClick={() => {
+          if (link.dropdown) {
+            setIsDropdownOpen(!isDropdownOpen);
+          } else {
+            navigate(link.path);
+            setIsMobileMenuOpen(false);
+          }
+        }}
+        className={`flex items-center justify-between py-3 font-display font-bold text-lg transition-colors
+          ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-gold-accent'}`}
+      >
+        <div className="flex items-center gap-3">
+          {link.icon && <span className={isCelestialTheme ? 'text-aurora-cyan' : 'text-gold-accent'}>{link.icon}</span>}
+          <span className="capitalize">{link.name.toLowerCase()}</span>
+        </div>
+        {link.dropdown && (
+          <ChevronDown size={18} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+        )}
+      </button>
+      {link.dropdown && (
+        <div className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 pl-11
+          ${isDropdownOpen ? 'max-h-96 opacity-100 pb-2' : 'max-h-0 opacity-0'}`}
+        >
+          {link.dropdown.map(subItem => (
+            <button
+              key={subItem.name}
+              onClick={() => {
+                navigate(subItem.path);
+                setIsMobileMenuOpen(false);
+              }}
+              className={`text-left font-body font-medium text-base transition-colors py-1 ${isCelestialTheme ? 'text-white/70 hover:text-aurora-cyan' : 'text-cocoa-medium hover:text-gold-accent'}`}
+            >
+              {subItem.name.charAt(0) + subItem.name.slice(1).toLowerCase()}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolean) => void }) {
   const { items } = useSelector((state: RootState) => state.cart);
   const { user } = useSelector((state: RootState) => state.auth);
@@ -35,7 +91,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
     { name: 'STORY', path: '/about', icon: <BookOpen size={18} /> },
     { name: 'SHOP', path: '/shop', icon: <Store size={18} /> },
     { name: 'DIET', path: '/diet', icon: <Sprout size={18} /> },
-     { 
+    { 
       name: 'OCCASION', 
       path: '#',
       icon: <Calendar size={18} />,
@@ -73,16 +129,12 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] transition-all duration-700 pointer-events-none">
-      
-      {/* COMPACT SOLID CHOCOLATE WAVE BACKGROUND - Hidden on Celestial Profile */}
       {!isCelestialTheme && <HeaderOoze />}
 
-      {/* NAVBAR CONTENTS - Robust Grid Layout for Perfect Centering */}
-      <div className={`max-w-[2000px] mx-auto px-4 md:px-8 lg:px-14 h-16 md:h-24 lg:h-32 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
+      <div className={`max-w-[2000px] mx-auto px-4 md:px-6 lg:px-8 xl:px-14 h-16 md:h-24 lg:h-28 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : ''}`}>
         
-        {/* Left Section: Nav Group 1 */}
-        <div className="flex items-center justify-start h-full">
-          {/* Mobile Menu Toggle */}
+        {/* Left Section */}
+        <div className="flex items-center justify-start h-full overflow-hidden">
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden ${themeColors.text} p-2 hover:bg-white/5 rounded-full transition-colors mr-2`}
@@ -90,14 +142,17 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pr-8 xl:pr-12">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8 pr-4">
             {leftLinks.map((link) => (
-              <div key={link.name} className="relative group/dropdown">
+              <div key={link.name} className={`relative group/dropdown ${
+                (link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden 2xl:block' : ''
+              } ${
+                (link.name === 'OCCASION' || link.name === 'STORY') ? 'hidden xl:block' : ''
+              }`}>
                 <Magnetic>
                   <button
                     onClick={() => link.path !== '#' && navigate(link.path)}
-                    className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap 
-                    ${(link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap`}
                   >
                     {link.name}
                   </button>
@@ -123,27 +178,29 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           </nav>
         </div>
 
-        <div className="flex items-center justify-center px-4 md:px-8 lg:px-12 min-w-[120px] md:min-w-[160px] lg:min-w-[240px]">
+        {/* Center Section: Logo */}
+        <div className="flex items-center justify-center px-2 md:px-4 lg:px-6">
           <Magnetic>
             <div 
               onClick={() => navigate('/')}
-              className="flex items-center justify-center cursor-pointer group z-30 -translate-y-[10%] md:-translate-y-[20%]"
+              className="flex items-center justify-center cursor-pointer group z-30"
             >
-              <Logo className={`w-28 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
+              <Logo className={`w-24 md:w-32 lg:w-40 xl:w-48 2xl:w-56 h-auto transition-transform group-hover:scale-105 duration-700 ${isCelestialTheme ? 'brightness-150 contrast-125' : ''}`} variant="light" />
             </div>
           </Magnetic>
         </div>
 
-        {/* Right Section: Nav Group 2 + Actions */}
-        <div className="flex items-center justify-end h-full">
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 pl-8 xl:pl-12 mr-6 xl:mr-14">
+        {/* Right Section */}
+        <div className="flex items-center justify-end h-full overflow-hidden">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8 pl-4 mr-4 xl:mr-8">
             {rightLinks.map((link) => (
-              <div key={link.name} className="relative group/dropdown">
+              <div key={link.name} className={`relative group/dropdown ${
+                (link.name === 'ACCESSORIES' || link.name === 'WORKSHOP') ? 'hidden xl:block' : ''
+              }`}>
                 <Magnetic>
                   <button
                     onClick={() => link.path !== '#' && navigate(link.path)}
-                    className={`font-body text-[9px] xl:text-[10px] font-black tracking-[0.3em] xl:tracking-[0.5em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap
-                    ${(link.name === 'ACCESSORIES' || link.name === 'WORKSHOP' || link.name === 'GIFTING' || link.name === 'OCCASION') ? 'hidden xl:block' : ''}`}
+                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap`}
                   >
                     {link.name}
                   </button>
@@ -168,29 +225,29 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             ))}
           </nav>
 
-          <div className="flex items-center gap-4 md:gap-6 xl:gap-8">
-            <div className="hidden 2xl:block">
+          <div className="flex items-center gap-2 md:gap-4 xl:gap-6">
+            <div className="hidden 3xl:block">
               <LiveViewerCount />
             </div>
             
-            <div className={`hidden md:flex items-center gap-4 xl:gap-6 pr-6 xl:pr-8 border-r ${themeColors.border}`}>
+            <div className={`hidden md:flex items-center gap-3 xl:gap-4 pr-4 xl:pr-6 border-r ${themeColors.border}`}>
               <Magnetic>
                 <button className={`${themeColors.text} hover:scale-110 transition-transform`}>
-                  <Search size={18} />
+                  <Search size={16} />
                 </button>
               </Magnetic>
               <Magnetic>
                 <button onClick={() => setIsWishlistOpen(true)} className={`${themeColors.text} hover:scale-110 transition-transform`}>
-                  <Heart size={18} />
+                  <Heart size={16} />
                 </button>
               </Magnetic>
             </div>
 
-            <div className="flex items-center gap-3 md:gap-6">
+            <div className="flex items-center gap-2 md:gap-4">
               {!user ? (
                   <button 
                     onClick={() => setIsAuthModalOpen(true)}
-                    className={`hidden sm:block font-body text-[9px] font-black uppercase tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-colors italic`}
+                    className={`hidden sm:block font-body text-[8px] xl:text-[9px] font-black uppercase tracking-[0.2em] ${themeColors.text} ${themeColors.hover} transition-colors italic`}
                   >
                     LOG_IN
                   </button>
@@ -199,7 +256,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                     onClick={() => navigate('/profile')} 
                     className={`${themeColors.text} ${themeColors.hover} transition-colors`}
                   >
-                    <User size={20} />
+                    <User size={18} />
                   </button>
                )}
 
@@ -208,11 +265,11 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                   onClick={() => setIsCartOpen(true)}
                   className="relative group flex items-center justify-center"
                 >
-                  <div className={`size-9 md:size-11 lg:size-12 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} rounded-full flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
-                      <ShoppingBag size={18} className={`${themeColors.text} group-hover:text-black transition-colors`} />
+                  <div className={`size-8 md:size-10 lg:size-11 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} rounded-full flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
+                      <ShoppingBag size={16} className={`${themeColors.text} group-hover:text-black transition-colors`} />
                   </div>
                   {cartItemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 size-5 bg-[#FF1D8E] text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <span className="absolute -top-1 -right-1 size-4 bg-[#FF1D8E] text-white text-[8px] font-black rounded-full flex items-center justify-center shadow-lg animate-pulse">
                       {cartItemCount}
                     </span>
                   )}
@@ -251,51 +308,15 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         </div>
         
         <nav className="flex flex-col flex-1 overflow-y-auto py-6 px-6 gap-2">
-          {[...leftLinks, ...rightLinks].map((link) => {
-            const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-            return (
-              <div key={link.name} className="flex flex-col border-b border-black/5 last:border-0 pb-2 mb-2">
-                <button
-                  onClick={() => {
-                    if (link.dropdown) {
-                      setIsDropdownOpen(!isDropdownOpen);
-                    } else {
-                      navigate(link.path);
-                      setIsMobileMenuOpen(false);
-                    }
-                  }}
-                  className={`flex items-center justify-between py-3 font-display font-bold text-lg transition-colors
-                    ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-gold-accent'}`}
-                >
-                  <div className="flex items-center gap-3">
-                    {link.icon && <span className={isCelestialTheme ? 'text-aurora-cyan' : 'text-gold-accent'}>{link.icon}</span>}
-                    <span className="capitalize">{link.name.toLowerCase()}</span>
-                  </div>
-                  {link.dropdown && (
-                    <ChevronDown size={18} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                  )}
-                </button>
-                {link.dropdown && (
-                  <div className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 pl-11
-                    ${isDropdownOpen ? 'max-h-96 opacity-100 pb-2' : 'max-h-0 opacity-0'}`}
-                  >
-                    {link.dropdown.map(subItem => (
-                      <button
-                        key={subItem.name}
-                        onClick={() => {
-                          navigate(subItem.path);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`text-left font-body font-medium text-base transition-colors py-1 ${isCelestialTheme ? 'text-white/70 hover:text-aurora-cyan' : 'text-cocoa-medium hover:text-gold-accent'}`}
-                      >
-                        {subItem.name.charAt(0) + subItem.name.slice(1).toLowerCase()}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {[...leftLinks, ...rightLinks].map((link) => (
+            <MobileNavItem 
+              key={link.name} 
+              link={link} 
+              isCelestialTheme={isCelestialTheme} 
+              navigate={navigate} 
+              setIsMobileMenuOpen={setIsMobileMenuOpen} 
+            />
+          ))}
         </nav>
 
         <div className={`mt-auto p-6 bg-black/5 flex flex-col gap-4 rounded-br-3xl`}>

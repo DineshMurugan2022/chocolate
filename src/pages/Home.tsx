@@ -118,7 +118,7 @@ export default function Home() {
                   transition={{ duration: 2 }}
                   className="max-w-4xl mx-auto space-y-8"
                >
-                  <span className="font-body text-[10px] font-black uppercase tracking-[1.2rem] text-gold-soft opacity-60">The Botanical Odyssey</span>
+                  <span className="font-body text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-gold-soft opacity-60">The Botanical Odyssey</span>
                   <h2 className="text-3xl md:text-6xl font-display italic font-black text-gold-soft leading-tight">
                      A symphony of rare cocoa estates <br /> harvested for the modern connoisseur.
                   </h2>
@@ -174,7 +174,7 @@ export default function Home() {
                            className="space-y-12 relative"
                         >
                            <div className="text-center space-y-4">
-                              <span className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-gold-soft opacity-60">The Curator's Calendar</span>
+                              <span className="font-body text-[8px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-gold-soft opacity-60">The Curator's Calendar</span>
                               <h2 className="text-4xl md:text-7xl font-display italic font-black text-white">Tailored Occasions</h2>
                            </div>
 
@@ -218,8 +218,8 @@ export default function Home() {
                <div className="max-w-[1400px] mx-auto relative z-10">
                   <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-10">
                      <div className="flex flex-col gap-6 max-w-2xl">
-                        <span className="font-body text-[10px] md:text-[14px] font-black uppercase text-gold-soft tracking-[0.5em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
-                        <h2 className="text-4xl md:text-9xl font-display font-black leading-[0.85] tracking-tight text-white opacity-100">
+                        <span className="font-body text-[8px] md:text-[14px] font-black uppercase text-gold-soft tracking-[0.4em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
+                        <h2 className="text-4xl md:text-7xl lg:text-9xl font-display font-black leading-[0.85] tracking-tight text-white opacity-100">
                            Reveal the <br /> <span className="not-italic font-black text-gold-soft">Soul</span>
                         </h2>
                      </div>
