@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ShoppingBag, ArrowUpRight, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { type Product } from '@/../../shared/types';
+import { type Product } from '@shared/types';
 
 interface ProductCardProps {
   product: Product;

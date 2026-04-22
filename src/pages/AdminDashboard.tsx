@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '@/store/authSlice';
 import api from '@/utils/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { type Product, type Order, type Category } from '@/../../shared/types';
+import { type Product, type Order, type Category } from '@shared/types';
 import toast from 'react-hot-toast';
 
 // Sub-components

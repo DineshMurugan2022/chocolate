@@ -1,6 +1,6 @@
 import { Search, Edit2, Trash2, Package } from 'lucide-react';
 
-import { type Product } from '@/../../shared/types';
+import { type Product } from '@shared/types';
 
 interface InventoryTableProps {
   products: Product[];

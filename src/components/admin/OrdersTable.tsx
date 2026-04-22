@@ -1,6 +1,6 @@
 import { ShoppingBag, ChevronRight } from 'lucide-react';
 
-import { type Order } from '@/../../shared/types';
+import { type Order } from '@shared/types';
 
 interface OrdersTableProps {
   orders: Order[];

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, User, Mail, Phone, MapPin, History, Package } from 'lucide-react';
 
-import { type Order, type User as SharedUser } from '@/../../shared/types';
+import { type Order, type User as SharedUser } from '@shared/types';
 
 interface OrderDetailsModalProps {
   order: Order | null;
@@ -106,7 +106,7 @@ const OrderDetailsModal = ({ order, onClose }: OrderDetailsModalProps) => {
               </div>
               
               <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                {order.items.map((item, idx) => (
+                {order.items.map((item: any, idx: number) => (
                   <div key={idx} className="flex justify-between items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                     <div className="flex items-center gap-3">
                        <div className="size-8 rounded bg-gray-50 flex items-center justify-center text-blue-600"><Package size={14} /></div>

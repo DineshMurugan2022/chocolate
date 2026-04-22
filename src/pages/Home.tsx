@@ -19,7 +19,7 @@ import type { AppDispatch } from '@/store';
 import { addToCart } from '@/store/cartSlice';
 import { fadeIn, fadeUp, stagger } from '@/utils/motion';
 import { BRANDS } from '@/data/brands';
-import { type Product } from '@/../../shared/types';
+import { type Product } from '@shared/types';
 import SEO from '@/components/SEO';
 
 export default function Home() {

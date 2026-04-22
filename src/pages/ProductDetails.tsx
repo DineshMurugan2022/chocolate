@@ -14,7 +14,7 @@ import CartDrawer from '@/components/CartDrawer';
 import Skeleton from '@/components/Skeleton';
 import { fadeIn, fadeUp, slideLeft, slideRight, stagger } from '@/utils/motion';
 import SEO from '@/components/SEO';
-import { type Product } from '@/../../shared/types';
+import { type Product } from '@shared/types';
 
 const ProductDetailsSkeleton = () => (
    <div className="min-h-screen bg-cocoa-deep pt-32 px-6 md:px-12 lg:px-16 space-y-12">
