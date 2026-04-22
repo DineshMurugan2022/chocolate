@@ -7,15 +7,7 @@ import { addToCart } from '@/store/cartSlice';
 import { useDispatch } from 'react-redux';
 import { hashString, createRandom } from '@/utils/random';
 
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  category: string;
-  image?: string;
-  color?: string;
-  stock: number;
-}
+import { type Product } from '@shared/types';
 
 interface ProductCardProps {
   product: Product;
@@ -43,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           <span className="px-4 py-1.5 bg-burnt-orange/10 text-burnt-orange border border-burnt-orange/30 rounded-full text-[10px] font-bold uppercase tracking-widest">
             {product.category}
           </span>
-          {product.stock > 0 && product.stock < 10 && (
+          {(product.stock ?? 0) > 0 && (product.stock ?? 0) < 10 && (
             <motion.div 
               animate={{ opacity: [1, 0.4, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -79,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
             <span className="text-2xl font-bold text-white">₹{product.price}</span>
             <div className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-noir-400 mt-1">
               <Package className="w-3 h-3" />
-              <span>{product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}</span>
+              <span>{(product.stock ?? 0) > 0 ? `${product.stock} in stock` : 'Out of stock'}</span>
             </div>
           </div>
 

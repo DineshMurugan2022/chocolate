@@ -14,10 +14,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@chocolux/shared/types': path.resolve(__dirname, '../shared/types/index.ts'),
-      '@chocolux/shared': path.resolve(__dirname, '../shared'),
-      '@shared/types': path.resolve(__dirname, '../shared/types/index.ts'),
-      '@shared': path.resolve(__dirname, '../shared'),
+      '@shared/types': path.resolve(__dirname, './src/types/shared.ts'),
+      '@shared': path.resolve(__dirname, './src/types'),
     },
   },
   test: {

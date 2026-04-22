@@ -1,9 +1,3 @@
-/**
- * AUTO-GENERATED - DO NOT EDIT DIRECTLY
- * This file is synchronized from the root /shared directory.
- * To make changes, edit /shared/types/index.ts and run "npm run sync"
- */
-
 export interface Product {
   _id: string;
   name: string;
@@ -11,15 +5,18 @@ export interface Product {
   price: number;
   category: string;
   image: string;
-  images: string[];
+  images?: string[];
   model3d?: string;
-  ingredients: string[];
-  stock: number;
-  weight: string;
-  rating: number;
-  reviews: number;
+  ingredients?: string[];
+  stock?: number;
+  weight?: string;
+  rating?: number;
+  reviews?: number;
   brand?: string;
   events?: string[];
+  cacaoContent?: string;
+  notes?: string;
+  color?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -69,4 +66,22 @@ export interface Order {
   razorpay_order_id?: string;
   razorpay_payment_id?: string;
   createdAt: string;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Review {
+  _id: string;
+  user: string | User;
+  product: string | Product;
+  rating: number;
+  comment: string;
+  isVerified?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
