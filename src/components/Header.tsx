@@ -145,9 +145,9 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           <nav className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8 pr-4">
             {leftLinks.map((link) => (
               <div key={link.name} className={`relative group/dropdown ${
-                (link.name === 'STORY' || link.name === 'SUBSCRIPTION' || link.name === 'OCCASION') ? 'hidden 2xl:block' : ''
+                (link.name === 'STORY' || link.name === 'OCCASION') ? 'hidden xl:block' : ''
               } ${
-                (link.name === 'OCCASION' || link.name === 'STORY') ? 'hidden xl:block' : ''
+                (link.name === 'SUBSCRIPTION') ? 'hidden lg:block' : ''
               }`}>
                 <Magnetic>
                   <button
@@ -195,7 +195,9 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           <nav className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8 pl-4 mr-4 xl:mr-8">
             {rightLinks.map((link) => (
               <div key={link.name} className={`relative group/dropdown ${
-                (link.name === 'ACCESSORIES' || link.name === 'WORKSHOP') ? 'hidden xl:block' : ''
+                (link.name === 'WORKSHOP') ? 'hidden xl:block' : ''
+              } ${
+                (link.name === 'ACCESSORIES') ? 'hidden lg:block' : ''
               }`}>
                 <Magnetic>
                   <button
@@ -226,7 +228,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           </nav>
 
           <div className="flex items-center gap-2 md:gap-4 xl:gap-6">
-            <div className="hidden 3xl:block">
+            <div className="hidden 2xl:block">
               <LiveViewerCount />
             </div>
             

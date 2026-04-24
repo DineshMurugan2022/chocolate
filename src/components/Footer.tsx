@@ -53,10 +53,10 @@ export default function Footer() {
                 <span className={`font-body text-[10px] ${isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'} font-black uppercase tracking-[0.5em]`}>Inventory</span>
              </div>
              <div className="flex flex-col items-center md:items-start gap-6">
-                {['Heritage Matrix', 'Artisan Atelier', 'Seasonal Harvests', 'Curatorial Manifest'].map((item) => (
+                {['Heritage Matrix', 'Artisan Atelier', 'Seasonal Harvests', 'Society Membership', 'Curatorial Manifest'].map((item) => (
                    <button
                      key={item}
-                     onClick={() => navigate('/shop')}
+                     onClick={() => navigate(item === 'Society Membership' ? '/subscription' : '/shop')}
                      className={`w-fit font-display text-2xl ${isCelestialTheme ? 'text-white/40 hover:text-aurora-cyan' : 'text-ivory-warm/40 hover:text-burnt-caramel'} transition-all italic hover:pl-4 flex items-center gap-4 group`}
                   >
                      {item}

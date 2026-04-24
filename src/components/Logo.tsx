@@ -1,5 +1,5 @@
 import React from 'react';
-import logooo from '../assets/branding/logooo.png';
+import logooo from '../assets/branding/logooo.jpeg';
 
 interface LogoProps {
   className?: string;

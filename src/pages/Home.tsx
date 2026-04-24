@@ -21,6 +21,7 @@ import { fadeIn, fadeUp, stagger } from '@/utils/motion';
 import { BRANDS } from '@/data/brands';
 import { type Product } from '@shared/types';
 import SEO from '@/components/SEO';
+import Newsletter from '@/components/Newsletter';
 
 export default function Home() {
    const navigate = useNavigate();
@@ -298,6 +299,7 @@ export default function Home() {
                </div>
             </motion.section>
 
+            <Newsletter />
             <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
          </motion.main>
 
