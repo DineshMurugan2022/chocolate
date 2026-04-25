@@ -14,7 +14,7 @@ export default function EventsNav() {
 
   return (
     <motion.section
-      className="px-6 lg:px-20 py-16 bg-white/[0.015] border-y border-gold-soft/10"
+      className="px-6 lg:px-20 py-16 bg-white/20 border-y border-gold-soft/10"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -22,8 +22,8 @@ export default function EventsNav() {
     >
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="text-center space-y-2">
-          <span className="font-body text-[10px] text-gold-soft/40 uppercase tracking-[0.8em]">Explore More</span>
-          <p className="font-display italic font-black text-2xl text-gold-soft/70">Other Event Collections</p>
+          <span className="font-body text-[10px] text-cocoa-deep/40 uppercase tracking-[0.8em]">Explore More</span>
+          <p className="font-display italic font-black text-2xl text-cocoa-deep/70">Other Event Collections</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -36,22 +36,22 @@ export default function EventsNav() {
                 className={`
                   group flex flex-col items-center gap-3 p-6 rounded-2xl border text-center transition-all duration-300
                   ${isActive
-                    ? 'border-gold-soft/50 bg-gold-soft/10 cursor-default pointer-events-none'
-                    : 'border-gold-soft/15 bg-white/[0.02] hover:border-gold-soft/40 hover:bg-gold-soft/5 hover:-translate-y-1'
+                    ? 'border-burnt-caramel/50 bg-burnt-caramel/10 cursor-default pointer-events-none'
+                    : 'border-gold-soft/20 bg-white/40 hover:border-burnt-caramel/40 hover:bg-burnt-caramel/5 hover:-translate-y-1'
                   }
                 `}
               >
-                <span className={`transition-colors ${isActive ? 'text-gold-soft' : 'text-gold-soft/40 group-hover:text-gold-soft'}`}>
+                <span className={`transition-colors ${isActive ? 'text-burnt-caramel' : 'text-cocoa-deep/40 group-hover:text-burnt-caramel'}`}>
                   {e.icon}
                 </span>
                 <div>
-                  <p className={`font-display italic font-black text-lg leading-none ${isActive ? 'text-gold-soft' : 'text-gold-soft/70'}`}>
+                  <p className={`font-display italic font-black text-lg leading-none ${isActive ? 'text-burnt-caramel' : 'text-cocoa-deep/70'}`}>
                     {e.label}
                   </p>
-                  <p className="font-body text-[9px] uppercase tracking-widest text-gold-soft/30 mt-1">{e.desc}</p>
+                  <p className="font-body text-[9px] uppercase tracking-widest text-cocoa-deep/30 mt-1">{e.desc}</p>
                 </div>
                 {isActive && (
-                  <span className="text-[8px] font-body uppercase tracking-widest text-gold-soft/50 border border-gold-soft/30 px-2 py-0.5 rounded-full">
+                  <span className="text-[8px] font-body uppercase tracking-widest text-burnt-caramel/50 border border-burnt-caramel/30 px-2 py-0.5 rounded-full">
                     Current Page
                   </span>
                 )}

@@ -54,13 +54,13 @@ export default function BirthdayEvent() {
 
   return (
     <motion.div
-      className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-cocoa-deep overflow-x-hidden relative"
+      className="min-h-screen bg-transparent text-cocoa-deep selection:bg-burnt-caramel selection:text-white overflow-x-hidden relative"
       variants={stagger(0.16)}
       initial={reduceMotion ? false : 'hidden'}
       animate="show"
     >
       <SEO
-        title="Artisanal Birthday Collections | ChocoLux"
+        title="Artisanal Birthday Collections | British Chocolate Store"
         description="Celebrate another orbit with extraordinary chocolate. Festive curations, party packs, and personalized truffles for the most memorable birthdays."
       />
       <Header setIsCartOpen={setIsCartOpen} />
@@ -75,16 +75,16 @@ export default function BirthdayEvent() {
       >
         <div className="absolute inset-0 z-0">
           <img src="/birthday_hero.png" alt="Birthday chocolates" className="w-full h-full object-cover object-center opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cocoa-deep/60 via-cocoa-deep/40 to-cocoa-deep" />
+          <div className="absolute inset-0 bg-gradient-to-b from-parchment-base/60 via-parchment-base/40 to-transparent" />
         </div>
         <div className="relative z-10 space-y-8 max-w-5xl mx-auto pt-32 pb-20">
           <div className="flex items-center justify-center gap-6">
-            <div className="h-[1px] w-20 bg-gold-soft/40" />
-            <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-gold-soft/70">The Celebration Registry</span>
-            <div className="h-[1px] w-20 bg-gold-soft/40" />
+            <div className="h-[1px] w-20 bg-burnt-caramel/40" />
+            <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-burnt-caramel/70">The Celebration Registry</span>
+            <div className="h-[1px] w-20 bg-burnt-caramel/40" />
           </div>
-          <h1 className="text-7xl md:text-[10vw] font-display font-black leading-[0.85] tracking-tighter">
-            Birthday<br /><span className="italic font-light text-gold-soft/30 uppercase tracking-widest pl-4 text-5xl md:text-[6vw]">Festival</span>
+          <h1 className="text-7xl md:text-[10vw] font-display font-black leading-[0.85] tracking-tighter text-cocoa-deep">
+            Birthday<br /><span className="italic font-light text-burnt-caramel/30 uppercase tracking-widest pl-4 text-5xl md:text-[6vw]">Festival</span>
           </h1>
           <p className="max-w-2xl mx-auto font-serif text-xl md:text-2xl italic text-gold-soft/60 leading-relaxed">
             Birthdays are rare. They deserve chocolate that's even rarer. We craft every piece to honor the remarkable person being celebrated — from the explosion of flavors to the final golden flourish on the ribbon.
@@ -98,21 +98,21 @@ export default function BirthdayEvent() {
             </a>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cocoa-deep to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-transparent to-transparent z-10" />
       </motion.section>
 
-      {/* ── STATS ── */}
-      <motion.section className="px-6 lg:px-20 py-16 border-y border-gold-soft/10 bg-white/[0.02]" variants={fadeUp} viewport={sectionViewport}>
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-          {funFacts.map((f, i) => (
-            <div key={i} className="space-y-2">
-              <p className="text-5xl font-display font-black text-gold-soft">{f.stat}</p>
-              <p className="font-body uppercase tracking-widest text-xs text-gold-soft/70">{f.label}</p>
-              <p className="font-serif text-xs text-gold-soft/40 italic">{f.note}</p>
-            </div>
-          ))}
-        </div>
-      </motion.section>
+       {/* ── STATS ── */}
+       <motion.section className="px-6 lg:px-20 py-16 border-y border-gold-soft/10 bg-white/40" variants={fadeUp} viewport={sectionViewport}>
+         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+           {funFacts.map((f, i) => (
+             <div key={i} className="space-y-2">
+               <p className="text-5xl font-display font-black text-burnt-caramel">{f.stat}</p>
+               <p className="font-body uppercase tracking-widest text-xs text-cocoa-deep/70">{f.label}</p>
+               <p className="font-serif text-xs text-cocoa-deep/40 italic">{f.note}</p>
+             </div>
+           ))}
+         </div>
+       </motion.section>
 
       {/* ── STORY ── */}
       <motion.section className="px-6 lg:px-24 py-24 max-w-7xl mx-auto" variants={fadeUp} viewport={sectionViewport}>
@@ -121,38 +121,38 @@ export default function BirthdayEvent() {
             <img src="/birthday_hero.png" alt="Birthday celebration chocolates" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-cocoa-deep/70" />
           </div>
-          <div className="space-y-8">
-            <span className="font-body text-[10px] text-gold-soft/50 uppercase tracking-[0.8em]">Why ChocoLux?</span>
-            <h2 className="text-4xl md:text-5xl font-display italic font-black leading-tight">
-              Because you only turn 30 — or 1, or 60 — exactly once.
-            </h2>
-            <p className="font-serif text-gold-soft/60 leading-relaxed text-lg">
-              We believe a birthday gift should carry emotional weight. Not just sweetness. Each ChocoLux birthday creation begins with a conversation: What does this person love? What are their memories? What flavor makes them smile?
-            </p>
-            <p className="font-serif text-gold-soft/60 leading-relaxed text-lg">
-              From there, our chocolatiers build something entirely personal — a truffle tower topped with edible gold, a personalized bark board spelling out their name, or a midnight-delivery surprise box packed with their favorite childhood flavors, elevated to luxury.
-            </p>
-          </div>
+           <div className="space-y-8">
+             <span className="font-body text-[10px] text-cocoa-deep/50 uppercase tracking-[0.8em]">Why British Chocolate Store?</span>
+             <h2 className="text-4xl md:text-5xl font-display italic font-black leading-tight text-cocoa-deep">
+               Because you only turn 30 — or 1, or 60 — exactly once.
+             </h2>
+             <p className="font-serif text-cocoa-deep/60 leading-relaxed text-lg">
+               We believe a birthday gift should carry emotional weight. Not just sweetness. Each British Chocolate Store birthday creation begins with a conversation: What does this person love? What are their memories? What flavor makes them smile?
+             </p>
+             <p className="font-serif text-cocoa-deep/60 leading-relaxed text-lg">
+               From there, our chocolatiers build something entirely personal — a truffle tower topped with edible gold, a personalized bark board spelling out their name, or a midnight-delivery surprise box packed with their favorite childhood flavors, elevated to luxury.
+             </p>
+           </div>
         </div>
       </motion.section>
 
-      {/* ── BIRTHDAY IDEAS ── */}
-      <motion.section id="ideas" className="px-6 lg:px-20 py-20 bg-white/[0.02] border-y border-gold-soft/10" variants={fadeUp} viewport={sectionViewport}>
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="text-center space-y-4">
-            <span className="font-body text-[10px] text-gold-soft/50 uppercase tracking-[0.8em]">Signature Creations</span>
-            <h2 className="text-4xl font-display italic font-black">Birthday Specials</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {birthdayIdeas.map((idea, i) => (
-              <div key={i} className="p-10 rounded-3xl bg-white/[0.03] border border-gold-soft/10 hover:border-gold-soft/30 transition-colors space-y-4">
-                <h3 className="text-2xl font-display italic font-black">{idea.title}</h3>
-                <p className="font-serif text-gold-soft/55 leading-relaxed">{idea.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
+       {/* ── BIRTHDAY IDEAS ── */}
+       <motion.section id="ideas" className="px-6 lg:px-20 py-20 bg-white/40 border-y border-gold-soft/10" variants={fadeUp} viewport={sectionViewport}>
+         <div className="max-w-6xl mx-auto space-y-16">
+           <div className="text-center space-y-4">
+             <span className="font-body text-[10px] text-cocoa-deep/50 uppercase tracking-[0.8em]">Signature Creations</span>
+             <h2 className="text-4xl font-display italic font-black text-cocoa-deep">Birthday Specials</h2>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+             {birthdayIdeas.map((idea, i) => (
+               <div key={i} className="p-10 rounded-3xl bg-white/40 border border-gold-soft/10 hover:border-burnt-caramel/30 transition-colors space-y-4">
+                 <h3 className="text-2xl font-display italic font-black text-cocoa-deep">{idea.title}</h3>
+                 <p className="font-serif text-cocoa-deep/55 leading-relaxed">{idea.desc}</p>
+               </div>
+             ))}
+           </div>
+         </div>
+       </motion.section>
 
       {/* ── SERVICE HIGHLIGHTS ── */}
       <motion.section className="px-6 lg:px-20 py-20" variants={fadeUp} viewport={sectionViewport}>
@@ -160,22 +160,22 @@ export default function BirthdayEvent() {
           <div className="text-center space-y-4">
             <h2 className="text-4xl font-display italic font-black">How We Celebrate With You</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {[
-              { icon: <Zap size={28} />, title: 'Party Packs', desc: 'Bite-sized assortments for 10 to 500 guests. Each piece individually wrapped with a personalized birthday sticker and a tiny hand-folded message scroll.' },
-              { icon: <Star size={28} />, title: 'Custom Toppings & Engravings', desc: 'Personalized names, ages, and silhouettes rendered in edible gold dust. We can even recreate your child\'s favorite cartoon in chocolate!' },
-              { icon: <Clock size={28} />, title: 'Midnight Surprise Delivery', desc: 'Love doesn\'t wait for office hours. Our midnight drop service brings chocolate magic to the door at the stroke of 12, city-wide.' },
-              { icon: <Gift size={28} />, title: 'Luxury Hamper Builds', desc: 'Choose your chocolates, add a bottle of wine or artisan tea, and we\'ll build a hamper worthy of a magazine spread. Every detail attended to.' },
-              { icon: <MessageCircle size={28} />, title: 'Personalized Message Cards', desc: 'A hand-lettered card on premium cotton paper, included with every order. Write as much as you need — our calligraphers handle the rest.' },
-              { icon: <CheckCircle size={28} />, title: 'Dietary Accommodations', desc: 'Vegan, sugar-free, and nut-free options available across the full range. No one should miss out on extraordinary chocolate.' },
-            ].map((s, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white/[0.03] border border-gold-soft/10 space-y-5 hover:border-gold-soft/30 transition-colors">
-                <div className="text-gold-soft w-fit">{s.icon}</div>
-                <h3 className="text-xl font-display italic font-black">{s.title}</h3>
-                <p className="font-serif text-gold-soft/50 leading-relaxed text-sm">{s.desc}</p>
-              </div>
-            ))}
-          </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+             {[
+               { icon: <Zap size={28} />, title: 'Party Packs', desc: 'Bite-sized assortments for 10 to 500 guests. Each piece individually wrapped with a personalized birthday sticker and a tiny hand-folded message scroll.' },
+               { icon: <Star size={28} />, title: 'Custom Toppings & Engravings', desc: 'Personalized names, ages, and silhouettes rendered in edible gold dust. We can even recreate your child\'s favorite cartoon in chocolate!' },
+               { icon: <Clock size={28} />, title: 'Midnight Surprise Delivery', desc: 'Love doesn\'t wait for office hours. Our midnight drop service brings chocolate magic to the door at the stroke of 12, city-wide.' },
+               { icon: <Gift size={28} />, title: 'Luxury Hamper Builds', desc: 'Choose your chocolates, add a bottle of wine or artisan tea, and we\'ll build a hamper worthy of a magazine spread. Every detail attended to.' },
+               { icon: <MessageCircle size={28} />, title: 'Personalized Message Cards', desc: 'A hand-lettered card on premium cotton paper, included with every order. Write as much as you need — our calligraphers handle the rest.' },
+               { icon: <CheckCircle size={28} />, title: 'Dietary Accommodations', desc: 'Vegan, sugar-free, and nut-free options available across the full range. No one should miss out on extraordinary chocolate.' },
+             ].map((s, i) => (
+               <div key={i} className="p-8 rounded-3xl bg-white/40 border border-gold-soft/10 space-y-5 hover:border-burnt-caramel/30 transition-colors">
+                 <div className="text-burnt-caramel w-fit">{s.icon}</div>
+                 <h3 className="text-xl font-display italic font-black text-cocoa-deep">{s.title}</h3>
+                 <p className="font-serif text-cocoa-deep/50 leading-relaxed text-sm">{s.desc}</p>
+               </div>
+             ))}
+           </div>
         </div>
       </motion.section>
 
@@ -190,15 +190,15 @@ export default function BirthdayEvent() {
             <div className="py-20 flex flex-col items-center justify-center animate-pulse">
               <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-gold-soft/20">Curating Birthday Collection...</span>
             </div>
-          ) : products.length === 0 ? (
-            <div className="py-20 flex flex-col items-center justify-center gap-8 bg-black/20 rounded-[60px] border border-dashed border-gold-soft/10">
-              <Gift size={48} className="text-gold-soft/10" />
-              <div className="text-center space-y-3">
-                <p className="font-display text-2xl italic text-gold-soft/30">Every birthday is a milestone.</p>
-                <p className="font-serif text-gold-soft/40 max-w-md">Our birthday collection is crafted to order. Explore our full shop or contact us to create a personalized birthday chocolate experience.</p>
-              </div>
-              <a href="/shop" className="px-6 py-3 bg-gold-soft/10 border border-gold-soft/30 text-gold-soft rounded-full font-body uppercase tracking-widest text-xs hover:bg-gold-soft/20 transition-colors">Browse All Collections</a>
-            </div>
+           ) : products.length === 0 ? (
+             <div className="py-20 flex flex-col items-center justify-center gap-8 bg-white/40 rounded-[60px] border border-dashed border-gold-soft/20 text-center px-10">
+               <Gift size={48} className="text-cocoa-deep/10" />
+               <div className="text-center space-y-3">
+                 <p className="font-display text-2xl italic text-cocoa-deep/30">Every birthday is a milestone.</p>
+                 <p className="font-serif text-cocoa-deep/40 max-w-md">Our birthday collection is crafted to order. Explore our full shop or contact us to create a personalized birthday chocolate experience.</p>
+               </div>
+               <a href="/shop" className="px-6 py-3 bg-burnt-caramel text-white rounded-full font-body uppercase tracking-widest text-xs hover:bg-cocoa-deep transition-colors">Browse All Collections</a>
+             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
               {products.map((p, idx) => (

@@ -241,7 +241,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-cocoa-deep font-body text-gold-soft overflow-hidden selection:bg-gold-soft selection:text-cocoa-deep">
+    <div className="flex min-h-screen bg-transparent font-body text-cocoa-deep overflow-hidden selection:bg-burnt-caramel selection:text-white">
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 

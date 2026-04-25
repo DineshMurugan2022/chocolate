@@ -191,7 +191,7 @@ const ProductModal = ({
 
                {/* Footer */}
                <div className="px-8 py-6 border-t border-gray-200 bg-gray-50 flex items-center justify-between shrink-0">
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] hidden sm:block">Asian Chocolate Store Admin Panel</span>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] hidden sm:block">British Chocolate Store Admin Panel</span>
                   <div className="flex gap-4 ml-auto">
                      <button type="button" onClick={() => { stopCamera(); onClose(); }} className="h-12 px-8 rounded-xl text-xs font-bold text-gray-500 hover:text-gray-900 transition-all uppercase">Discard</button>
                      <button type="submit" className="h-12 px-10 bg-blue-600 text-white rounded-xl flex items-center gap-2 text-xs font-bold uppercase shadow-[0_10px_20px_rgba(37,99,235,0.2)] hover:bg-blue-700 hover:shadow-[0_15px_30px_rgba(37,99,235,0.3)] transition-all">

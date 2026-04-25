@@ -67,8 +67,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {/* Animated Aurora Glow inside card */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-aurora-cyan to-transparent opacity-50" />
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 x: ['-50%', '50%', '-50%'],
                 opacity: [0.1, 0.2, 0.1]
               }}
@@ -88,15 +88,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="text-center mb-10">
               <div className="flex justify-center mb-6">
                 <div className="p-4 rounded-3xl bg-aurora-cyan/5 border border-aurora-cyan/10 relative group">
-                  <div className="absolute inset-0 bg-aurora-cyan/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <Logo className="w-20 h-auto relative z-10 brightness-200 contrast-125" variant="light" />
+                  <Logo 
+                    variant="celestial" 
+                    showText={false}
+                    className="scale-110 transition-transform duration-700"
+                  />
                 </div>
               </div>
               <h2 className="text-4xl font-display font-black tracking-tight text-white mb-2">
                 {isLogin ? 'Sign In' : 'Create Account'}
               </h2>
               <p className="text-[9px] font-mono uppercase tracking-[0.5em] text-aurora-cyan/60">
-                {isLogin ? 'Enter your details to access your account' : 'Join ChocoLux to start your journey'}
+                {isLogin ? 'Enter your details to access your account' : 'Join British Chocolate Store to start your journey'}
               </p>
             </div>
 
@@ -166,16 +169,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </button>
             </div>
           </div>
-          
+
           <div className="bg-white/5 p-6 flex items-center justify-center gap-12 border-t border-white/5 overflow-hidden relative">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-aurora-cyan/30 to-transparent" />
             <div className="flex items-center gap-3 opacity-20">
-               <Fingerprint size={12} className="text-aurora-cyan" />
-               <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">SECURE LOGIN</span>
+              <Fingerprint size={12} className="text-aurora-cyan" />
+              <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">SECURE LOGIN</span>
             </div>
             <div className="flex items-center gap-3 opacity-20">
-               <Cpu size={12} className="text-aurora-purple" />
-               <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">ENCRYPTED</span>
+              <Cpu size={12} className="text-aurora-purple" />
+              <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-white">ENCRYPTED</span>
             </div>
           </div>
         </motion.div>

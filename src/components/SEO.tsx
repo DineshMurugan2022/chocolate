@@ -9,13 +9,13 @@ interface SEOProps {
 }
 
 export default function SEO({ 
-  title = "ChocoLux | The Ultimate Chocolate Shop Experience", 
-  description = "Discover artisanal chocolates crafted with heritage ingredients like Karupatti and Himalayan Honey. The finest chocolate shop experience in India.",
+  title = "British Chocolate Store | The Ultimate Chocolate Experience", 
+  description = "Discover artisanal chocolates crafted with heritage ingredients. The finest chocolate experience in India.",
   image = "/og-image.jpg",
-  url = "https://chocolux.in",
+  url = "https://britishchocolate.in",
   type = "website"
 }: SEOProps) {
-  const siteTitle = title.includes("ChocoLux") ? title : `${title} | ChocoLux`;
+  const siteTitle = title.includes("British Chocolate") ? title : `${title} | British Chocolate Store`;
 
   return (
     <Helmet>

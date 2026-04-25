@@ -88,7 +88,7 @@ const Checkout = () => {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
-        name: 'Asian Chocolate Store',
+        name: 'British Chocolate Store',
         description: 'Heritage Registry Acquisition',
         order_id: order.id,
         handler: async (response: RazorpayResponse) => {
@@ -133,7 +133,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-black relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-cocoa-deep selection:bg-burnt-caramel selection:text-white relative overflow-hidden">
 
       {/* Heritage Grid Motif & Texture */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -152,7 +152,7 @@ const Checkout = () => {
 
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-6 text-gold-soft/20 hover:text-gold-soft transition-all mb-20 uppercase text-[9px] tracking-[0.8em] font-black group"
+          className="flex items-center gap-6 text-cocoa-deep/20 hover:text-cocoa-deep transition-all mb-20 uppercase text-[9px] tracking-[0.8em] font-black group"
         >
           <ChevronLeft size={16} className="group-hover:-translate-x-3 transition-transform" /> Back_to_Registry
         </button>
@@ -163,14 +163,14 @@ const Checkout = () => {
           <div className="space-y-32">
 
             <motion.section className="space-y-12" variants={fadeDown}>
-              <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gold-soft/10 pb-10 gap-6">
+              <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gold-soft/20 pb-10 gap-6">
                 <div className="space-y-4">
-                  <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-gold-soft/40">Section_01A</span>
-                  <h1 className="text-5xl md:text-7xl font-display font-black leading-[0.8] tracking-tighter uppercase text-gold-soft">
-                    Acquisition <span className="italic font-light text-gold-soft/20">Matrix</span>
+                  <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-burnt-caramel/40">Section_01A</span>
+                  <h1 className="text-5xl md:text-7xl font-display font-black leading-[0.8] tracking-tighter uppercase text-cocoa-deep">
+                    Acquisition <span className="italic font-light text-cocoa-deep/20">Matrix</span>
                   </h1>
                 </div>
-                <Logo className="w-32 h-auto opacity-20 hidden md:block" variant="light" />
+                <Logo className="w-32 h-auto opacity-20 hidden md:block" variant="dark" />
               </div>
 
               <div className="space-y-8">
@@ -183,39 +183,39 @@ const Checkout = () => {
                     <motion.div
                       layout
                       key={item.id}
-                      className="p-10 bg-black/40 backdrop-blur-3xl rounded-[48px] border border-gold-soft/10 flex flex-wrap lg:flex-nowrap items-center gap-10 group shadow-sm hover:shadow-2xl transition-all duration-700"
+                      className="p-10 bg-white/40 backdrop-blur-3xl rounded-[48px] border border-gold-soft/20 flex flex-wrap lg:flex-nowrap items-center gap-10 group shadow-sm hover:shadow-2xl transition-all duration-700"
                     >
-                      <div className="size-32 bg-black/40 rounded-[32px] overflow-hidden shrink-0 border border-gold-soft/10 p-4">
+                      <div className="size-32 bg-white/40 rounded-[32px] overflow-hidden shrink-0 border border-gold-soft/20 p-4">
                         <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000" />
                       </div>
 
                       <div className="flex-grow space-y-3">
                         <div className="flex items-center gap-4">
-                          <div className="h-[1px] w-10 bg-gold-soft/20" />
-                          <span className="font-body text-[9px] font-black text-gold-soft uppercase tracking-[0.4em]">{item.category || 'Limited Piece'}</span>
+                          <div className="h-[1px] w-10 bg-burnt-caramel/20" />
+                          <span className="font-body text-[9px] font-black text-burnt-caramel uppercase tracking-[0.4em]">{item.category || 'Limited Piece'}</span>
                         </div>
-                        <h3 className="text-3xl font-display text-gold-soft italic leading-tight">{item.name}</h3>
-                        <p className="font-mono text-[9px] text-gold-soft/20 uppercase tracking-[0.2em] font-black">ORIGIN_BATCH_{item.id.slice(-6).toUpperCase()}</p>
+                        <h3 className="text-3xl font-display text-cocoa-deep italic leading-tight">{item.name}</h3>
+                        <p className="font-mono text-[9px] text-cocoa-deep/20 uppercase tracking-[0.2em] font-black">ORIGIN_BATCH_{item.id.slice(-6).toUpperCase()}</p>
                       </div>
 
-                      <div className="flex items-center gap-6 bg-black/40 p-2 rounded-[24px] border border-gold-soft/10 self-end lg:self-center">
+                      <div className="flex items-center gap-6 bg-white/40 p-2 rounded-[24px] border border-gold-soft/20 self-end lg:self-center">
                         <button
                           onClick={() => dispatch(decrementQuantity(item.id))}
-                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-gold-soft/30 hover:text-gold-soft shadow-sm active:scale-90"
+                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-burnt-caramel/30 hover:text-burnt-caramel shadow-sm active:scale-90"
                         >
                           <Minus size={14} />
                         </button>
-                        <span className="w-10 text-center font-body font-black text-gold-soft text-sm">{item.quantity}</span>
+                        <span className="w-10 text-center font-body font-black text-cocoa-deep text-sm">{item.quantity}</span>
                         <button
                           onClick={() => dispatch(addToCart(item))}
-                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-gold-soft/30 hover:text-gold-soft shadow-sm active:scale-90"
+                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-burnt-caramel/30 hover:text-burnt-caramel shadow-sm active:scale-90"
                         >
                           <Plus size={14} />
                         </button>
                       </div>
 
                       <div className="text-right min-w-[120px] self-end lg:self-center">
-                        <p className="text-4xl font-display font-black text-gold-soft tracking-tighter shadow-sm">₹{item.price * item.quantity}</p>
+                        <p className="text-4xl font-display font-black text-cocoa-deep tracking-tighter shadow-sm">₹{item.price * item.quantity}</p>
                       </div>
                     </motion.div>
                   ))
@@ -225,71 +225,71 @@ const Checkout = () => {
 
             {/* Curatorial Registry Integration (Shipping) */}
             <motion.section
-              className="p-16 md:p-24 bg-black/40 backdrop-blur-3xl rounded-[80px] border border-gold-soft/10 shadow-3xl space-y-20 relative overflow-hidden"
+              className="p-16 md:p-24 bg-white/40 backdrop-blur-3xl rounded-[80px] border border-gold-soft/20 shadow-3xl space-y-20 relative overflow-hidden"
               variants={fadeUp}
               viewport={sectionViewport}
               initial={reduceMotion ? false : 'hidden'}
               whileInView="show"
             >
-              <div className="absolute top-0 left-0 w-2 h-full bg-gold-soft/10" />
+              <div className="absolute top-0 left-0 w-2 h-full bg-burnt-caramel/10" />
 
-              <div className="flex flex-col md:flex-row items-center justify-between border-b border-gold-soft/10 pb-12 gap-10">
+              <div className="flex flex-col md:flex-row items-center justify-between border-b border-gold-soft/20 pb-12 gap-10">
                 <div className="space-y-4">
                   <div className="flex items-center gap-6">
-                    <div className="size-14 rounded-[20px] bg-gold-soft flex items-center justify-center text-black shadow-xl">
+                    <div className="size-14 rounded-[20px] bg-burnt-caramel flex items-center justify-center text-white shadow-xl">
                       <Ship size={20} />
                     </div>
-                    <h2 className="text-4xl font-display italic leading-none text-gold-soft">Curatorial <span className="text-gold-soft font-black not-italic tracking-tighter">Registry</span></h2>
+                    <h2 className="text-4xl font-display italic leading-none text-cocoa-deep">Curatorial <span className="text-cocoa-deep font-black not-italic tracking-tighter">Registry</span></h2>
                   </div>
                 </div>
                 <div className="flex items-center gap-6 opacity-40">
-                  <ShieldCheck size={20} className="text-gold-soft" />
-                  <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-gold-soft">SECURE_EXTRACTION_PROTOCOL</span>
+                  <ShieldCheck size={20} className="text-burnt-caramel" />
+                  <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-cocoa-deep">SECURE_EXTRACTION_PROTOCOL</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Authorized Curator Identity</span>
+                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Authorized Curator Identity</span>
                   <input
                     type="text"
                     value={shippingData.name}
                     onChange={(e) => setShippingData({ ...shippingData, name: e.target.value })}
                     placeholder="HARVEST_NAME"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
 
                 <div className="space-y-6">
-                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Digital Link</span>
+                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Digital Link</span>
                   <input
                     type="email"
                     value={shippingData.email}
                     onChange={(e) => setShippingData({ ...shippingData, email: e.target.value })}
                     placeholder="EMAIL_STATION"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
 
                 <div className="space-y-6">
-                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Voice Path</span>
+                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Voice Path</span>
                   <input
                     type="tel"
                     value={shippingData.phoneNumber}
                     onChange={(e) => setShippingData({ ...shippingData, phoneNumber: e.target.value })}
                     placeholder="+91_MOBILE_FREQ"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
 
                 <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.8em] ml-4">Extraction Point Address</span>
+                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Extraction Point Address</span>
                   <input
                     type="text"
                     value={shippingData.address}
                     onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
                     placeholder="UNIT_STREET_AREA_ESTATE"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
 
@@ -299,7 +299,7 @@ const Checkout = () => {
                     value={shippingData.city}
                     onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
                     placeholder="DISTRICT"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
 
@@ -309,7 +309,7 @@ const Checkout = () => {
                     value={shippingData.postalCode}
                     onChange={(e) => setShippingData({ ...shippingData, postalCode: e.target.value })}
                     placeholder="PIN_CODE"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/10 rounded-none p-8 pl-0 text-gold-soft focus:outline-none focus:border-gold-soft transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
                   />
                 </div>
               </div>
@@ -318,29 +318,29 @@ const Checkout = () => {
 
           {/* Right Side: High-End Heritage Liquidation */}
           <motion.div className="sticky top-40" variants={fadeUp}>
-            <div className="p-16 bg-black/40 backdrop-blur-3xl rounded-[100px] text-gold-soft space-y-20 shadow-4xl relative overflow-hidden group border-8 border-gold-soft/5">
+            <div className="p-16 bg-white/60 backdrop-blur-3xl rounded-[100px] text-cocoa-deep space-y-20 shadow-4xl relative overflow-hidden group border-8 border-gold-soft/5">
               {/* Internal Text Texture */}
-              <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none font-display font-black text-[30vw] italic text-white -rotate-12 translate-y-1/2">ACS</div>
+              <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none font-display font-black text-[30vw] italic text-cocoa-deep -rotate-12 translate-y-1/2">ACS</div>
 
-              <div className="space-y-6 border-b border-gold-soft/10 pb-12 text-center">
-                <Logo className="w-48 h-auto mx-auto mb-8" variant="light" />
-                <h2 className="text-4xl font-display italic">Acquisition <span className="text-gold-soft font-black not-italic">Liquidation</span></h2>
-                <p className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-gold-soft/30 italic">Registry_Verified_v09</p>
+              <div className="space-y-6 border-b border-gold-soft/20 pb-12 text-center">
+                <Logo className="w-48 h-auto mx-auto mb-8" variant="dark" />
+                <h2 className="text-4xl font-display italic">Acquisition <span className="text-cocoa-deep font-black not-italic">Liquidation</span></h2>
+                <p className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-cocoa-deep/30 italic">Registry_Verified_v09</p>
               </div>
 
               <div className="space-y-12">
                 <div className="flex justify-between items-center px-4">
-                  <span className="font-body text-white/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Net Batch Valuation</span>
+                  <span className="font-body text-cocoa-deep/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Net Batch Valuation</span>
                   <span className="font-display font-black text-3xl tracking-tighter">₹{totalPrice.toFixed(0)}</span>
                 </div>
                 <div className="flex justify-between items-center px-4">
-                  <span className="font-body text-white/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Matrix Logistics</span>
+                  <span className="font-body text-cocoa-deep/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Matrix Logistics</span>
                   <span className="text-burnt-caramel font-black uppercase tracking-[0.4em] text-[11px] italic">Complimentary</span>
                 </div>
               </div>
 
-              <div className="space-y-6 pt-12 border-t border-gold-soft/10 text-center">
-                <span className="font-body text-gold-soft/20 tracking-[0.8em] uppercase text-[11px] font-black">Authorized_Total</span>
+              <div className="space-y-6 pt-12 border-t border-gold-soft/20 text-center">
+                <span className="font-body text-cocoa-deep/20 tracking-[0.8em] uppercase text-[11px] font-black">Authorized_Total</span>
                 <div className="flex items-center justify-center">
                   <span className="text-8xl font-display font-black tracking-tighter shadow-sm">₹{grandTotal.toFixed(0)}</span>
                 </div>
@@ -350,7 +350,7 @@ const Checkout = () => {
                   <button
                     disabled={loading || items.length === 0}
                     onClick={handleRazorpayPayment}
-                    className="w-full h-24 bg-gold-soft hover:bg-gold-soft/80 text-black font-body font-black rounded-[40px] shadow-3xl flex items-center justify-center gap-10 transition-all transform group active:scale-[0.98] disabled:opacity-50"
+                    className="w-full h-24 bg-burnt-caramel hover:bg-cocoa-deep text-white font-body font-black rounded-[40px] shadow-3xl flex items-center justify-center gap-10 transition-all transform group active:scale-[0.98] disabled:opacity-50"
                   >
                     <span className="uppercase tracking-[0.6em] text-[13px]">
                       {loading ? 'AUTHENTICATING...' : 'FINALIZE_ACQUISITION'}
@@ -360,7 +360,7 @@ const Checkout = () => {
                 ) : (
                   <button
                     onClick={() => setIsAuthModalOpen(true)}
-                    className="w-full h-24 bg-black/40 hover:bg-black/60 text-gold-soft font-body font-black rounded-[40px] flex items-center justify-center gap-10 transition-all border border-gold-soft/10 uppercase tracking-[0.4em] text-[12px] italic"
+                    className="w-full h-24 bg-white/40 hover:bg-white/60 text-cocoa-deep font-body font-black rounded-[40px] flex items-center justify-center gap-10 transition-all border border-gold-soft/20 uppercase tracking-[0.4em] text-[12px] italic"
                   >
                     Identify as Curator to Proceed <Lock size={20} />
                   </button>

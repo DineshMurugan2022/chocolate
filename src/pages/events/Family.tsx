@@ -57,13 +57,13 @@ export default function FamilyEvent() {
 
   return (
     <motion.div
-      className="min-h-screen bg-cocoa-deep text-gold-soft selection:bg-gold-soft selection:text-cocoa-deep overflow-x-hidden relative"
+      className="min-h-screen bg-transparent text-cocoa-deep selection:bg-burnt-caramel selection:text-white overflow-x-hidden relative"
       variants={stagger(0.16)}
       initial={reduceMotion ? false : 'hidden'}
       animate="show"
     >
       <SEO
-        title="Family Gathering & Tradition Collections | ChocoLux"
+        title="Family Gathering & Tradition Collections | British Chocolate Store"
         description="Share the love with artisanal chocolate designed for the whole family. From traditional Karupatti truffles to modern sharing crates, we celebrate the bond of togetherness."
       />
       <Header setIsCartOpen={setIsCartOpen} />
@@ -78,94 +78,94 @@ export default function FamilyEvent() {
       >
         <div className="absolute inset-0 z-0">
           <img src="/family_hero.png" alt="Family chocolate gathering" className="w-full h-full object-cover object-center opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cocoa-deep/60 via-cocoa-deep/40 to-cocoa-deep" />
+          <div className="absolute inset-0 bg-gradient-to-b from-parchment-base/60 via-parchment-base/40 to-transparent" />
         </div>
         <div className="relative z-10 space-y-8 max-w-5xl mx-auto pt-32 pb-20">
           <div className="flex items-center justify-center gap-6">
-            <div className="h-[1px] w-20 bg-gold-soft/40" />
-            <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-gold-soft/70">The Hearth Registry</span>
-            <div className="h-[1px] w-20 bg-gold-soft/40" />
+            <div className="h-[1px] w-20 bg-burnt-caramel/40" />
+            <span className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-burnt-caramel/70">The Hearth Registry</span>
+            <div className="h-[1px] w-20 bg-burnt-caramel/40" />
           </div>
-          <h1 className="text-7xl md:text-[10vw] font-display font-black leading-[0.85] tracking-tighter">
-            Family<br /><span className="italic font-light text-gold-soft/30 uppercase tracking-widest pl-4 text-5xl md:text-[6vw]">Curation</span>
+          <h1 className="text-7xl md:text-[10vw] font-display font-black leading-[0.85] tracking-tighter text-cocoa-deep">
+            Family<br /><span className="italic font-light text-burnt-caramel/30 uppercase tracking-widest pl-4 text-5xl md:text-[6vw]">Curation</span>
           </h1>
-          <p className="max-w-2xl mx-auto font-serif text-xl md:text-2xl italic text-gold-soft/60 leading-relaxed">
-            The richest flavors in the world are the ones shared with people you love. ChocoLux crafts experiences designed for the whole family — from the youngest grandchild to the eldest matriarch — rooted in heritage, elevated to luxury.
+          <p className="max-w-2xl mx-auto font-serif text-xl md:text-2xl italic text-cocoa-deep/60 leading-relaxed">
+            The richest flavors in the world are the ones shared with people you love. British Chocolate Store crafts experiences designed for the whole family — from the youngest grandchild to the eldest matriarch — rooted in heritage, elevated to luxury.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <a href="#heritage" className="px-8 py-4 bg-gold-soft text-cocoa-deep font-body font-black uppercase tracking-widest text-xs hover:bg-white transition-colors rounded-full">
+            <a href="#heritage" className="px-8 py-4 bg-burnt-caramel text-white font-body font-black uppercase tracking-widest text-xs hover:bg-cocoa-deep transition-colors rounded-full">
               Heritage Flavors
             </a>
-            <a href="#occasions" className="px-8 py-4 border border-gold-soft/40 text-gold-soft font-body font-black uppercase tracking-widest text-xs hover:border-gold-soft transition-colors rounded-full">
+            <a href="#occasions" className="px-8 py-4 border border-burnt-caramel/40 text-burnt-caramel font-body font-black uppercase tracking-widest text-xs hover:border-burnt-caramel transition-colors rounded-full">
               Family Occasions
             </a>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cocoa-deep to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-transparent to-transparent z-10" />
       </motion.section>
 
       {/* ── PHILOSOPHY ── */}
       <motion.section className="px-6 lg:px-24 py-24 max-w-7xl mx-auto" variants={fadeUp} viewport={sectionViewport}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
-            <span className="font-body text-[10px] text-gold-soft/50 uppercase tracking-[0.8em]">Our Heritage</span>
-            <h2 className="text-4xl md:text-5xl font-display italic font-black leading-tight">
+            <span className="font-body text-[10px] text-cocoa-deep/50 uppercase tracking-[0.8em]">Our Heritage</span>
+            <h2 className="text-4xl md:text-5xl font-display italic font-black leading-tight text-cocoa-deep">
               Chocolate rooted in the flavors your grandmother loved.
             </h2>
-            <p className="font-serif text-gold-soft/60 leading-relaxed text-lg">
+            <p className="font-serif text-cocoa-deep/60 leading-relaxed text-lg">
               We are deeply proud of our South Indian heritage. From the palm jaggery of Thanjavur to the cardamom valleys of Idukki, we source ingredients that have fed families for generations and transform them into something new, without losing what made them special.
             </p>
-            <p className="font-serif text-gold-soft/60 leading-relaxed text-lg">
+            <p className="font-serif text-cocoa-deep/60 leading-relaxed text-lg">
               Our Family Collection is built on the belief that food is memory. Every chocolate we craft carries a thread back to a simpler time — a festival afternoon, a grandparent's kitchen, the smell of coconut oil and cardamom on a Sunday morning. We just make it a little more golden.
             </p>
           </div>
-          <div className="relative rounded-[40px] overflow-hidden aspect-square">
+          <div className="relative rounded-[40px] overflow-hidden aspect-square border border-gold-soft/20">
             <img src="/family_hero.png" alt="Family sharing chocolate" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-tl from-cocoa-deep/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-tl from-parchment-shadow/60 to-transparent" />
           </div>
         </div>
       </motion.section>
 
-      {/* ── HERITAGE FLAVORS ── */}
-      <motion.section id="heritage" className="px-6 lg:px-20 py-20 bg-white/[0.02] border-y border-gold-soft/10" variants={fadeUp} viewport={sectionViewport}>
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="text-center space-y-4">
-            <span className="font-body text-[10px] text-gold-soft/50 uppercase tracking-[0.8em]">Taste Your Roots</span>
-            <h2 className="text-4xl font-display italic font-black">Heritage Signature Flavors</h2>
-            <p className="max-w-xl mx-auto font-serif text-gold-soft/50">Flavors crafted from regional Tamil Nadu and South Indian ingredients, elevated to couverture chocolate excellence.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {heritageFlavors.map((f, i) => (
-              <div key={i} className="p-10 rounded-3xl border border-gold-soft/15 bg-white/[0.02] hover:border-gold-soft/30 transition-colors space-y-3">
-                <div className="flex items-start justify-between">
-                  <h3 className="text-2xl font-display italic font-black">{f.name}</h3>
-                  <span className="text-xs font-body text-gold-soft/30 uppercase tracking-widest ml-4 text-right">{f.origin}</span>
-                </div>
-                <p className="font-serif text-gold-soft/55 leading-relaxed">{f.note}</p>
-              </div>
-            ))}
-          </div>
+       {/* ── HERITAGE FLAVORS ── */}
+       <motion.section id="heritage" className="px-6 lg:px-20 py-20 bg-white/40 border-y border-gold-soft/10" variants={fadeUp} viewport={sectionViewport}>
+         <div className="max-w-6xl mx-auto space-y-16">
+           <div className="text-center space-y-4">
+             <span className="font-body text-[10px] text-cocoa-deep/50 uppercase tracking-[0.8em]">Taste Your Roots</span>
+             <h2 className="text-4xl font-display italic font-black text-cocoa-deep">Heritage Signature Flavors</h2>
+             <p className="max-w-xl mx-auto font-serif text-cocoa-deep/50">Flavors crafted from regional Tamil Nadu and South Indian ingredients, elevated to couverture chocolate excellence.</p>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+             {heritageFlavors.map((f, i) => (
+               <div key={i} className="p-10 rounded-3xl border border-gold-soft/20 bg-white/40 hover:border-burnt-caramel/30 transition-colors space-y-3">
+                 <div className="flex items-start justify-between">
+                   <h3 className="text-2xl font-display italic font-black text-cocoa-deep">{f.name}</h3>
+                   <span className="text-xs font-body text-burnt-caramel/30 uppercase tracking-widest ml-4 text-right">{f.origin}</span>
+                 </div>
+                 <p className="font-serif text-cocoa-deep/55 leading-relaxed">{f.note}</p>
+               </div>
+             ))}
+           </div>
         </div>
       </motion.section>
 
-      {/* ── FAMILY OCCASIONS ── */}
-      <motion.section id="occasions" className="px-6 lg:px-20 py-24" variants={fadeUp} viewport={sectionViewport}>
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="text-center space-y-4">
-            <span className="font-body text-[10px] text-gold-soft/50 uppercase tracking-[0.8em]">For Every Gathering</span>
-            <h2 className="text-4xl font-display italic font-black">Family Occasions We Love</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {occasions.map((o, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white/[0.03] border border-gold-soft/10 space-y-5 hover:border-gold-soft/30 transition-colors">
-                <div className="text-gold-soft w-fit">{o.icon}</div>
-                <h3 className="text-xl font-display italic font-black">{o.title}</h3>
-                <p className="font-serif text-gold-soft/50 leading-relaxed text-sm">{o.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
+       {/* ── FAMILY OCCASIONS ── */}
+       <motion.section id="occasions" className="px-6 lg:px-20 py-24" variants={fadeUp} viewport={sectionViewport}>
+         <div className="max-w-7xl mx-auto space-y-16">
+           <div className="text-center space-y-4">
+             <span className="font-body text-[10px] text-cocoa-deep/50 uppercase tracking-[0.8em]">For Every Gathering</span>
+             <h2 className="text-4xl font-display italic font-black text-cocoa-deep">Family Occasions We Love</h2>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+             {occasions.map((o, i) => (
+               <div key={i} className="p-8 rounded-3xl bg-white/40 border border-gold-soft/10 space-y-5 hover:border-burnt-caramel/30 transition-colors">
+                 <div className="text-burnt-caramel w-fit">{o.icon}</div>
+                 <h3 className="text-xl font-display italic font-black text-cocoa-deep">{o.title}</h3>
+                 <p className="font-serif text-cocoa-deep/50 leading-relaxed text-sm">{o.desc}</p>
+               </div>
+             ))}
+           </div>
+         </div>
+       </motion.section>
 
       {/* ── PRODUCT GALLERY ── */}
       <motion.section className="px-6 lg:px-20 py-24 bg-white/[0.02] border-t border-gold-soft/10 space-y-16" variants={fadeUp} viewport={sectionViewport}>
@@ -178,15 +178,15 @@ export default function FamilyEvent() {
             <div className="py-20 flex flex-col items-center justify-center animate-pulse">
               <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-gold-soft/20">Curating Family Collection...</span>
             </div>
-          ) : products.length === 0 ? (
-            <div className="py-20 flex flex-col items-center justify-center gap-8 bg-black/20 rounded-[60px] border border-dashed border-gold-soft/10">
-              <Users size={48} className="text-gold-soft/10" />
-              <div className="text-center space-y-3">
-                <p className="font-display text-2xl italic text-gold-soft/30">Sharing is the oldest ritual.</p>
-                <p className="font-serif text-gold-soft/40 max-w-md">Our family collections can be built to order. Explore our shop or contact us to build your own family sharing crate.</p>
-              </div>
-              <a href="/shop" className="px-6 py-3 bg-gold-soft/10 border border-gold-soft/30 text-gold-soft rounded-full font-body uppercase tracking-widest text-xs hover:bg-gold-soft/20 transition-colors">Browse All Collections</a>
-            </div>
+           ) : products.length === 0 ? (
+             <div className="py-20 flex flex-col items-center justify-center gap-8 bg-white/40 rounded-[60px] border border-dashed border-gold-soft/20 text-center px-10">
+               <Users size={48} className="text-cocoa-deep/10" />
+               <div className="text-center space-y-3">
+                 <p className="font-display text-2xl italic text-cocoa-deep/30">Sharing is the oldest ritual.</p>
+                 <p className="font-serif text-cocoa-deep/40 max-w-md">Our family collections can be built to order. Explore our shop or contact us to build your own family sharing crate.</p>
+               </div>
+               <a href="/shop" className="px-6 py-3 bg-burnt-caramel text-white rounded-full font-body uppercase tracking-widest text-xs hover:bg-cocoa-deep transition-colors">Browse All Collections</a>
+             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
               {products.map((p, idx) => (

@@ -91,7 +91,7 @@ export default function Home() {
          animate="show"
       >
          <SEO 
-            title="ChocoLux | Premium Chocolate Shop in Tamil Nadu"
+            title="British Chocolate Store | Premium Chocolate in Tamil Nadu"
             description="Experience the finest artisanal chocolates in India. Crafted with heritage ingredients like Karupatti and Himalayan Honey. Your luxury chocolate destination in Chennai and beyond."
          />
          <Header setIsCartOpen={setIsCartOpen} />
@@ -119,11 +119,11 @@ export default function Home() {
                   transition={{ duration: 2 }}
                   className="max-w-4xl mx-auto space-y-8"
                >
-                  <span className="font-body text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-gold-soft opacity-60">The Botanical Odyssey</span>
-                  <h2 className="text-3xl md:text-6xl font-display italic font-black text-gold-soft leading-tight">
+                  <span className="font-body text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-burnt-caramel opacity-60">The Botanical Odyssey</span>
+                  <h2 className="text-3xl md:text-6xl font-display italic font-black text-cocoa-deep leading-tight">
                      A symphony of rare cocoa estates <br /> harvested for the modern connoisseur.
                   </h2>
-                  <div className="w-[1px] h-12 bg-gradient-to-b from-gold-soft/40 to-transparent mx-auto" />
+                  <div className="w-[1px] h-12 bg-gradient-to-b from-burnt-caramel/40 to-transparent mx-auto" />
                </motion.div>
             </motion.section>
 
@@ -140,13 +140,13 @@ export default function Home() {
                   <div className="flex flex-wrap justify-center gap-6">
                      <button
                         onClick={() => { setActiveTab('brands'); setSelectedCollection(''); }}
-                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'brands' ? 'bg-gold-soft text-black border-gold-soft shadow-[0_0_30px_rgba(212,175,55,0.4)]' : 'bg-transparent text-gold-soft/60 border-gold-soft/20 hover:border-gold-soft/50 hover:text-gold-soft'}`}
+                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'brands' ? 'bg-burnt-caramel text-white border-burnt-caramel shadow-[0_0_30px_rgba(179,83,15,0.4)]' : 'bg-transparent text-burnt-caramel/60 border-burnt-caramel/20 hover:border-burnt-caramel/50 hover:text-burnt-caramel'}`}
                      >
                         Discover Brands
                      </button>
                      <button
                         onClick={() => { setActiveTab('events'); setSelectedCollection(''); }}
-                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'events' ? 'bg-gold-soft text-black border-gold-soft shadow-[0_0_30px_rgba(212,175,55,0.4)]' : 'bg-transparent text-gold-soft/60 border-gold-soft/20 hover:border-gold-soft/50 hover:text-gold-soft'}`}
+                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'events' ? 'bg-burnt-caramel text-white border-burnt-caramel shadow-[0_0_30px_rgba(179,83,15,0.4)]' : 'bg-transparent text-burnt-caramel/60 border-burnt-caramel/20 hover:border-burnt-caramel/50 hover:text-burnt-caramel'}`}
                      >
                         Shop by Events
                      </button>
@@ -175,8 +175,8 @@ export default function Home() {
                            className="space-y-12 relative"
                         >
                            <div className="text-center space-y-4">
-                              <span className="font-body text-[8px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-gold-soft opacity-60">The Curator's Calendar</span>
-                              <h2 className="text-4xl md:text-7xl font-display italic font-black text-white">Tailored Occasions</h2>
+                              <span className="font-body text-[8px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-burnt-caramel opacity-60">The Curator's Calendar</span>
+                              <h2 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep">Tailored Occasions</h2>
                            </div>
 
                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 max-w-[1400px] mx-auto">
@@ -219,13 +219,13 @@ export default function Home() {
                <div className="max-w-[1400px] mx-auto relative z-10">
                   <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-10">
                      <div className="flex flex-col gap-6 max-w-2xl">
-                        <span className="font-body text-[8px] md:text-[14px] font-black uppercase text-gold-soft tracking-[0.4em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
-                        <h2 className="text-4xl md:text-7xl lg:text-9xl font-display font-black leading-[0.85] tracking-tight text-white opacity-100">
-                           Reveal the <br /> <span className="not-italic font-black text-gold-soft">Soul</span>
+                        <span className="font-body text-[8px] md:text-[14px] font-black uppercase text-burnt-caramel tracking-[0.4em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
+                        <h2 className="text-4xl md:text-7xl lg:text-9xl font-display font-black leading-[0.85] tracking-tight text-cocoa-deep opacity-100">
+                           Reveal the <br /> <span className="not-italic font-black text-burnt-caramel">Soul</span>
                         </h2>
                      </div>
                      <div className="max-w-xs text-right">
-                        <p className="font-serif italic text-xl md:text-4xl leading-relaxed text-gold-soft font-bold">
+                        <p className="font-serif italic text-xl md:text-4xl leading-relaxed text-cocoa-deep/60 font-bold">
                            Experience the molecular architecture of our heritage artifacts.
                         </p>
                      </div>
@@ -259,8 +259,8 @@ export default function Home() {
             >
                <div className="max-w-[1400px] mx-auto">
                   <div className="mb-20 text-center space-y-4">
-                     <h2 className="text-5xl md:text-8xl font-display italic font-black text-white">The Heritage Crate</h2>
-                     <p className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-gold-soft">Design Your Personal Collection</p>
+                     <h2 className="text-5xl md:text-8xl font-display italic font-black text-cocoa-deep">The Heritage Crate</h2>
+                     <p className="font-body text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] text-burnt-caramel">Design Your Personal Collection</p>
                   </div>
                   <UnifiedBoxBuilder 
                      size={9} 
@@ -288,13 +288,13 @@ export default function Home() {
                whileInView="show"
             >
                <div className="max-w-4xl mx-auto text-center space-y-16">
-                  <h3 className="text-4xl md:text-7xl font-display italic font-black text-gold-soft leading-tight">
+                  <h3 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep leading-tight">
                      "The most beautiful chocolate journey <br /> is the one that never ends."
                   </h3>
                   <div className="flex items-center justify-center gap-10">
-                     <div className="h-[2px] w-24 bg-gold-soft" />
-                     <span className="font-body text-[12px] font-black uppercase tracking-[1em] text-gold-soft">END_REGISTRY</span>
-                     <div className="h-[2px] w-24 bg-gold-soft" />
+                     <div className="h-[2px] w-24 bg-burnt-caramel/40" />
+                     <span className="font-body text-[12px] font-black uppercase tracking-[1em] text-burnt-caramel">END_REGISTRY</span>
+                     <div className="h-[2px] w-24 bg-burnt-caramel/40" />
                   </div>
                </div>
             </motion.section>

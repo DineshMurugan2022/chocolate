@@ -71,9 +71,9 @@ export default function Subscription() {
   };
 
   return (
-    <div className="min-h-screen bg-[#120807] text-white selection:bg-gold-soft selection:text-black overflow-x-hidden pt-32">
+    <div className="min-h-screen bg-transparent text-cocoa-deep selection:bg-burnt-caramel selection:text-white overflow-x-hidden pt-32">
       <SEO 
-        title="The ChocoLux Society | Premium Chocolate Subscriptions"
+        title="The British Chocolate Society | Premium Chocolate Subscriptions"
         description="Join an exclusive monthly journey through the world's finest cocoa. Tiered subscriptions curated for the true chocolate enthusiast."
       />
       
@@ -90,7 +90,7 @@ export default function Subscription() {
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-body text-[11px] font-black uppercase tracking-[0.8em] text-gold-soft"
+            className="font-body text-[11px] font-black uppercase tracking-[0.8em] text-burnt-caramel"
           >
             The Society Entry
           </motion.span>
@@ -98,15 +98,15 @@ export default function Subscription() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-6xl md:text-[8vw] font-display font-black leading-[0.85] tracking-tighter"
+            className="text-6xl md:text-[8vw] font-display font-black leading-[0.85] tracking-tighter text-cocoa-deep"
           >
-            Monthly <br /> <span className="italic font-light text-gold-soft/30 uppercase tracking-[0.2em]">Subscription</span>
+            Monthly <br /> <span className="italic font-light text-burnt-caramel/30 uppercase tracking-[0.2em]">Subscription</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="font-serif text-xl md:text-3xl italic text-gold-soft/40 max-w-2xl mx-auto"
+            className="font-serif text-xl md:text-3xl italic text-cocoa-deep/40 max-w-2xl mx-auto"
           >
             Join our inner circle and receive a curated registry of artisanal artifacts delivered to your vault every month.
           </motion.p>
@@ -123,38 +123,38 @@ export default function Subscription() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
-              className={`relative group bg-gradient-to-br ${tier.color} border ${tier.border} rounded-[60px] p-12 flex flex-col items-center text-center space-y-10 hover:border-gold-soft transition-all duration-700`}
+              className={`relative group bg-white/40 backdrop-blur-3xl border ${tier.border} rounded-[60px] p-12 flex flex-col items-center text-center space-y-10 hover:border-burnt-caramel transition-all duration-700`}
             >
               {tier.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 bg-gold-soft text-black font-body text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 bg-burnt-caramel text-white font-body text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
                   Most Coveted
                 </div>
               )}
 
-              <div className="size-24 rounded-3xl bg-black/40 border border-white/5 flex items-center justify-center p-6 shadow-2xl">
+              <div className="size-24 rounded-3xl bg-white/60 border border-gold-soft/10 flex items-center justify-center p-6 shadow-2xl">
                 {tier.icon}
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-4xl font-display font-black italic">{tier.name}</h3>
+                <h3 className="text-4xl font-display font-black italic text-cocoa-deep">{tier.name}</h3>
                 <div className="space-y-1">
-                  <p className="text-5xl font-display font-black text-white">₹{tier.price.toLocaleString()}</p>
-                  <p className="font-body text-[10px] font-black uppercase tracking-widest text-gold-soft">{tier.extra}</p>
+                  <p className="text-5xl font-display font-black text-cocoa-deep">₹{tier.price.toLocaleString()}</p>
+                  <p className="font-body text-[10px] font-black uppercase tracking-widest text-burnt-caramel">{tier.extra}</p>
                 </div>
-                <p className="font-serif italic text-white/30 text-sm leading-relaxed">{tier.description}</p>
+                <p className="font-serif italic text-cocoa-deep/30 text-sm leading-relaxed">{tier.description}</p>
               </div>
 
-              <ul className="w-full space-y-4 py-8 border-t border-white/5">
+              <ul className="w-full space-y-4 py-8 border-t border-gold-soft/10">
                 {tier.features.map(f => (
-                  <li key={f} className="flex items-center gap-3 text-xs font-body uppercase tracking-[0.2em] text-white/60">
-                    <Check size={14} className="text-gold-soft shrink-0" /> {f}
+                  <li key={f} className="flex items-center gap-3 text-xs font-body uppercase tracking-[0.2em] text-cocoa-deep/60">
+                    <Check size={14} className="text-burnt-caramel shrink-0" /> {f}
                   </li>
                 ))}
               </ul>
 
               <button 
                 onClick={() => handleSubscribe(tier)}
-                className="w-full py-6 bg-white text-black font-body text-[11px] font-black uppercase tracking-widest rounded-2xl group-hover:bg-gold-soft transition-all duration-500 flex items-center justify-center gap-4"
+                className="w-full py-6 bg-cocoa-deep text-white font-body text-[11px] font-black uppercase tracking-widest rounded-2xl group-hover:bg-burnt-caramel transition-all duration-500 flex items-center justify-center gap-4"
               >
                 Enter the Society <ArrowRight size={14} />
               </button>
@@ -163,30 +163,30 @@ export default function Subscription() {
         </div>
       </section>
 
-      {/* Gifting Section */}
-      <section className="px-6 py-40 lg:px-20 bg-white/[0.02] border-y border-white/5 text-center">
-        <div className="max-w-4xl mx-auto space-y-12">
-          <div className="inline-block p-4 rounded-3xl bg-gold-soft/5 mb-6">
-            <Gift className="text-gold-soft" size={40} />
-          </div>
-          <h2 className="text-5xl md:text-7xl font-display font-black italic text-ivory-warm">Subscription & <span className="text-gold-soft">Gift</span></h2>
-          <p className="font-serif text-2xl italic text-gold-soft/40 leading-relaxed">
-            Bestow the gift of monthly chocolate rituals upon a worthy peer. Our "Plus One" subscription allows you to send a premium box as a recurring gesture of refinement.
-          </p>
-          <div className="flex justify-center gap-8 pt-10">
-            <button className="px-12 py-6 border border-gold-soft text-gold-soft font-body text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-gold-soft hover:text-black transition-all">Send A Society Box</button>
-            <button className="px-12 py-6 bg-gold-soft text-black font-body text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-white transition-all">Gift Card Registry</button>
-          </div>
-        </div>
-      </section>
+       {/* Gifting Section */}
+       <section className="px-6 py-40 lg:px-20 bg-white/20 border-y border-gold-soft/10 text-center">
+         <div className="max-w-4xl mx-auto space-y-12">
+           <div className="inline-block p-4 rounded-3xl bg-burnt-caramel/5 mb-6">
+             <Gift className="text-burnt-caramel" size={40} />
+           </div>
+           <h2 className="text-5xl md:text-7xl font-display font-black italic text-cocoa-deep">Subscription & <span className="text-burnt-caramel">Gift</span></h2>
+           <p className="font-serif text-2xl italic text-cocoa-deep/40 leading-relaxed">
+             Bestow the gift of monthly chocolate rituals upon a worthy peer. Our "Plus One" subscription allows you to send a premium box as a recurring gesture of refinement.
+           </p>
+           <div className="flex justify-center gap-8 pt-10">
+             <button className="px-12 py-6 border border-burnt-caramel text-burnt-caramel font-body text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-burnt-caramel hover:text-white transition-all">Send A Society Box</button>
+             <button className="px-12 py-6 bg-burnt-caramel text-white font-body text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-cocoa-deep transition-all">Gift Card Registry</button>
+           </div>
+         </div>
+       </section>
 
       {/* Society Perks */}
       <section className="px-6 py-40 lg:px-20 overflow-hidden">
          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
             <div className="space-y-12">
                <div className="space-y-4">
-                  <span className="font-body text-[12px] font-black uppercase tracking-[0.8em] text-gold-soft/40">The Member Protocol</span>
-                  <h2 className="text-6xl md:text-8xl font-display italic font-black text-white leading-[0.85]">Society <br /> Privileges</h2>
+                  <span className="font-body text-[12px] font-black uppercase tracking-[0.8em] text-burnt-caramel/40">The Member Protocol</span>
+                  <h2 className="text-6xl md:text-8xl font-display italic font-black text-cocoa-deep leading-[0.85]">Society <br /> Privileges</h2>
                </div>
                <div className="grid grid-cols-1 gap-10">
                   {[
@@ -202,14 +202,14 @@ export default function Subscription() {
                </div>
             </div>
             
-            <div className="relative aspect-square rounded-[60px] border border-gold-soft/10 bg-black/40 flex items-center justify-center p-12 overflow-hidden overflow-hidden">
+            <div className="relative aspect-square rounded-[60px] border border-gold-soft/10 bg-white/40 flex items-center justify-center p-12 overflow-hidden">
                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-gold-soft blur-[100px] rounded-full" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-burnt-caramel blur-[100px] rounded-full" />
                </div>
-               <Calendar className="text-gold-soft relative z-10 opacity-20" size={300} strokeWidth={0.5} />
-               <div className="absolute bottom-16 left-16 right-16 p-8 bg-black/60 backdrop-blur-2xl rounded-3xl border border-gold-soft/10 text-center">
-                  <p className="font-display italic text-2xl text-ivory-warm">Next Dispatch: April 25th</p>
-                  <p className="font-body text-[9px] uppercase font-black tracking-widest text-gold-soft/40 mt-2">Cycle of the Midnight Cocoa</p>
+               <Calendar className="text-burnt-caramel relative z-10 opacity-20" size={300} strokeWidth={0.5} />
+               <div className="absolute bottom-16 left-16 right-16 p-8 bg-white/60 backdrop-blur-2xl rounded-3xl border border-gold-soft/10 text-center">
+                  <p className="font-display italic text-2xl text-cocoa-deep">Next Dispatch: April 25th</p>
+                  <p className="font-body text-[9px] uppercase font-black tracking-widest text-burnt-caramel/40 mt-2">Cycle of the Midnight Cocoa</p>
                </div>
             </div>
          </div>

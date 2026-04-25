@@ -42,7 +42,7 @@ const HoverRevealProductCard = memo(({ product, onAddToCart }: ProductCardProps)
             }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             src={product.image || "https://images.unsplash.com/photo-1548907602-1f062e2a608a?q=80&w=1000"}
-            className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:drop-shadow-[0_45px_65px_rgba(212,175,55,0.15)] transition-all duration-700 mix-blend-screen"
+            className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_40px_rgba(26,15,13,0.2)] group-hover:drop-shadow-[0_45px_65px_rgba(179,83,15,0.1)] transition-all duration-700"
             alt={product.name}
           />
         </div>
@@ -56,29 +56,29 @@ const HoverRevealProductCard = memo(({ product, onAddToCart }: ProductCardProps)
               exit={{ opacity: 0, scale: 0.9 }}
               className="absolute inset-x-0 -bottom-4 z-20 flex flex-col items-center justify-center pointer-events-none"
             >
-               {/* Metadata Bubble - Redesigned for Dark Cinematic */}
-               <div className="bg-black/60 backdrop-blur-3xl rounded-[28px] p-6 shadow-2xl border border-gold-soft/10 pointer-events-auto space-y-4 min-w-[200px]">
+               {/* Metadata Bubble - Redesigned for Heritage Theme */}
+               <div className="bg-white/80 backdrop-blur-3xl rounded-[28px] p-6 shadow-2xl border border-gold-soft/20 pointer-events-auto space-y-4 min-w-[200px]">
                   <div className="space-y-1 text-center">
-                     <span className="font-body text-[8px] font-black uppercase tracking-[0.4em] text-gold-soft/40">
+                     <span className="font-body text-[8px] font-black uppercase tracking-[0.4em] text-burnt-caramel/60">
                         {product.category || "Estate Collection"}
                      </span>
-                     <h4 className="text-xl font-display font-black text-gold-soft tracking-tight">
+                     <h4 className="text-xl font-display font-black text-cocoa-deep tracking-tight">
                         {product.name}
                      </h4>
                   </div>
                   
                    <div className="flex items-center justify-between border-t border-gold-soft/10 pt-4">
-                      <span className="font-body text-[14px] font-black uppercase text-gold-soft">₹{product.price}</span>
+                      <span className="font-body text-[14px] font-black uppercase text-cocoa-deep">₹{product.price}</span>
                       <div className="flex gap-2">
                          <button
                             onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
-                            className="size-10 bg-gold-soft hover:bg-gold-soft/80 text-black rounded-xl flex items-center justify-center shadow-lg transition-all active:scale-90"
+                            className="size-10 bg-burnt-caramel hover:bg-cocoa-deep text-white rounded-xl flex items-center justify-center shadow-lg transition-all active:scale-90"
                          >
                             <ShoppingBag size={14} />
                          </button>
                          <button
                             onClick={(e) => { e.stopPropagation(); }}
-                            className="size-10 bg-black/40 border border-gold-soft/10 text-gold-soft/40 rounded-xl flex items-center justify-center hover:bg-black transition-all active:scale-90"
+                            className="size-10 bg-white/40 border border-gold-soft/20 text-burnt-caramel/40 rounded-xl flex items-center justify-center hover:bg-white transition-all active:scale-90"
                          >
                             <Heart size={14} />
                          </button>
@@ -91,7 +91,7 @@ const HoverRevealProductCard = memo(({ product, onAddToCart }: ProductCardProps)
       </motion.div>
 
       {/* EXTERNAL LINK ICON (Pill Style) */}
-      <div className="absolute top-4 right-4 size-8 rounded-full bg-black/40 backdrop-blur-md border border-white/5 flex items-center justify-center text-gold-soft/40 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute top-4 right-4 size-8 rounded-full bg-white/40 backdrop-blur-md border border-gold-soft/10 flex items-center justify-center text-burnt-caramel/40 opacity-0 group-hover:opacity-100 transition-opacity">
         <ArrowUpRight size={14} />
       </div>
     </motion.div>

@@ -34,10 +34,10 @@ export default function MeltHero() {
    const framePath = `/assets/small_chocolate/ezgif-frame-${currentFrame.toString().padStart(3, '0')}.jpg`;
 
    // DYNAMIC LAYOUT: SLIDE TO RIGHT & LEFT TEXT (Adjusted for mobile)
-   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-   const xCore = useTransform(smoothProgress, [0.3, 0.6], [0, isMobile ? 80 : 400]);
+   const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+   const xCore = useTransform(smoothProgress, [0.3, 0.6], [0, isMobile ? 180 : 400]);
    const textOpacity = useTransform(smoothProgress, [0.35, 0.55], [0, 1]);
-   const textX = useTransform(smoothProgress, [0.35, 0.55], isMobile ? [0, 0] : [-100, 0]);
+   const textX = useTransform(smoothProgress, [0.35, 0.55], isMobile ? [0, 0] : [-150, 0]);
 
    return (
       <section
@@ -56,13 +56,13 @@ export default function MeltHero() {
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.5, duration: 2 }}
                style={{ opacity: barOpacity }}
-               className="absolute top-[22%] md:top-[18%] z-40 text-center space-y-4"
+               className="absolute top-[32%] md:top-[30%] z-40 text-center space-y-4"
             >
-               <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-gold-soft">The Asian Chocolate Store</p>
-               <h1 className="text-4xl md:text-7xl font-display italic font-black text-gold-soft">Crafted with Heritage</h1>
+               <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-burnt-caramel">British Chocolate</p>
+               <h1 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep">Crafted with Heritage</h1>
                <div className="flex flex-col items-center gap-10 mt-20 opacity-60">
-                  <span className="font-body text-[9px] font-black uppercase tracking-[0.5em] text-gold-soft">Scroll to Discover</span>
-                  <div className="w-[1px] h-20 bg-gradient-to-b from-gold-soft to-transparent" />
+                  <span className="font-body text-[9px] font-black uppercase tracking-[0.5em] text-cocoa-deep">Scroll to Discover</span>
+                  <div className="w-[1px] h-20 bg-gradient-to-b from-burnt-caramel/40 to-transparent" />
                </div>
             </motion.div>
 
@@ -125,44 +125,44 @@ export default function MeltHero() {
                </div>
             </motion.div>
 
-            {/* LAYER 3: MINIMALIST FLOATING GOLDEN TEXT - REDESIGNED & RESPONSIVE */}
             <motion.div
                style={{ opacity: textOpacity, x: textX }}
-               className="absolute left-[5%] md:left-[10%] top-[30%] md:top-[60%] -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-full md:max-w-[750px] z-[40]"
+               className="absolute left-[5%] md:left-[10%] top-[20%] md:top-[60%] lg:top-[65%] -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-[80%] lg:w-full md:max-w-[750px] z-[40]"
             >
-               <div className="space-y-8 md:space-y-16 pt-20 md:pt-0">
+               <div className="space-y-6 md:space-y-16 pt-20 md:pt-0">
+
                   {/* Floating Minimalist Header */}
                   <div className="flex items-center gap-4 md:gap-10">
-                     <div className="h-[1px] w-12 md:w-24 bg-gold-soft/40" />
-                     <span className="font-body text-[9px] md:text-[12px] font-black uppercase text-gold-soft tracking-[0.8rem] md:tracking-[1.5rem] opacity-70">Heritage_Archive</span>
+                     <div className="h-[1px] w-12 md:w-24 bg-burnt-caramel/40" />
+                     <span className="font-body text-[9px] md:text-[12px] font-black uppercase text-burnt-caramel tracking-[0.8rem] md:tracking-[1.5rem] opacity-70">Heritage_Archive</span>
                   </div>
 
                   {/* Ultra-Large Minimalist Typography */}
                   <div className="space-y-4 md:space-y-6">
-                     <h2 className="text-4xl md:text-[6.5vw] font-display font-black text-gold-soft leading-[0.85] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
+                     <h2 className="text-5xl md:text-[6.5vw] font-display font-black text-cocoa-deep leading-[0.85] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(179,83,15,0.15)]">
                         Molecular<br />Inheritance
                      </h2>
-                     <div className="h-[2px] md:h-[4px] w-16 md:w-32 bg-gold-soft" />
+                     <div className="h-[2px] md:h-[4px] w-16 md:w-32 bg-burnt-caramel/40" />
                   </div>
 
                   {/* Floating Quote - No Background */}
-                  <p className="font-serif italic text-lg md:text-4xl text-gold-soft leading-[1.3] font-light max-w-2xl">
-                     "Our laboratory extracts the <span className="underline decoration-gold-soft/30 underline-offset-[12px]">genetic essence</span> of the cocoa bean."
+                  <p className="font-serif italic text-xl md:text-4xl text-cocoa-deep leading-[1.3] font-light max-w-2xl drop-shadow-sm">
+                     "Our laboratory extracts the <span className="underline decoration-burnt-caramel/30 underline-offset-[12px]">genetic essence</span> of the cocoa bean."
                   </p>
 
                   {/* Minimalist Data Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 pt-10 md:pt-16 border-t border-gold-soft/10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 pt-10 md:pt-16 border-t border-burnt-caramel/10">
                      <div className="space-y-4 md:space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
-                        <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Registry_Intensity</span>
+                        <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-burnt-caramel/60">Registry_Intensity</span>
                         <div className="flex items-baseline gap-2 md:gap-4">
-                           <span className="text-5xl md:text-7xl font-display font-black text-gold-soft leading-none">88.4</span>
-                           <span className="text-[8px] md:text-sm font-body text-gold-soft/40 uppercase tracking-[0.2em] md:tracking-[0.3em]">SRI_UNIT</span>
+                           <span className="text-5xl md:text-7xl font-display font-black text-cocoa-deep leading-none">88.4</span>
+                           <span className="text-[8px] md:text-sm font-body text-cocoa-deep/40 uppercase tracking-[0.2em] md:tracking-[0.3em]">SRI_UNIT</span>
                         </div>
                      </div>
 
                      <div className="space-y-4 md:space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
-                        <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-gold-soft/50">Estate_Registry</span>
-                        <span className="block text-3xl md:text-6xl font-display font-black text-gold-soft italic leading-none">
+                        <span className="block text-[10px] md:text-[11px] font-black uppercase tracking-[0.3rem] md:tracking-[0.6rem] text-burnt-caramel/60">Estate_Registry</span>
+                        <span className="block text-3xl md:text-6xl font-display font-black text-burnt-caramel italic leading-none">
                            Madagascar
                         </span>
                      </div>
@@ -170,9 +170,9 @@ export default function MeltHero() {
 
                   {/* Subtle Footer Authentication */}
                   <div className="flex items-center gap-8 pt-10 opacity-30">
-                     <span className="font-mono text-[10px] text-gold-soft tracking-widest">AUTH_VERIFIED_2026</span>
-                     <div className="h-[1px] flex-1 bg-gold-soft/20" />
-                     <span className="font-mono text-[10px] text-gold-soft">ESTATE_NO_42</span>
+                     <span className="font-mono text-[10px] text-burnt-caramel tracking-widest">AUTH_VERIFIED_2026</span>
+                     <div className="h-[1px] flex-1 bg-burnt-caramel/20" />
+                     <span className="font-mono text-[10px] text-burnt-caramel">ESTATE_NO_42</span>
                   </div>
                </div>
             </motion.div>
