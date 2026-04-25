@@ -11,6 +11,7 @@ import milestoneImg3 from '../assets/product/WhatsApp Image 2026-03-20 at 12.57.
 import milestoneImg4 from '../assets/product/WhatsApp Image 2026-03-20 at 12.57.15 PM(3).jpeg';
 import inheritanceBg from '../assets/artisan-inheritance-bg.png';
 import { fadeDown, fadeUp, stagger } from '@/utils/motion';
+import SEO from '../components/SEO';
 
 const milestones = [
   {

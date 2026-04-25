@@ -171,7 +171,7 @@ export default function Accessories() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-soft blur-[150px] rounded-full" />
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }} className="space-y-12 relative z-10 pt-30">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }} className="space-y-12 relative z-10 pt-32">
           <div className="flex items-center justify-center gap-4 md:gap-6">
             <div className="hidden sm:block h-[1px] w-12 bg-gold-soft/30" />
             <span className="font-body text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em] text-gold-soft/60">The Artisan Hardware Registry</span>
@@ -183,7 +183,7 @@ export default function Accessories() {
           <p className="max-w-xl mx-auto font-serif text-lg md:text-xl lg:text-3xl italic text-cocoa-deep/40 px-4">
             The structural instruments required to master the alchemical properties of cacao.
           </p>
-          <div className="pt-30">
+          <div className="pt-32">
             <div className="w-[1px] h-32 bg-gradient-to-b from-burnt-caramel to-transparent mx-auto" />
             <span className="font-body text-[9px] uppercase font-black tracking-widest text-burnt-caramel mt-4 block">EXPLORE THE INSTRUMENTS</span>
           </div>
