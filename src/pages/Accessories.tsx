@@ -166,7 +166,7 @@ export default function Accessories() {
       <GoldenScrollPath />
 
       {/* Hero: Dramatic and Visual */}
-      <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+      <section className="min-h-screen flex flex-col items-center justify-start pt-48 md:pt-64 text-center px-6 relative">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-soft blur-[150px] rounded-full" />
         </div>

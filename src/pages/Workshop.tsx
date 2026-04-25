@@ -118,7 +118,7 @@ export default function Workshop() {
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-burnt-caramel z-[110] origin-left" style={{ scaleX }} />
 
       {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center text-center p-6 relative">
+      <section className="min-h-screen flex flex-col items-center justify-start pt-48 md:pt-64 text-center p-6 relative">
          <div className="absolute inset-0 opacity-5">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-soft blur-[120px] rounded-full" />
          </div>
