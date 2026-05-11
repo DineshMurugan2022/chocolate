@@ -36,8 +36,8 @@ export default function MeltHero() {
    // DYNAMIC LAYOUT: SLIDE TO RIGHT & LEFT TEXT (Adjusted for mobile)
    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
    const xCore = useTransform(smoothProgress, [0.3, 0.6], [0, isMobile ? 180 : 400]);
-   const textOpacity = useTransform(smoothProgress, [0.35, 0.55], [0, 1]);
-   const textX = useTransform(smoothProgress, [0.35, 0.55], isMobile ? [0, 0] : [-150, 0]);
+   const textOpacity = useTransform(smoothProgress, [0.38, 0.58], [0, 1]);
+   const textX = useTransform(smoothProgress, [0.38, 0.58], isMobile ? [0, 0] : [-150, 0]);
 
    return (
       <section
@@ -127,9 +127,9 @@ export default function MeltHero() {
 
             <motion.div
                style={{ opacity: textOpacity, x: textX }}
-               className="absolute left-[5%] md:left-[10%] top-[20%] md:top-[60%] lg:top-[65%] -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-[80%] lg:w-full md:max-w-[750px] z-[40]"
+               className="absolute left-[5%] md:left-[10%] top-[35%] md:top-[60%] lg:top-[65%] -translate-y-0 md:-translate-y-1/2 w-[90%] md:w-[80%] lg:w-full md:max-w-[750px] z-[40]"
             >
-               <div className="space-y-6 md:space-y-16 pt-20 md:pt-0">
+               <div className="space-y-6 md:space-y-16 pt-10 md:pt-0">
 
                   {/* Floating Minimalist Header */}
                   <div className="flex items-center gap-4 md:gap-10">
@@ -139,7 +139,7 @@ export default function MeltHero() {
 
                   {/* Ultra-Large Minimalist Typography */}
                   <div className="space-y-4 md:space-y-6">
-                     <h2 className="text-5xl md:text-[6.5vw] font-display font-black text-cocoa-deep leading-[0.85] tracking-tighter italic drop-shadow-[0_10px_30px_rgba(179,83,15,0.15)]">
+                     <h2 className="text-4xl md:text-[6.5vw] font-display font-black text-cocoa-deep leading-[0.95] tracking-tight italic drop-shadow-[0_10px_30px_rgba(179,83,15,0.15)]">
                         Molecular<br />Inheritance
                      </h2>
                      <div className="h-[2px] md:h-[4px] w-16 md:w-32 bg-burnt-caramel/40" />

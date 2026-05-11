@@ -11,7 +11,7 @@ export default function TermsOfService() {
       <section className="space-y-12">
         <p>The Website Owner, including subsidiaries and affiliates (“Website” or “Website Owner” or “we” or “us” or “our”) provides the information contained on the website or any of the pages comprising the website (“website”) to visitors (“visitors”) (cumulatively referred to as “you” or “your” hereinafter) subject to the terms and conditions set out in these website terms and conditions, the privacy policy and any other relevant terms and conditions, policies and notices which may be applicable to a specific section or module of the website.</p>
         
-        <p>Welcome to our website. If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern Cavasa's relationship with you in relation to this website.</p>
+        <p>Welcome to our website. If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern British Chocolate Store's relationship with you in relation to this website.</p>
         
         <p>The term Cavasa’s or 'us' or 'we' refers to the owner of the website whose registered/operational office is No 7/2, Sharoff Bazaar Vellore TAMIL NADU 635802. The term 'you' refers to the user or viewer of our website.</p>
 

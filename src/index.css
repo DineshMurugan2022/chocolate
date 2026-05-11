@@ -19,6 +19,19 @@
   --color-chrome-silver: #E0E0E0;
   --color-deep-space: #0A0A10;
   
+  /* Additional Extended Palette */
+  --color-gold-accent: #FFD700;
+  --color-gold-deep: #B8860B;
+  --color-burnt-orange: #CC5500;
+  --color-satin-gold: #C5A059;
+  --color-cream-text: #FDFBF7;
+  --color-chocolate-rich: #3D1F16;
+  --color-chocolate-dark: #1A0F0D;
+  --color-espresso-900: #2B1B17;
+  --color-espresso-950: #1A0F0D;
+  --color-taupe-muted: #8B7D77;
+  --color-umber-text: #4A3728;
+  
   --scrollbar-thumb: var(--color-burnt-caramel);
   --scrollbar-track: var(--color-ivory-warm);
   

@@ -220,7 +220,7 @@ export default function Home() {
                   <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-10">
                      <div className="flex flex-col gap-6 max-w-2xl">
                         <span className="font-body text-[8px] md:text-[14px] font-black uppercase text-burnt-caramel tracking-[0.4em] md:tracking-[1em] mb-4 opacity-100">The Exhibition Registry</span>
-                        <h2 className="text-4xl md:text-7xl lg:text-9xl font-display font-black leading-[0.85] tracking-tight text-cocoa-deep opacity-100">
+                        <h2 className="text-4xl md:text-7xl lg:text-9xl font-display font-black leading-[1.1] md:leading-[0.85] tracking-tight text-cocoa-deep opacity-100">
                            Reveal the <br /> <span className="not-italic font-black text-burnt-caramel">Soul</span>
                         </h2>
                      </div>

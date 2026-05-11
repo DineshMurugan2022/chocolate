@@ -17,6 +17,11 @@ export default {
         "ivory-bg": "var(--color-ivory-warm)",
         "ivory-panel": "rgba(255, 252, 247, 0.4)",
         "botanical-green": "var(--color-botanical-green)",
+        "satin-gold": "var(--color-satin-gold)",
+        "espresso-900": "var(--color-espresso-900)",
+        "espresso-950": "var(--color-espresso-950)",
+        "taupe-muted": "var(--color-taupe-muted)",
+        "umber-text": "var(--color-umber-text)",
       },
       fontFamily: {
         "display": ["Fraunces", "serif"],

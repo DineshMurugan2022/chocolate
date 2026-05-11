@@ -55,7 +55,7 @@ export default function Logo({
         <div className={`absolute inset-0 blur-3xl opacity-10 group-hover:opacity-30 transition-opacity duration-700 ${styles.accent}`} />
         <img
           src={logooo}
-          alt="British Chocolate Stores Logo"
+          alt="British Chocolate Store Logo"
           className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[5deg] ${styles.img}`}
         />
       </div>
@@ -64,7 +64,7 @@ export default function Logo({
       {showText && (
         <div className="flex flex-col leading-none">
           <span className={`font-display text-base md:text-lg lg:text-xl font-black tracking-[0.1em] uppercase italic transition-all duration-700 group-hover:tracking-[0.15em] ${styles.text}`}>
-            British <span className={variant === 'celestial' ? 'text-white' : 'text-gold-soft'}>Chocolate Stores</span>
+            British <span className={variant === 'celestial' ? 'text-white' : 'text-gold-soft'}>Chocolate Store</span>
           </span>
           <div className="h-[1px] w-0 group-hover:w-full transition-all duration-700 ease-out mt-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50" />
         </div>

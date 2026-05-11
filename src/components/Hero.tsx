@@ -9,9 +9,9 @@ export default function Hero() {
       >
       </div>
       <div className="relative z-20 px-6 md:px-16 lg:px-40 pb-20 max-w-4xl">
-        <span className="text-satin-gold font-bold tracking-[0.5em] uppercase text-xs mb-4 block">The Art of Cacao</span>
-        <h2 className="text-5xl md:text-8xl font-display font-medium text-espresso-950 mb-6 leading-[1.05]">Pure Indulgence</h2>
-        <p className="text-lg text-espresso-900/70 max-w-xl leading-relaxed font-body">
+        <span className="text-gold-soft font-bold tracking-[0.5em] uppercase text-xs mb-4 block">The Art of Cacao</span>
+        <h2 className="text-5xl md:text-8xl font-display font-medium text-cocoa-deep mb-6 leading-[1.05]">Pure Indulgence</h2>
+        <p className="text-lg text-cocoa-deep/70 max-w-xl leading-relaxed font-body">
           Experience the ethereal lightness of artisanal creation. A curated sanctuary for the world's most delicate single-origin masterpieces.
         </p>
       </div>

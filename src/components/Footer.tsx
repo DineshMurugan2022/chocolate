@@ -21,10 +21,10 @@ export default function Footer() {
 
                {/* Brand Identity */}
                <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-8">
-                  <div className="mb-12">
+                  <div className="mb-6">
                      <Logo
-                        variant={isCelestialTheme ? 'celestial' : 'light'}
-                        className="origin-left"
+                        variant={isCelestialTheme ? 'celestial' : 'gold'}
+                        className="scale-110 origin-center md:origin-left"
                      />
                   </div>
 
@@ -85,7 +85,7 @@ export default function Footer() {
                         <div className={`flex items-center gap-3 text-[9px] font-body font-black uppercase tracking-[0.3em] ${isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'}`}>
                            <Mail size={12} /> Digital Link
                         </div>
-                        <p className="font-serif text-lg italic text-ivory-warm">dnfoodcraft@gmail.com</p>
+                        <p className="font-serif text-lg italic text-ivory-warm">sales@british-chocolate.com</p>
                      </div>
                      <div className="space-y-2 opacity-60 hover:opacity-100 transition-opacity flex flex-col items-center md:items-start">
                         <div className={`flex items-center gap-3 text-[9px] font-body font-black uppercase tracking-[0.3em] ${isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'}`}>
@@ -145,7 +145,7 @@ export default function Footer() {
             {/* Unified Legal Base */}
             <div className={`flex flex-col md:flex-row items-center justify-between gap-10 border-t ${isCelestialTheme ? 'border-white/5' : 'border-ivory-warm/5'} pt-10`}>
                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-                  <span className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em] text-center md:text-left">© {year} BRITISH CHOCOLATE STORES INNOVATIVE</span>
+                  <span className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em] text-center md:text-left">© {year} BRITISH CHOCOLATE STORE INNOVATIVE</span>
                   <div className="flex flex-wrap justify-center gap-6">
                      <button onClick={() => navigate('/terms-of-service')} className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em] hover:text-burnt-caramel transition-colors">Terms_of_Service</button>
                      <button onClick={() => navigate('/shipping-policy')} className="font-body text-[9px] font-black text-ivory-warm/20 uppercase tracking-[0.5em] hover:text-burnt-caramel transition-colors">Shipping_Protocol</button>
