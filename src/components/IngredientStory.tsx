@@ -115,13 +115,13 @@ const IngredientStory = () => {
             <div className="story-step flex flex-col md:flex-row items-center gap-20">
               <div className="step-content w-full md:w-5/12 md:text-right space-y-6">
                 <span className="text-7xl font-display font-black text-gold-soft/10 italic block leading-none">01</span>
-                <h3 className="text-4xl font-display italic font-black text-gold-soft">The Karupatti Origin</h3>
+                <h3 className="text-4xl font-display italic font-black text-gold-soft">The Karupatti (Palm Jaggery) Origin</h3>
                 <p className="text-gold-soft/50 text-xl font-serif leading-relaxed italic border-r-2 border-gold-soft/10 pr-10">
                   Pure Palm Jaggery harvested from the sun-drenched groves of Tirunelveli, bringing an earthy depth that cane sugar can never replicate.
                 </p>
               </div>
               <div className="step-box w-32 h-32 bg-gold-soft flex-shrink-0 rounded-[40px] z-10 border border-gold-soft/20 shadow-[0_30px_60px_rgba(212,175,55,0.3)] rotate-12 flex items-center justify-center p-6 grayscale hover:grayscale-0 transition-all duration-700">
-                 <img src="https://img.icons8.com/plasticine/100/null/palm-tree.png" alt="Karupatti" className="w-full opacity-60" />
+                 <img src="https://img.icons8.com/plasticine/100/null/palm-tree.png" alt="Karupatti (Palm Jaggery)" className="w-full opacity-60" />
               </div>
               <div className="w-full md:w-5/12" />
             </div>

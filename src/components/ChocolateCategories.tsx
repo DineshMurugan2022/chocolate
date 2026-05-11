@@ -52,15 +52,13 @@ export default function ChocolateCategories() {
         {categories.map((cat, idx) => (
           <div key={idx} className="category-card flex flex-col items-center group cursor-pointer opacity-0 translate-y-8">
             <div className="relative w-full aspect-square mb-6">
-              {/* Drip Border Decoration */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-gold-accent/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md" />
-              <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-gold-accent/40 group-hover:border-gold-accent transition-colors duration-500">
+              <div className="absolute inset-0 rounded-full overflow-hidden transition-all duration-500">
                 <img 
                   src={cat.image} 
                   alt={cat.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-white/20 group-hover:bg-transparent transition-colors duration-500" />
+                <div className="absolute inset-0 bg-white/10 group-hover:bg-transparent transition-colors duration-500" />
               </div>
             </div>
             <h3 className="font-playfair text-xl md:text-2xl text-umber-text group-hover:text-gold-accent transition-colors">

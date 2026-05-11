@@ -49,7 +49,7 @@ export default function DietChocolates() {
     >
       <SEO 
         title="Wellness & Sugar-Free Artisanal Chocolates | British Chocolate Store"
-        description="Experience luxury without compromise. Our low-glycemic, sugar-free collection uses natural Karupatti and premium dark cocoa for a guilt-free ritual."
+        description="Experience luxury without compromise. Our low-glycemic, sugar-free collection uses natural Karupatti (Palm Jaggery) and premium dark cocoa for a guilt-free ritual."
       />
       <Header setIsCartOpen={setIsCartOpen} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
@@ -80,7 +80,7 @@ export default function DietChocolates() {
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
              {[
                { icon: <Leaf size={32} />, title: 'Zero Sugar', desc: 'Crafted with premium Stevia and molecularly stable sugar alternatives.' },
-               { icon: <Droplets size={32} />, title: 'Karupatti Infusions', desc: 'Harnessing the high-mineral, low-GI properties of South Indian Palm Jaggery.' },
+               { icon: <Droplets size={32} />, title: 'Karupatti (Palm Jaggery) Infusions', desc: 'Harnessing the high-mineral, low-GI properties of South Indian Palm Jaggery.' },
                { icon: <Heart size={32} />, title: 'Keto-Premium', desc: 'High-fat, low-carb lattice structures for sustained alchemical energy.' }
              ].map((p, i) => (
                <div key={i} className="group p-12 bg-white/40 border border-gold-soft/10 rounded-[60px] space-y-8 hover:border-burnt-caramel transition-all duration-700">
@@ -151,7 +151,7 @@ export default function DietChocolates() {
             <div className="size-20 rounded-full bg-burnt-caramel/10 flex items-center justify-center mx-auto border border-burnt-caramel/20">
                <Droplets className="text-burnt-caramel" size={32} />
             </div>
-            <h2 className="text-5xl md:text-7xl font-display font-black italic text-cocoa-deep">The <span className="text-burnt-caramel">Karupatti</span> Advantage</h2>
+            <h2 className="text-5xl md:text-7xl font-display font-black italic text-cocoa-deep">The <span className="text-burnt-caramel">Karupatti (Palm Jaggery)</span> Advantage</h2>
             <p className="font-serif text-2xl italic text-cocoa-deep/40 leading-relaxed">
               Derived from the ancient palm groves of Tamil Nadu, Karupatti (Palm Jaggery) is a low-glycemic natural sweetener rich in vitamins and minerals. It provides a smoky, earthy baseline that creates a healthier, more complex chocolate profile.
             </p>

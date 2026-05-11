@@ -58,11 +58,11 @@ export default function MeltHero() {
                style={{ opacity: barOpacity }}
                className="absolute top-[32%] md:top-[30%] z-40 text-center space-y-4"
             >
-               <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-burnt-caramel">British Chocolate</p>
-               <h1 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep">Crafted with Heritage</h1>
-               <div className="flex flex-col items-center gap-10 mt-20 opacity-60">
-                  <span className="font-body text-[9px] font-black uppercase tracking-[0.5em] text-cocoa-deep">Scroll to Discover</span>
-                  <div className="w-[1px] h-20 bg-gradient-to-b from-burnt-caramel/40 to-transparent" />
+               <p className="font-body text-[10px] md:text-[14px] font-black uppercase tracking-[1em] text-gold-soft drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">British Chocolate</p>
+               <h1 className="text-4xl md:text-7xl font-display italic font-black text-ivory-warm drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">Crafted with Heritage</h1>
+               <div className="flex flex-col items-center gap-10 mt-20 opacity-80">
+                  <span className="font-body text-[9px] font-black uppercase tracking-[0.5em] text-ivory-warm drop-shadow-md">Scroll to Discover</span>
+                  <div className="w-[1px] h-20 bg-gradient-to-b from-gold-soft to-transparent" />
                </div>
             </motion.div>
 

@@ -15,7 +15,7 @@ import SEO from '@/components/SEO';
 import EventsNav from '@/components/EventsNav';
 
 const heritageFlavors = [
-  { name: 'Karupatti Kouverture', origin: 'Thanjavur, Tamil Nadu', note: 'Palm jaggery slow-melted into 72% dark chocolate. Smoky, earthy, ancient.' },
+  { name: 'Karupatti (Palm Jaggery) Kouverture', origin: 'Thanjavur, Tamil Nadu', note: 'Palm jaggery slow-melted into 72% dark chocolate. Smoky, earthy, ancient.' },
   { name: 'Cardamom Cloud', origin: 'Idukki, Kerala', note: 'Green cardamom-infused white chocolate ganache. Floral, delicate, homely.' },
   { name: 'Tamarind Toffee', origin: 'Madurai, Tamil Nadu', note: 'Sweet-sour tamarind caramel in milk chocolate. Bold, tangy, nostalgic.' },
   { name: 'Coconut Rose Truffle', origin: 'Kanyakumari, Tamil Nadu', note: 'Toasted coconut filling with rose-water ganache. Like a celebration in a bite.' },
@@ -64,7 +64,7 @@ export default function FamilyEvent() {
     >
       <SEO
         title="Family Gathering & Tradition Collections | British Chocolate Store"
-        description="Share the love with artisanal chocolate designed for the whole family. From traditional Karupatti truffles to modern sharing crates, we celebrate the bond of togetherness."
+        description="Share the love with artisanal chocolate designed for the whole family. From traditional Karupatti (Palm Jaggery) truffles to modern sharing crates, we celebrate the bond of togetherness."
       />
       <Header setIsCartOpen={setIsCartOpen} />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />

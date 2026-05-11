@@ -51,7 +51,7 @@ export default function CollectionCard({ title, image, description, onClick, sha
   return (
     <div className="perspective-2000">
       <motion.div 
-        className={`group relative cursor-pointer overflow-hidden backdrop-blur-3xl transition-all duration-700 ${isLogo ? 'bg-white/[0.02] border border-white/10 hover:border-gold-soft/30' : 'bg-black border border-gold-soft/20'} shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] ${shapeClasses[shape]}`}
+        className={`group relative cursor-pointer overflow-hidden backdrop-blur-3xl transition-all duration-700 ${isLogo ? 'bg-transparent' : 'bg-black border border-gold-soft/20 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)]'} ${shapeClasses[shape]}`}
         onClick={onClick}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}

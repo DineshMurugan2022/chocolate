@@ -92,7 +92,7 @@ export default function Home() {
       >
          <SEO 
             title="British Chocolate Store | Premium Chocolate in Tamil Nadu"
-            description="Experience the finest artisanal chocolates in India. Crafted with heritage ingredients like Karupatti and Himalayan Honey. Your luxury chocolate destination in Chennai and beyond."
+            description="Experience the finest artisanal chocolates in India. Crafted with heritage ingredients like Karupatti (Palm Jaggery) and Himalayan Honey. Your luxury chocolate destination in Chennai and beyond."
          />
          <Header setIsCartOpen={setIsCartOpen} />
 
@@ -129,26 +129,33 @@ export default function Home() {
 
             {/* Step 3: Partner Brands & Event Curations Highlights */}
             <motion.section
-               className="relative py-20 px-6 lg:px-20 bg-transparent border-t border-gold-soft/10"
+               className="relative py-24 px-6 lg:px-20 bg-transparent"
                variants={fadeUp}
                viewport={sectionViewport}
                initial={reduceMotion ? false : 'hidden'}
                whileInView="show"
             >
-               <div className="max-w-[1700px] mx-auto space-y-16">
+               <div className="w-full space-y-16">
                   {/* Category Toggle Buttons */}
-                  <div className="flex flex-wrap justify-center gap-6">
+                  {/* Minimalist Tab Navigation */}
+                  <div className="flex justify-center items-center gap-12 border-b border-cocoa-deep/5 py-8">
                      <button
                         onClick={() => { setActiveTab('brands'); setSelectedCollection(''); }}
-                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'brands' ? 'bg-burnt-caramel text-white border-burnt-caramel shadow-[0_0_30px_rgba(179,83,15,0.4)]' : 'bg-transparent text-burnt-caramel/60 border-burnt-caramel/20 hover:border-burnt-caramel/50 hover:text-burnt-caramel'}`}
+                        className={`relative py-2 font-body text-xs font-black uppercase tracking-[0.3em] transition-all duration-500 ${activeTab === 'brands' ? 'text-burnt-caramel' : 'text-cocoa-deep/40 hover:text-cocoa-deep/70'}`}
                      >
-                        Discover Brands
+                        The Artisan Guild
+                        {activeTab === 'brands' && (
+                           <motion.div layoutId="tab-underline" className="absolute -bottom-[17px] left-0 right-0 h-[2px] bg-burnt-caramel" />
+                        )}
                      </button>
                      <button
                         onClick={() => { setActiveTab('events'); setSelectedCollection(''); }}
-                        className={`px-8 py-4 rounded-full font-body text-xs font-black uppercase tracking-[0.2em] transition-all duration-500 ease-out border ${activeTab === 'events' ? 'bg-burnt-caramel text-white border-burnt-caramel shadow-[0_0_30px_rgba(179,83,15,0.4)]' : 'bg-transparent text-burnt-caramel/60 border-burnt-caramel/20 hover:border-burnt-caramel/50 hover:text-burnt-caramel'}`}
+                        className={`relative py-2 font-body text-xs font-black uppercase tracking-[0.3em] transition-all duration-500 ${activeTab === 'events' ? 'text-burnt-caramel' : 'text-cocoa-deep/40 hover:text-cocoa-deep/70'}`}
                      >
-                        Shop by Events
+                        Curated Events
+                        {activeTab === 'events' && (
+                           <motion.div layoutId="tab-underline" className="absolute -bottom-[17px] left-0 right-0 h-[2px] bg-burnt-caramel" />
+                        )}
                      </button>
                   </div>
 

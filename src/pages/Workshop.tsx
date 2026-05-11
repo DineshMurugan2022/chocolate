@@ -57,7 +57,7 @@ export default function Workshop() {
       description: "Finally, we decorate each piece by hand. We use traditional Karupatti (Palm Jaggery), Himalayan sea salt, or a brush of edible gold to make each chocolate a small work of art.",
       fact: "Each piece is hand-checked to ensure a mirror-like finish.",
       image: "/images/workshop/finishing.png",
-      insight: "Karupatti adds a natural, earthy sweetness that balances the rich cocoa."
+      insight: "Karupatti (Palm Jaggery) adds a natural, earthy sweetness that balances the rich cocoa."
     }
   ];
 
