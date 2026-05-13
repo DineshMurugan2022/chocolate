@@ -15,82 +15,89 @@ const OrderDetailsModal = ({ order, onClose }: OrderDetailsModalProps) => {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/40" />
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
+          onClick={onClose} 
+          className="absolute inset-0 bg-black/80 backdrop-blur-md" 
+        />
         
         <motion.div 
-          initial={{ opacity: 0, scale: 0.98 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          exit={{ opacity: 0, scale: 0.98 }} 
-          className="relative w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+          initial={{ opacity: 0, scale: 0.98, y: 20 }} 
+          animate={{ opacity: 1, scale: 1, y: 0 }} 
+          exit={{ opacity: 0, scale: 0.98, y: 20 }} 
+          className="relative w-full max-w-5xl bg-[#0F0A09] border border-gold-soft/20 rounded-[32px] shadow-[0_32px_64px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[92vh]"
         >
           {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center shrink-0">
-            <div className="flex items-center gap-4">
-               <div className="size-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
-                  <Package size={18} />
+          <div className="px-10 py-8 border-b border-gold-soft/10 bg-black/40 flex justify-between items-center shrink-0">
+            <div className="flex items-center gap-5">
+               <div className="size-12 rounded-2xl bg-gold-soft/10 border border-gold-soft/20 flex items-center justify-center text-gold-soft shadow-inner">
+                  <Package size={24} />
                </div>
                <div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    Order Details <span className="text-[10px] font-mono text-gray-400 bg-white border border-gray-200 px-3 py-1 rounded-md ml-4 uppercase">#{order._id.slice(-10).toUpperCase()}</span>
+                  <h3 className="text-2xl font-display font-black text-gold-soft italic uppercase tracking-tighter flex items-center gap-4">
+                    Order_Specification
+                    <span className="text-[10px] font-mono text-gold-soft/40 bg-white/5 border border-gold-soft/10 px-4 py-1.5 rounded-full uppercase tracking-[0.2em]">#{order._id.slice(-10).toUpperCase()}</span>
                   </h3>
-                  <p className="text-[10px] text-gray-500 flex items-center gap-2 mt-0.5">
-                     <Calendar size={12} /> 
-                     Date: {new Date(order.createdAt).toLocaleDateString()} at {new Date(order.createdAt).toLocaleTimeString()}
+                  <p className="text-[10px] font-black text-gold-soft/30 flex items-center gap-2 mt-1.5 uppercase tracking-widest">
+                     <Calendar size={12} className="text-gold-soft/20" /> 
+                     Logged: {new Date(order.createdAt).toLocaleDateString()} // {new Date(order.createdAt).toLocaleTimeString()}
                   </p>
                </div>
             </div>
             <button 
               onClick={onClose} 
-              className="p-2 rounded-lg hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-all font-bold"
+              className="size-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gold-soft/40 hover:text-gold-soft hover:bg-gold-soft/20 transition-all active:scale-90"
             >
-              <X size={20} />
+              <X size={24} />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-8 custom-scrollbar grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="flex-1 overflow-y-auto p-10 custom-scrollbar grid grid-cols-1 lg:grid-cols-12 gap-10">
             
             {/* Column 1: Customer & Shipping */}
-            <div className="lg:col-span-7 space-y-10">
+            <div className="lg:col-span-7 space-y-12">
               
               {/* Customer Info */}
-              <div className="space-y-4">
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Customer Information</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><User size={18} /></div>
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.3em] px-2">Customer_Profile_Data</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="flex items-start gap-5 p-6 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-xl">
+                    <div className="size-12 rounded-xl bg-gold-soft/5 border border-gold-soft/10 flex items-center justify-center text-gold-soft/30"><User size={20} /></div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Full Name</p>
-                      <p className="text-sm font-semibold text-gray-900">{(order.user as SharedUser).name || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gold-soft/20 uppercase tracking-tight mb-1">Authenticated_Name</p>
+                      <p className="text-base font-display font-black text-gold-soft italic uppercase">{(order.user as SharedUser).name || 'ANONYMOUS_USER'}</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><Mail size={18} /></div>
+                  <div className="flex items-start gap-5 p-6 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-xl">
+                    <div className="size-12 rounded-xl bg-gold-soft/5 border border-gold-soft/10 flex items-center justify-center text-gold-soft/30"><Mail size={20} /></div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Email Address</p>
-                      <p className="text-sm font-semibold text-gray-900 truncate max-w-[180px]">{(order.user as SharedUser).email || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gold-soft/20 uppercase tracking-tight mb-1">Contact_Registry</p>
+                      <p className="text-base font-display font-black text-gold-soft italic uppercase truncate max-w-[200px]">{(order.user as SharedUser).email || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Shipping Details */}
-              <div className="space-y-4">
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Shipping Details</h4>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><Phone size={18} /></div>
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.3em] px-2">Logistics_Terminal_Address</h4>
+                <div className="space-y-8">
+                  <div className="flex items-start gap-6 p-6 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-xl w-full">
+                    <div className="size-12 rounded-xl bg-gold-soft/5 border border-gold-soft/10 flex items-center justify-center text-gold-soft/30 shrink-0"><Phone size={20} /></div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Phone Number</p>
-                      <p className="text-sm font-semibold text-gray-900">{order.shippingAddress.phoneNumber}</p>
+                      <p className="text-[10px] font-black text-gold-soft/20 uppercase tracking-tight mb-1">Signal_Contact</p>
+                      <p className="text-base font-display font-black text-gold-soft italic uppercase tracking-widest">{order.shippingAddress.phoneNumber}</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400"><MapPin size={18} /></div>
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Shipping Address</p>
-                      <p className="text-sm font-semibold text-gray-900 leading-relaxed uppercase">
+                  <div className="flex items-start gap-6 p-6 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-xl w-full">
+                    <div className="size-12 rounded-xl bg-gold-soft/5 border border-gold-soft/10 flex items-center justify-center text-gold-soft/30 shrink-0"><MapPin size={20} /></div>
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-black text-gold-soft/20 uppercase tracking-tight mb-1">Physical_Coordinates</p>
+                      <p className="text-base font-display font-black text-gold-soft italic uppercase leading-relaxed tracking-tight">
                         {order.shippingAddress.address}<br />
-                        {order.shippingAddress.city} - {order.shippingAddress.postalCode}
+                        <span className="text-gold-soft/60">{order.shippingAddress.city} — {order.shippingAddress.postalCode}</span>
                       </p>
                     </div>
                   </div>
@@ -99,57 +106,57 @@ const OrderDetailsModal = ({ order, onClose }: OrderDetailsModalProps) => {
             </div>
 
             {/* Column 2: Order Summary */}
-            <div className="lg:col-span-5 space-y-6 bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <div className="flex items-center justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                 <span>Items</span>
-                 <span>{order.items.length} Units</span>
+            <div className="lg:col-span-5 space-y-8 bg-black/40 p-8 rounded-[32px] border border-gold-soft/10 shadow-inner">
+              <div className="flex items-center justify-between text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.3em]">
+                 <span>Registry_Manifest</span>
+                 <span className="text-gold-soft">{order.items.length} Artifacts</span>
               </div>
               
-              <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-5 max-h-[400px] overflow-y-auto pr-3 custom-scrollbar">
                 {order.items.map((item: any, idx: number) => (
-                  <div key={idx} className="flex justify-between items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    <div className="flex items-center gap-3">
-                       <div className="size-8 rounded bg-gray-50 flex items-center justify-center text-blue-600"><Package size={14} /></div>
+                  <div key={idx} className="flex justify-between items-center p-5 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-2xl group hover:border-gold-soft/30 transition-all">
+                    <div className="flex items-center gap-4">
+                       <div className="size-12 rounded-xl bg-gold-soft/5 flex items-center justify-center text-gold-soft/20 group-hover:text-gold-soft/50 transition-colors"><Package size={20} /></div>
                        <div>
-                         <p className="text-sm font-semibold text-gray-900 uppercase tracking-tight">{item.name}</p>
-                         <p className="text-[10px] text-gray-400 mt-0.5">₹{item.price} × {item.quantity}</p>
+                         <p className="text-sm font-display font-black text-gold-soft uppercase tracking-tight italic">{item.name}</p>
+                         <p className="text-[10px] font-black text-gold-soft/20 mt-1 uppercase tracking-widest">₹{item.price} × {item.quantity}</p>
                        </div>
                     </div>
-                    <p className="text-sm font-bold text-gray-900">₹{item.price * item.quantity}</p>
+                    <p className="text-base font-display font-black text-gold-soft italic">₹{item.price * item.quantity}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-6 border-t border-gray-200 space-y-4">
-                 <div className="flex justify-between items-center px-6 h-16 bg-blue-600 rounded-lg text-white shadow-md">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Total Amount</span>
-                    <span className="text-2xl font-bold">₹{order.totalPrice.toFixed(0)}</span>
+              <div className="pt-8 border-t border-gold-soft/10 space-y-6">
+                 <div className="flex justify-between items-center px-8 h-20 bg-gold-soft rounded-2xl text-black shadow-[0_20px_40px_rgba(212,175,55,0.2)]">
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">Total_Valuation</span>
+                    <span className="text-3xl font-display font-black italic">₹{order.totalPrice.toFixed(0)}</span>
                  </div>
 
-                 <div className="flex items-center gap-2 justify-center opacity-40">
-                    <History size={12} />
-                    <span className="text-[8px] font-bold uppercase tracking-wider">Transaction Verified</span>
+                 <div className="flex items-center gap-3 justify-center opacity-20">
+                    <History size={14} className="text-gold-soft" />
+                    <span className="text-[8px] font-black text-gold-soft uppercase tracking-[0.5em]">Transaction_Integrity_Verified</span>
                  </div>
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
-            <div className="flex items-center gap-4 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-sm">
-               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status:</span>
-               <span className={`px-4 py-0.5 rounded-full text-[10px] font-bold uppercase shadow-sm ${
-                 order.status === 'paid' ? 'bg-emerald-500 text-white' : 
-                 order.status === 'processing' ? 'bg-blue-500 text-white' :
-                 order.status === 'completed' ? 'bg-gray-500 text-white' :
-                 'bg-orange-500 text-white'
+          <div className="px-10 py-8 bg-black/60 border-t border-gold-soft/10 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0">
+            <div className="flex items-center gap-5 px-6 py-3 bg-black/40 border border-gold-soft/10 rounded-2xl shadow-xl">
+               <span className="text-[10px] font-black text-gold-soft/20 uppercase tracking-[0.2em]">Current_Protocol:</span>
+               <span className={`px-5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-2xl ${
+                 order.status === 'paid' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 
+                 order.status === 'processing' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                 order.status === 'completed' ? 'bg-gold-soft/10 text-gold-soft/40 border border-gold-soft/10' :
+                 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
                }`}>{order.status}</span>
             </div>
             <button 
               onClick={onClose}
-              className="h-10 px-8 bg-gray-900 hover:bg-black text-white rounded-lg text-xs font-bold uppercase shadow-md transition-all flex items-center gap-2"
+              className="h-14 px-12 bg-black border border-gold-soft/10 hover:border-gold-soft text-gold-soft text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl shadow-2xl transition-all active:scale-95"
             >
-              Close
+              Terminate_View
             </button>
           </div>
         </motion.div>

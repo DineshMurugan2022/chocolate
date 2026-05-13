@@ -1,115 +1,77 @@
-import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Minus, Plus, Ship, Lock, ArrowRight, ShieldCheck, ChevronLeft } from 'lucide-react';
-import { addToCart, decrementQuantity } from '../store/cartSlice';
-import type { RootState, AppDispatch } from '../store';
-import Header from '../components/Header';
-import Logo from '../components/Logo';
+import { motion } from 'framer-motion';
+import { ChevronLeft, Truck, ShieldCheck, Tag, Info } from 'lucide-react';
+import type { RootState, AppDispatch } from '@/store';
+import { clearCart } from '@/store/cartSlice';
 import api from '@/utils/api';
-import AuthModal from '../components/AuthModal';
-import { fadeDown, fadeUp, stagger } from '@/utils/motion';
+import Logo from '@/components/Logo';
 
-const Checkout = () => {
+export default function Checkout() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   const { user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
-  const reduceMotion = useReducedMotion();
-  const sectionViewport = { once: true, margin: '0px 0px -120px 0px' };
-
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const [shippingData, setShippingData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     phoneNumber: '',
     address: '',
+    addressLine2: '',
     city: '',
+    state: '',
     postalCode: ''
   });
 
-  const grandTotal = totalPrice;
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  interface RazorpayResponse {
-    razorpay_order_id: string;
-    razorpay_payment_id: string;
-    razorpay_signature: string;
-  }
-
-  interface RazorpayOptions {
-    key: string;
-    amount: number;
-    currency: string;
-    name: string;
-    description: string;
-    order_id: string;
-    handler: (response: RazorpayResponse) => void;
-    prefill: { name: string; email: string; contact: string };
-    theme: { color: string };
-  }
-
-  interface WindowWithRazorpay extends Window {
-    Razorpay: new (options: RazorpayOptions) => { open: () => void };
-  }
-
-  const handleRazorpayPayment = async () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
+  const handlePayment = async () => {
+    if (!shippingData.name || !shippingData.phoneNumber || !shippingData.address || !shippingData.city || !shippingData.postalCode || !shippingData.state) {
+      alert('Please fill all required shipping details.');
       return;
     }
 
-    if (!shippingData.address || !shippingData.phoneNumber) {
-      alert('Please fill in all curatorial details');
-      return;
-    }
-
-    setLoading(true);
-
+    setIsProcessing(true);
     try {
-      const { data } = await api.post(`/orders/razorpay/order`, {
+      // The backend expects shippingAddress as an object and items to have product ID and quantity
+      const orderResponse = await api.post('/orders', {
         items: items.map(item => ({
           product: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity
+          quantity: item.quantity,
+          name: item.name
         })),
-        receipt: `receipt_${Date.now()}`,
-        shippingAddress: shippingData
+        shippingAddress: {
+          name: shippingData.name,
+          email: shippingData.email || user?.email || 'customer@example.com',
+          phoneNumber: shippingData.phoneNumber,
+          address: `${shippingData.address}${shippingData.addressLine2 ? ', ' + shippingData.addressLine2 : ''}, ${shippingData.state}`,
+          city: shippingData.city,
+          postalCode: shippingData.postalCode
+        }
       });
-      const order = data.order;
-      if (!order) {
-        throw new Error('Failed to create Razorpay order');
-      }
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
-        name: 'British Chocolate Store',
-        description: 'Heritage Registry Acquisition',
-        order_id: order.id,
-        handler: async (response: RazorpayResponse) => {
+        amount: Math.round(totalPrice * 100),
+        currency: "INR",
+        name: "British Chocolate",
+        description: "Artisan Selection",
+        order_id: orderResponse.data.razorpayOrderId,
+        handler: async function (response: any) {
           try {
-            const verificationData = {
+            await api.post('/orders/verify', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
-            };
-
-            const { data: result } = await api.post(
-              `/orders/razorpay/verify`,
-              verificationData
-            );
-
-            if (result.status === 'success') {
-              navigate('/order-success');
-            }
-          } catch (err) {
-            console.error('Liquidation failed:', err);
-            alert('Verification failed. Contact the Heritage Registry.');
+              orderId: orderResponse.data.orderId
+            });
+            dispatch(clearCart());
+            navigate('/order-success', { state: { orderId: orderResponse.data.orderId } });
+          } catch (error) {
+            console.error("Verification failed", error);
+            alert("Payment verification failed. Please contact support.");
           }
         },
         prefill: {
@@ -118,278 +80,194 @@ const Checkout = () => {
           contact: shippingData.phoneNumber
         },
         theme: {
-          color: '#1A0F0D'
+          color: "#357960"
         }
       };
 
-      const rzp = new (window as unknown as WindowWithRazorpay).Razorpay(options);
+      const rzp = new (window as any).Razorpay(options);
       rzp.open();
-    } catch (error) {
-      console.error('Acquisition failed:', error);
-      alert('Could not initiate liquidation.');
+    } catch (error: any) {
+      console.error("Order creation failed", error);
+      alert(error.response?.data?.message || "Something went wrong. Please try again.");
     } finally {
-      setLoading(false);
+      setIsProcessing(false);
     }
   };
 
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#F8FAF9] flex flex-col items-center justify-center p-6 text-center">
+        <ShoppingCart size={64} className="text-gray-200 mb-6" />
+        <h2 className="text-2xl font-bold text-[#1A1A1A] mb-4">Your cart is empty</h2>
+        <button
+          onClick={() => navigate('/shop')}
+          className="bg-[#357960] text-white px-8 py-3 rounded-xl font-bold"
+        >
+          Return to Shop
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-transparent text-cocoa-deep selection:bg-burnt-caramel selection:text-white relative overflow-hidden">
-
-      {/* Heritage Grid Motif & Texture */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{ backgroundImage: 'radial-gradient(#1A0F0D 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.2] mix-blend-multiply"
-        style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/rice-paper-2.png")' }} />
-
-      <Header setIsCartOpen={() => { }} />
-
-      <motion.main
-        className="max-w-[1400px] mx-auto px-6 lg:px-20 pt-48 relative z-10 pb-40"
-        variants={stagger(0.2)}
-        initial={reduceMotion ? false : 'hidden'}
-        animate="show"
-      >
-
+    <div className="min-h-screen bg-[#F8FAF9] pt-12 pb-24 px-4 md:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto">
+        {/* Back Link */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-6 text-cocoa-deep/20 hover:text-cocoa-deep transition-all mb-20 uppercase text-[9px] tracking-[0.8em] font-black group"
+          className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-[#357960] transition-colors mb-8"
         >
-          <ChevronLeft size={16} className="group-hover:-translate-x-3 transition-transform" /> Back_to_Registry
+          <ChevronLeft size={16} /> Back to Shopping
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-8 items-start">
+          
+          {/* Left Column: Shipping Form */}
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 shadow-sm space-y-10">
+            <div className="flex items-center gap-4 text-[#1A1A1A]">
+              <Truck size={24} className="text-[#357960]" />
+              <h2 className="text-xl md:text-2xl font-bold">Shipping Information</h2>
+            </div>
 
-          {/* Left Side: Inventory & Global Shipping Identification */}
-          <div className="space-y-32">
-
-            <motion.section className="space-y-12" variants={fadeDown}>
-              <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gold-soft/20 pb-10 gap-6">
-                <div className="space-y-4">
-                  <span className="font-body text-[10px] uppercase font-black tracking-[0.6em] text-burnt-caramel/40">Section_01A</span>
-                  <h1 className="text-5xl md:text-7xl font-display font-black leading-[0.8] tracking-tighter uppercase text-cocoa-deep">
-                    Acquisition <span className="italic font-light text-cocoa-deep/20">Matrix</span>
-                  </h1>
-                </div>
-                <Logo className="w-32 h-auto opacity-20 hidden md:block" variant="dark" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-600 uppercase">Full Name *</label>
+                <input
+                  type="text"
+                  value={shippingData.name}
+                  onChange={(e) => setShippingData({ ...shippingData, name: e.target.value })}
+                  placeholder="Dinesh"
+                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                />
               </div>
 
-              <div className="space-y-8">
-                {items.length === 0 ? (
-                  <div className="p-24 text-center bg-white/40 backdrop-blur-3xl rounded-[60px] border border-dashed border-cocoa-deep/10 py-40">
-                    <p className="font-serif italic text-3xl text-cocoa-deep/20">No artifacts selected in current batch.</p>
-                  </div>
-                ) : (
-                  items.map((item) => (
-                    <motion.div
-                      layout
-                      key={item.id}
-                      className="p-10 bg-white/40 backdrop-blur-3xl rounded-[48px] border border-gold-soft/20 flex flex-wrap lg:flex-nowrap items-center gap-10 group shadow-sm hover:shadow-2xl transition-all duration-700"
-                    >
-                      <div className="size-32 bg-white/40 rounded-[32px] overflow-hidden shrink-0 border border-gold-soft/20 p-4">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000" />
-                      </div>
-
-                      <div className="flex-grow space-y-3">
-                        <div className="flex items-center gap-4">
-                          <div className="h-[1px] w-10 bg-burnt-caramel/20" />
-                          <span className="font-body text-[9px] font-black text-burnt-caramel uppercase tracking-[0.4em]">{item.category || 'Limited Piece'}</span>
-                        </div>
-                        <h3 className="text-3xl font-display text-cocoa-deep italic leading-tight">{item.name}</h3>
-                        <p className="font-mono text-[9px] text-cocoa-deep/20 uppercase tracking-[0.2em] font-black">ORIGIN_BATCH_{item.id.slice(-6).toUpperCase()}</p>
-                      </div>
-
-                      <div className="flex items-center gap-6 bg-white/40 p-2 rounded-[24px] border border-gold-soft/20 self-end lg:self-center">
-                        <button
-                          onClick={() => dispatch(decrementQuantity(item.id))}
-                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-burnt-caramel/30 hover:text-burnt-caramel shadow-sm active:scale-90"
-                        >
-                          <Minus size={14} />
-                        </button>
-                        <span className="w-10 text-center font-body font-black text-cocoa-deep text-sm">{item.quantity}</span>
-                        <button
-                          onClick={() => dispatch(addToCart(item))}
-                          className="size-10 flex items-center justify-center hover:bg-gold-soft/10 rounded-xl transition-all text-burnt-caramel/30 hover:text-burnt-caramel shadow-sm active:scale-90"
-                        >
-                          <Plus size={14} />
-                        </button>
-                      </div>
-
-                      <div className="text-right min-w-[120px] self-end lg:self-center">
-                        <p className="text-4xl font-display font-black text-cocoa-deep tracking-tighter shadow-sm">₹{item.price * item.quantity}</p>
-                      </div>
-                    </motion.div>
-                  ))
-                )}
-              </div>
-            </motion.section>
-
-            {/* Curatorial Registry Integration (Shipping) */}
-            <motion.section
-              className="p-16 md:p-24 bg-white/40 backdrop-blur-3xl rounded-[80px] border border-gold-soft/20 shadow-3xl space-y-20 relative overflow-hidden"
-              variants={fadeUp}
-              viewport={sectionViewport}
-              initial={reduceMotion ? false : 'hidden'}
-              whileInView="show"
-            >
-              <div className="absolute top-0 left-0 w-2 h-full bg-burnt-caramel/10" />
-
-              <div className="flex flex-col md:flex-row items-center justify-between border-b border-gold-soft/20 pb-12 gap-10">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-6">
-                    <div className="size-14 rounded-[20px] bg-burnt-caramel flex items-center justify-center text-white shadow-xl">
-                      <Ship size={20} />
-                    </div>
-                    <h2 className="text-4xl font-display italic leading-none text-cocoa-deep">Curatorial <span className="text-cocoa-deep font-black not-italic tracking-tighter">Registry</span></h2>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6 opacity-40">
-                  <ShieldCheck size={20} className="text-burnt-caramel" />
-                  <span className="font-body text-[9px] font-black uppercase tracking-[0.6em] text-cocoa-deep">SECURE_EXTRACTION_PROTOCOL</span>
-                </div>
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-600 uppercase">Phone Number *</label>
+                <input
+                  type="tel"
+                  value={shippingData.phoneNumber}
+                  onChange={(e) => setShippingData({ ...shippingData, phoneNumber: e.target.value })}
+                  placeholder="+919843240703"
+                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Authorized Curator Identity</span>
+              <div className="md:col-span-2 space-y-2">
+                <label className="text-xs font-bold text-gray-600 uppercase">Address Line 1 *</label>
+                <input
+                  type="text"
+                  value={shippingData.address}
+                  onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
+                  placeholder="Big Street"
+                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                />
+              </div>
+
+              <div className="md:col-span-2 space-y-2">
+                <label className="text-xs font-bold text-gray-600 uppercase">Address Line 2</label>
+                <input
+                  type="text"
+                  value={shippingData.addressLine2}
+                  onChange={(e) => setShippingData({ ...shippingData, addressLine2: e.target.value })}
+                  placeholder="Apartment, suite, etc."
+                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-600 uppercase">City *</label>
+                <input
+                  type="text"
+                  value={shippingData.city}
+                  onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
+                  placeholder="Davikapuram"
+                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-600 uppercase">State *</label>
                   <input
                     type="text"
-                    value={shippingData.name}
-                    onChange={(e) => setShippingData({ ...shippingData, name: e.target.value })}
-                    placeholder="HARVEST_NAME"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    value={shippingData.state}
+                    onChange={(e) => setShippingData({ ...shippingData, state: e.target.value })}
+                    placeholder="Tamil Nadu"
+                    className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
                   />
                 </div>
-
-                <div className="space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Digital Link</span>
-                  <input
-                    type="email"
-                    value={shippingData.email}
-                    onChange={(e) => setShippingData({ ...shippingData, email: e.target.value })}
-                    placeholder="EMAIL_STATION"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
-                  />
-                </div>
-
-                <div className="space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Voice Path</span>
-                  <input
-                    type="tel"
-                    value={shippingData.phoneNumber}
-                    onChange={(e) => setShippingData({ ...shippingData, phoneNumber: e.target.value })}
-                    placeholder="+91_MOBILE_FREQ"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
-                  />
-                </div>
-
-                <div className="col-span-2 space-y-6">
-                  <span className="font-body text-[10px] font-black text-cocoa-deep/20 uppercase tracking-[0.8em] ml-4">Extraction Point Address</span>
-                  <input
-                    type="text"
-                    value={shippingData.address}
-                    onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
-                    placeholder="UNIT_STREET_AREA_ESTATE"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
-                  />
-                </div>
-
-                <div className="space-y-6">
-                  <input
-                    type="text"
-                    value={shippingData.city}
-                    onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
-                    placeholder="DISTRICT"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
-                  />
-                </div>
-
-                <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-600 uppercase">Pincode *</label>
                   <input
                     type="text"
                     value={shippingData.postalCode}
                     onChange={(e) => setShippingData({ ...shippingData, postalCode: e.target.value })}
-                    placeholder="PIN_CODE"
-                    className="w-full bg-transparent border-b-2 border-gold-soft/20 rounded-none p-8 pl-0 text-cocoa-deep focus:outline-none focus:border-burnt-caramel transition-all font-body text-xs font-black uppercase tracking-[0.4em]"
+                    placeholder="632326"
+                    className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
                   />
                 </div>
               </div>
-            </motion.section>
+            </div>
+
+            <button
+              onClick={handlePayment}
+              disabled={isProcessing}
+              className="w-full h-16 bg-[#357960] hover:bg-[#2D6A4F] disabled:bg-gray-300 text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center text-lg mt-10"
+            >
+              {isProcessing ? "Processing..." : "Proceed to Payment"}
+            </button>
           </div>
 
-          {/* Right Side: High-End Heritage Liquidation */}
-          <motion.div className="sticky top-40" variants={fadeUp}>
-            <div className="p-16 bg-white/60 backdrop-blur-3xl rounded-[100px] text-cocoa-deep space-y-20 shadow-4xl relative overflow-hidden group border-8 border-gold-soft/5">
-              {/* Internal Text Texture */}
-              <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none font-display font-black text-[30vw] italic text-cocoa-deep -rotate-12 translate-y-1/2">ACS</div>
+          {/* Right Column: Order Summary */}
+          <div className="space-y-8">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm space-y-8">
+              <h2 className="text-xl font-bold text-[#1A1A1A]">Order Summary</h2>
 
-              <div className="space-y-6 border-b border-gold-soft/20 pb-12 text-center">
-                <Logo className="w-48 h-auto mx-auto mb-8" variant="dark" />
-                <h2 className="text-4xl font-display italic">Acquisition <span className="text-cocoa-deep font-black not-italic">Liquidation</span></h2>
-                <p className="font-body text-[10px] font-black uppercase tracking-[0.8em] text-cocoa-deep/30 italic">Registry_Verified_v09</p>
+              {/* Product List */}
+              <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                {items.map((item) => (
+                  <div key={item.id} className="flex gap-4">
+                    <div className="size-16 rounded-lg overflow-hidden shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-sm text-[#1A1A1A] truncate">{item.name}</h4>
+                          <p className="text-[10px] text-gray-400 mt-0.5">Qty: {item.quantity} <span className="ml-2">100 gms</span></p>
+                        </div>
+                        <span className="font-bold text-sm text-[#1A1A1A]">₹{(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="space-y-12">
-                <div className="flex justify-between items-center px-4">
-                  <span className="font-body text-cocoa-deep/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Net Batch Valuation</span>
-                  <span className="font-display font-black text-3xl tracking-tighter">₹{totalPrice.toFixed(0)}</span>
+              {/* Totals */}
+              <div className="space-y-4 pt-6 border-t border-gray-50">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-500 font-medium">Subtotal</span>
+                  <span className="text-[#1A1A1A] font-bold">₹{totalPrice.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between items-center px-4">
-                  <span className="font-body text-cocoa-deep/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Matrix Logistics</span>
-                  <span className="text-burnt-caramel font-black uppercase tracking-[0.4em] text-[11px] italic">Complimentary</span>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-500 font-medium">Shipping</span>
+                  <span className="text-[#357960] font-bold">FREE</span>
+                </div>
+                <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+                  <span className="text-[#1A1A1A] font-extrabold text-lg">Total</span>
+                  <span className="text-[#1A1A1A] font-extrabold text-2xl">₹{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="space-y-6 pt-12 border-t border-gold-soft/20 text-center">
-                <span className="font-body text-cocoa-deep/20 tracking-[0.8em] uppercase text-[11px] font-black">Authorized_Total</span>
-                <div className="flex items-center justify-center">
-                  <span className="text-8xl font-display font-black tracking-tighter shadow-sm">₹{grandTotal.toFixed(0)}</span>
-                </div>
-              </div>
-              <div className="space-y-10 pt-10">
-                {user ? (
-                  <button
-                    disabled={loading || items.length === 0}
-                    onClick={handleRazorpayPayment}
-                    className="w-full h-24 bg-burnt-caramel hover:bg-cocoa-deep text-white font-body font-black rounded-[40px] shadow-3xl flex items-center justify-center gap-10 transition-all transform group active:scale-[0.98] disabled:opacity-50"
-                  >
-                    <span className="uppercase tracking-[0.6em] text-[13px]">
-                      {loading ? 'AUTHENTICATING...' : 'FINALIZE_ACQUISITION'}
-                    </span>
-                    {!loading && <ArrowRight className="w-8 h-8 group-hover:translate-x-4 transition-transform" />}
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setIsAuthModalOpen(true)}
-                    className="w-full h-24 bg-white/40 hover:bg-white/60 text-cocoa-deep font-body font-black rounded-[40px] flex items-center justify-center gap-10 transition-all border border-gold-soft/20 uppercase tracking-[0.4em] text-[12px] italic"
-                  >
-                    Identify as Curator to Proceed <Lock size={20} />
-                  </button>
-                )}
-
-                <div className="flex items-center justify-center gap-6 opacity-30">
-                  <ShieldCheck size={20} />
-                  <p className="text-[10px] font-body font-black uppercase tracking-[0.5em] italic">
-                    Encrypted Portfolio Protocol_RSA
-                  </p>
-                </div>
+              {/* Trust Badge */}
+              <div className="flex items-center justify-center gap-2 pt-4">
+                <ShieldCheck size={14} className="text-gray-400" />
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">Secure checkout powered by Razorpay</span>
               </div>
             </div>
-
-            {/* Payment Verification Partners */}
-            <div className="mt-16 flex items-center justify-center gap-12 opacity-10 filter grayscale brightness-200">
-              <img src="https://razorpay.com/assets/razorpay-glyph-white.svg" alt="" className="h-4" />
-              <div className="h-4 w-[1px] bg-white" />
-              <span className="font-body text-[9px] font-black uppercase tracking-widest">VISA_LEGACY</span>
-              <div className="h-4 w-[1px] bg-white" />
-              <span className="font-body text-[9px] font-black uppercase tracking-widest">MATRIX_SECURE</span>
-            </div>
-          </motion.div>
+          </div>
         </div>
-      </motion.main>
-
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      </div>
     </div>
   );
-};
-
-export default Checkout;
+}

@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '@/store';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { X, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { addToCart, decrementQuantity } from '@/store/cartSlice';
+import { addToCart, decrementQuantity, removeFromCart } from '@/store/cartSlice';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -14,25 +14,8 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const liquidVariants = {
-    closed: {
-      clipPath: "circle(0% at 100% 0%)",
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40
-      }
-    } as const,
-    opened: {
-      clipPath: "circle(150% at 100% 0%)",
-      transition: {
-        type: "spring",
-        stiffness: 40,
-        restDelta: 2,
-        damping: 10
-      }
-    } as const
-  };
+
+  const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <AnimatePresence>
@@ -44,152 +27,120 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-cocoa-deep/10 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40"
           />
 
           {/* Drawer Panel */}
           <motion.div
-            variants={liquidVariants}
-            initial="closed"
-            animate="opened"
-            exit="closed"
-            className="w-full max-w-md bg-white h-full shadow-[-30px_0_60px_rgba(26,15,13,0.05)] relative z-10 flex flex-col border-l border-gold-soft/20 overflow-hidden"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="w-full max-w-md bg-[#F8FAF9] h-full shadow-2xl relative z-10 flex flex-col overflow-hidden"
           >
-            {/* Soft Organic Glows */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-40 overflow-hidden">
-              <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 360],
-                  x: [0, 40, -40, 0]
-                }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-[10%] -left-[10%] w-full aspect-square bg-burnt-caramel/10 blur-[120px] rounded-full"
-              />
-              <motion.div
-                animate={{
-                  scale: [1.2, 1, 1.2],
-                  rotate: [360, 0],
-                  y: [0, 40, -40, 0]
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute -bottom-[10%] -right-[10%] w-full aspect-square bg-gold-soft/10 blur-[100px] rounded-full"
-              />
-            </div>
-
             {/* Header */}
-            <div className="relative z-10 flex items-center justify-between p-10 border-b border-gold-soft/10 bg-white/40 backdrop-blur-3xl">
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <div className="size-2 rounded-full bg-burnt-caramel" />
-                  <span className="font-body text-[9px] font-black uppercase tracking-[0.4em] text-burnt-caramel/30">Registry Batch 2024</span>
-                </div>
-                <h2 className="text-3xl font-display text-cocoa-deep italic">
-                  Your <span className="text-cocoa-deep/40 font-light">Inventory</span>
-                </h2>
+            <div className="flex items-center justify-between p-6 bg-white border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <ShoppingCart className="text-[#357960]" size={24} />
+                <h2 className="text-xl font-bold text-[#1A1A1A]">Shopping Cart</h2>
+                <span className="bg-[#E5E9E7] text-[#357960] text-[10px] font-bold px-3 py-1 rounded-full">
+                  {cartItemCount} items
+                </span>
               </div>
               <button
                 onClick={onClose}
-                className="size-12 rounded-2xl bg-white/40 border border-gold-soft/20 shadow-sm text-burnt-caramel/40 hover:text-burnt-caramel flex items-center justify-center transition-all"
+                className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
 
             {/* Cart Items */}
-            <div className="relative z-10 flex-1 overflow-y-auto p-8 flex flex-col gap-6 custom-scrollbar bg-gold-soft/5" data-lenis-prevent>
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center space-y-10 text-center px-4">
-                  <div className="relative size-32 bg-white/40 rounded-full flex items-center justify-center border border-gold-soft/10 shadow-2xl">
-                    <ShoppingBag size={48} strokeWidth={1} className="text-burnt-caramel/10" />
-                    <motion.div
-                      animate={{ scale: [1, 1.4, 1], opacity: [0.1, 0.3, 0.1] }}
-                      transition={{ duration: 5, repeat: Infinity }}
-                      className="absolute inset-0 bg-burnt-caramel/5 rounded-full blur-2xl"
-                    />
+                <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
+                  <div className="size-20 bg-gray-100 rounded-full flex items-center justify-center">
+                    <ShoppingCart size={32} className="text-gray-300" />
                   </div>
-                  <div className="space-y-4">
-                    <p className="font-display text-2xl italic text-cocoa-deep">Your inventory is vacant.</p>
-                    <p className="text-[10px] font-body font-black uppercase text-cocoa-deep/30 tracking-[0.4em] max-w-[200px] mx-auto leading-loose italic">
-                      Begin your artisanal harvest in our collection matrix.
-                    </p>
-                  </div>
+                  <p className="text-gray-500 font-medium">Your cart is empty</p>
                   <button
                     onClick={() => { onClose(); navigate('/shop'); }}
-                    className="h-14 px-10 bg-white/40 border border-gold-soft/20 text-burnt-caramel font-body font-black text-[9px] uppercase tracking-[0.5em] rounded-xl hover:bg-burnt-caramel hover:text-white transition-all shadow-md group italic"
+                    className="text-[#357960] font-bold text-sm hover:underline"
                   >
-                    Enter the Shop <ArrowRight size={14} className="inline ml-3 group-hover:translate-x-2 transition-transform" />
+                    Continue Shopping
                   </button>
                 </div>
               ) : (
                 items.map((item) => (
-                  <motion.div
+                  <div
                     key={item.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="flex gap-6 p-5 rounded-[32px] bg-white/60 backdrop-blur-3xl border border-gold-soft/10 group shadow-sm hover:shadow-xl transition-all duration-500"
+                    className="flex gap-4 pb-6 border-b border-gray-100 last:border-0"
                   >
-                    <div className="size-24 rounded-2xl overflow-hidden bg-black/20 border border-gold-soft/10 flex-shrink-0">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <div className="size-20 bg-white rounded-xl border border-gray-100 overflow-hidden shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
 
-                    <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between">
-                          <span className="font-body text-[8px] font-black text-burnt-caramel/60 uppercase tracking-[0.2em] italic">{item.category || 'Limited Piece'}</span>
-                          <span className="font-mono text-[9px] text-cocoa-deep/20 uppercase tracking-tighter italic">REF_{item.id?.slice(-4).toUpperCase() || 'N/A'}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-[#1A1A1A] text-sm md:text-base truncate">{item.name}</h4>
+                          <p className="text-xs text-gray-400 mt-1">₹{item.price.toFixed(2)} each <span className="bg-gray-100 px-2 py-0.5 rounded ml-2">100 gms</span></p>
                         </div>
-                        <h4 className="font-display text-xl text-cocoa-deep italic leading-tight truncate pr-4">{item.name}</h4>
-                        <span className="font-display font-black text-lg text-cocoa-deep shadow-sm">₹{item.price * item.quantity}</span>
+                        <span className="font-bold text-[#357960]">₹{(item.price * item.quantity).toFixed(2)}</span>
                       </div>
-                      <div className="flex items-center gap-4 bg-white/40 self-start p-1.5 rounded-xl border border-gold-soft/10 mt-4">
-                        <button
-                          onClick={() => dispatch(decrementQuantity(item.id))}
-                          className="size-8 flex items-center justify-center text-burnt-caramel/30 hover:text-burnt-caramel hover:bg-gold-soft/10 rounded-lg transition-all"
+
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
+                          <button
+                            onClick={() => dispatch(decrementQuantity(item.id))}
+                            className="p-2 hover:bg-gray-50 text-gray-500 transition-colors"
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span className="w-10 text-center font-bold text-sm text-[#1A1A1A]">{item.quantity}</span>
+                          <button
+                            onClick={() => dispatch(addToCart(item))}
+                            className="p-2 hover:bg-gray-50 text-gray-500 transition-colors"
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
+                        <button 
+                          onClick={() => dispatch(removeFromCart(item.id))}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
                         >
-                          <Minus size={14} />
-                        </button>
-                        <span className="text-xs font-body font-black text-cocoa-deep min-w-[24px] text-center">{item.quantity}</span>
-                        <button
-                          onClick={() => dispatch(addToCart(item))}
-                          className="size-8 flex items-center justify-center text-burnt-caramel/30 hover:text-burnt-caramel hover:bg-gold-soft/10 rounded-lg transition-all"
-                        >
-                          <Plus size={14} />
+                          <Trash2 size={18} />
                         </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))
               )}
             </div>
 
-              {/* Footer Summary */}
-              {items.length > 0 && (
-                <div className="relative z-10 p-10 border-t border-gold-soft/10 bg-white/40 backdrop-blur-3xl space-y-10">
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <span className="font-body text-cocoa-deep/40 tracking-[0.4em] uppercase text-[9px] font-black italic">Subtotal valuation</span>
-                      <span className="font-display font-black text-xl text-cocoa-deep">₹{totalPrice}</span>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 border-t border-gold-soft/10">
-                      <span className="font-body text-cocoa-deep/20 tracking-[0.4em] uppercase text-[10px] font-black italic">Net Liquidation</span>
-                      <span className="text-5xl font-display font-black text-cocoa-deep tracking-tighter">₹{totalPrice.toFixed(0)}</span>
-                    </div>
+            {/* Footer */}
+            {items.length > 0 && (
+              <div className="p-6 bg-white border-t border-gray-100 space-y-6 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-500 font-medium">Subtotal ({cartItemCount} items)</span>
+                    <span className="text-gray-500 font-bold">₹{totalPrice.toFixed(2)}</span>
                   </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#1A1A1A] font-extrabold text-lg">Total</span>
+                    <span className="text-[#1A1A1A] font-extrabold text-xl">₹{totalPrice.toFixed(2)}</span>
+                  </div>
+                </div>
 
-                  <button
-                    onClick={() => {
-                      onClose();
-                      navigate('/checkout');
-                    }}
-                    className="w-full h-20 bg-burnt-caramel hover:bg-cocoa-deep text-white font-body font-black rounded-2xl text-[10px] uppercase tracking-[0.6em] shadow-2xl transition-all group overflow-hidden relative active:scale-[0.98] italic"
-                  >
-                    <span className="relative z-10 flex items-center justify-center gap-4">
-                      Finalize Acquisition <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-                    </span>
-                  </button>
+                <button
+                  onClick={() => {
+                    onClose();
+                    navigate('/checkout');
+                  }}
+                  className="w-full h-14 bg-[#357960] hover:bg-[#2D6A4F] text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center text-base"
+                >
+                  Checkout
+                </button>
               </div>
             )}
           </motion.div>

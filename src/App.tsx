@@ -52,7 +52,7 @@ function PageWrapper() {
 
   return (
     <>
-      <DecorativeElements />
+      {!location.pathname.includes('/checkout') && <DecorativeElements />}
       <ChocolateDripTransition isVisible={isTransitioning} />
       <Suspense fallback={<div className="h-screen w-full bg-[#1A0F0D]" />}>
         <AnimatePresence mode="wait">

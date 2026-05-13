@@ -28,8 +28,8 @@ export function InputField({ label, value, onChange, icon, type = 'text', placeh
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full h-14 bg-black/40 border border-gold-soft/10 rounded-xl pl-12 pr-4 text-sm focus:outline-none focus:border-gold-soft focus:bg-black/60 text-gold-soft transition-all placeholder:text-gold-soft/10"
-          placeholder={placeholder || `Enter ${label.toLowerCase()}...`}
+          className="w-full h-14 bg-black/40 border border-gold-soft/10 rounded-2xl pl-12 pr-4 text-[11px] font-black uppercase tracking-widest focus:outline-none focus:border-gold-soft focus:bg-black/60 text-gold-soft transition-all placeholder:text-gold-soft/10 shadow-inner"
+          placeholder={placeholder || `INPUT_${label.toUpperCase().replace(' ', '_')}...`}
         />
       </div>
     </div>

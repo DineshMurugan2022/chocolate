@@ -182,29 +182,29 @@ export default function Home() {
                            className="space-y-12 relative"
                         >
                            <div className="text-center space-y-4">
-                              <span className="font-body text-[8px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-burnt-caramel opacity-60">The Curator's Calendar</span>
-                              <h2 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep">Tailored Occasions</h2>
+                               <span className="font-body text-[8px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-burnt-caramel opacity-60">The Curator's Calendar</span>
+                               <h2 className="text-4xl md:text-7xl font-display italic font-black text-cocoa-deep">Tailored Occasions</h2>
                            </div>
 
                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 max-w-[1400px] mx-auto">
-                              {eventsData.map((eData, i) => (
-                                 <motion.div
-                                    key={eData.title}
-                                    initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50, rotateX: 10 }}
-                                    whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                                    transition={{ duration: 1, delay: i * 0.2, ease: "easeOut" }}
-                                    viewport={{ once: true }}
-                                    className="perspective-1000"
-                                 >
-                                    <CollectionCard
-                                       title={eData.title}
-                                       image={eData.image}
-                                       description={eData.description}
-                                       shape="landscape"
-                                       onClick={() => handleEventClick(eData.title)}
-                                    />
-                                 </motion.div>
-                              ))}
+                               {eventsData.map((eData, i) => (
+                                  <motion.div
+                                     key={eData.title}
+                                     initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50, rotateX: 10 }}
+                                     whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
+                                     transition={{ duration: 1, delay: i * 0.2, ease: "easeOut" }}
+                                     viewport={{ once: true }}
+                                     className="perspective-1000"
+                                  >
+                                     <CollectionCard
+                                        title={eData.title}
+                                        image={eData.image}
+                                        description={eData.description}
+                                        shape="landscape"
+                                        onClick={() => handleEventClick(eData.title)}
+                                     />
+                                  </motion.div>
+                               ))}
                            </div>
                         </motion.div>
                      )}

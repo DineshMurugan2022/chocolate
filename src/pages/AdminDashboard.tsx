@@ -20,7 +20,7 @@ import { StatsCard } from '@/components/admin/AdminComponents';
 export default function AdminDashboard() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<'inventory' | 'orders' | 'categories' | 'overview' | 'analytics'>('inventory');
+  const [activeTab, setActiveTab] = useState<'inventory' | 'orders' | 'categories' | 'overview' | 'analytics'>('overview');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -261,54 +261,60 @@ export default function AdminDashboard() {
         />
 
         <div className="p-6 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
-          {activeTab === 'inventory' ? (
+          {activeTab === 'overview' ? (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <StatsCard label="Total Products" value={products.length.toString()} icon={<Package size={20} className="text-blue-600" />} />
-                <StatsCard label="Out of Stock" value={products.filter(p => p.stock === 0).length.toString()} icon={<X size={20} className="text-red-600" />} />
-                <StatsCard label="Categories" value={categories.length.toString()} icon={<Tag size={20} className="text-purple-600" />} />
+                <StatsCard label="Total Products" value={products.length.toString()} icon={<Package size={20} className="text-gold-soft" />} />
+                <StatsCard label="Out of Stock" value={products.filter(p => p.stock === 0).length.toString()} icon={<X size={20} className="text-red-400" />} />
+                <StatsCard label="Categories" value={categories.length.toString()} icon={<Tag size={20} className="text-gold-soft" />} />
               </div>
-              
-              <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+            </motion.div>
+          ) : activeTab === 'inventory' ? (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
+              <div className="flex items-center justify-between border-b border-gold-soft/10 pb-4">
                  <div className="flex items-center gap-4">
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Inventory</h2>
+                    <h2 className="text-2xl font-bold text-gold-soft tracking-tight">Inventory</h2>
                  </div>
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Admin Panel</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gold-soft/40">Admin Panel</span>
               </div>
               
               <InventoryTable products={products} loading={loading} handleOpenModal={handleOpenModal} handleDelete={handleDelete} />
             </motion.div>
           ) : activeTab === 'orders' ? (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
-               <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+               <div className="flex items-center justify-between border-b border-gold-soft/10 pb-4">
                  <div className="flex items-center gap-4">
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Orders</h2>
+                    <h2 className="text-2xl font-bold text-gold-soft tracking-tight">Orders</h2>
                  </div>
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Order History</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gold-soft/40">Order History</span>
               </div>
               <OrdersTable orders={orders} loading={loading} handleUpdateOrderStatus={handleUpdateOrderStatus} setSelectedOrder={setSelectedOrder} />
             </motion.div>
-          ) : (
+          ) : activeTab === 'categories' ? (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-8">
-               <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+               <div className="flex items-center justify-between border-b border-gold-soft/10 pb-4">
                  <div className="flex items-center gap-4">
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Categories</h2>
+                    <h2 className="text-2xl font-bold text-gold-soft tracking-tight">Categories</h2>
                  </div>
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Manage Categories</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-gold-soft/40">Manage Categories</span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {categories.map((cat) => (
-                  <motion.div key={cat._id} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all group overflow-hidden">
+                  <motion.div key={cat._id} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} className="bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-gold-soft/10 shadow-2xl hover:border-gold-soft/30 transition-all group overflow-hidden">
                      <div className="flex items-center justify-between relative z-10">
-                        <h4 className="text-lg font-bold text-gray-900">{cat.name}</h4>
-                        <button onClick={() => handleDeleteCategory(cat._id)} className="p-2 rounded-lg bg-red-50 text-red-600 border border-red-100 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 hover:text-white">
+                        <h4 className="text-lg font-bold text-gold-soft">{cat.name}</h4>
+                        <button onClick={() => handleDeleteCategory(cat._id)} className="p-2 rounded-lg bg-red-900/20 text-red-400 border border-red-500/10 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500/20">
                            <X size={16} />
                         </button>
                      </div>
                   </motion.div>
                 ))}
               </div>
+            </motion.div>
+          ) : (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center h-64">
+              <p className="text-gold-soft/40 text-lg uppercase tracking-widest">Module under construction</p>
             </motion.div>
           )}
         </div>

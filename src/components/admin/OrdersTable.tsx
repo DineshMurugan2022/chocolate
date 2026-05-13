@@ -11,72 +11,77 @@ interface OrdersTableProps {
 
 const OrdersTable = ({ orders, loading, handleUpdateOrderStatus, setSelectedOrder }: OrdersTableProps) => {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-      <div className="p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gray-50/50">
-        <div className="flex items-center gap-3">
-           <div className="size-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
-              <ShoppingBag size={18} />
+    <div className="bg-black/40 backdrop-blur-3xl rounded-[20px] border border-gold-soft/10 overflow-hidden shadow-2xl">
+      <div className="p-8 border-b border-gold-soft/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gold-soft/[0.02]">
+        <div className="flex items-center gap-4">
+           <div className="size-10 rounded-xl bg-gold-soft/10 flex items-center justify-center text-gold-soft">
+              <ShoppingBag size={20} />
            </div>
            <div className="flex flex-col">
-              <h3 className="text-lg font-bold text-gray-900">Order History</h3>
-              <span className="text-xs text-gray-500">Manage customer orders</span>
+              <h3 className="text-xl font-display font-black text-gold-soft italic uppercase tracking-wider">Customer_Manifests</h3>
+              <span className="text-[10px] font-black uppercase text-gold-soft/30 tracking-widest">Global_Order_Registry</span>
            </div>
         </div>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="text-gray-500 text-xs font-bold uppercase tracking-wider bg-gray-50 border-b border-gray-200">
+          <thead className="text-gold-soft/30 text-[10px] font-black uppercase tracking-[0.2em] bg-black/60 border-b border-gold-soft/10">
             <tr>
-              <th className="px-6 py-4">Order ID</th>
-              <th className="px-6 py-4">Customer</th>
-              <th className="px-6 py-4">Total</th>
-              <th className="px-6 py-4">Status</th>
-              <th className="px-6 py-4 text-right">Action</th>
+              <th className="px-8 py-5">ORDER_ID</th>
+              <th className="px-8 py-5">CUSTOMER_PROFILE</th>
+              <th className="px-8 py-5">VALUATION</th>
+              <th className="px-8 py-5">PROTOCOL_STATUS</th>
+              <th className="px-8 py-5 text-right">OPERATIONS</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-gold-soft/5">
             {loading ? (
               <tr>
-                <td colSpan={5} className="px-6 py-20 text-center text-gray-400 font-medium text-lg">Loading orders...</td>
+                <td colSpan={5} className="px-8 py-40 text-center text-gold-soft/20 font-display italic text-2xl">Synchronizing Manifests...</td>
+              </tr>
+            ) : orders.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-8 py-20 text-center text-gold-soft/20 font-display italic text-xl">No manifests found in registry</td>
               </tr>
             ) : orders.map((order) => (
-              <tr key={order._id} className="hover:bg-gray-50 transition-colors group">
-                <td className="px-6 py-4">
+              <tr key={order._id} className="hover:bg-gold-soft/[0.03] transition-colors group">
+                <td className="px-8 py-6">
                    <div className="flex items-center gap-2">
-                      <div className="size-1.5 rounded-full bg-blue-500" />
-                      <span className="font-mono text-[10px] text-gray-500 uppercase tracking-tighter">#{order._id.slice(-10).toUpperCase()}</span>
+                      <div className="size-1.5 rounded-full bg-gold-soft" />
+                      <span className="font-mono text-[11px] font-black text-gold-soft/60 uppercase tracking-tighter">#{order._id.slice(-10).toUpperCase()}</span>
                    </div>
                 </td>
-                <td className="px-6 py-4">
-                   <p className="font-semibold text-gray-900">{order.shippingAddress.name}</p>
-                   <p className="text-[10px] text-gray-400 truncate max-w-[150px]">{order.shippingAddress.email}</p>
+                <td className="px-8 py-6">
+                   <p className="font-display font-black text-gold-soft text-lg tracking-tight uppercase italic">{order.shippingAddress.name}</p>
+                   <p className="text-[9px] font-black text-gold-soft/20 uppercase tracking-widest">{order.shippingAddress.email}</p>
                 </td>
-                <td className="px-6 py-4 font-bold text-gray-900">₹{order.totalPrice.toFixed(0)}</td>
-                <td className="px-6 py-4">
+                <td className="px-8 py-6 font-display font-black text-gold-soft text-xl italic">₹{order.totalPrice.toFixed(0)}</td>
+                <td className="px-8 py-6">
                   <select 
                     value={order.status}
                     onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
-                    className={`h-8 px-3 rounded-lg text-[10px] font-bold uppercase border bg-white focus:outline-none cursor-pointer transition-all ${
-                      order.status === 'paid' ? 'text-emerald-600 border-emerald-200 bg-emerald-50' : 
-                      order.status === 'processing' ? 'text-blue-600 border-blue-200 bg-blue-50' :
-                      order.status === 'completed' ? 'text-gray-500 border-gray-200 bg-gray-100' :
-                      'text-orange-600 border-orange-200 bg-orange-50'
+                    className={`h-9 px-4 rounded-lg text-[10px] font-black uppercase tracking-widest border focus:outline-none cursor-pointer transition-all ${
+                      order.status === 'paid' ? 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10' : 
+                      order.status === 'processing' ? 'text-blue-400 border-blue-500/30 bg-blue-500/10' :
+                      order.status === 'completed' ? 'text-gold-soft/40 border-gold-soft/10 bg-black/40' :
+                      order.status === 'cancelled' ? 'text-red-400 border-red-500/30 bg-red-500/10' :
+                      'text-orange-400 border-orange-500/30 bg-orange-500/10'
                     }`}
                   >
                     <option value="pending">Pending</option>
                     <option value="paid">Paid</option>
-                    <option value="processing">In Progress</option>
+                    <option value="processing">Processing</option>
                     <option value="completed">Completed</option>
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </td>
-                <td className="px-6 py-4 text-right">
+                <td className="px-8 py-6 text-right">
                   <button 
                     onClick={() => setSelectedOrder(order)}
-                    className="h-8 px-4 bg-white border border-gray-200 rounded-lg text-[10px] font-bold uppercase text-gray-500 hover:text-blue-600 hover:border-blue-500 hover:shadow-sm transition-all flex items-center gap-2 ml-auto group/btn"
+                    className="h-10 px-6 bg-black/40 border border-gold-soft/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-gold-soft/60 hover:text-gold-soft hover:border-gold-soft transition-all flex items-center gap-3 ml-auto group/btn shadow-xl"
                   >
-                    View Details <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                    Details <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </td>
               </tr>
