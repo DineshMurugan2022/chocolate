@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Truck, ShieldCheck, Tag, Info } from 'lucide-react';
+import { ChevronLeft, Truck, ShieldCheck, Tag, Info, ShoppingCart } from 'lucide-react';
 import type { RootState, AppDispatch } from '@/store';
 import { clearCart } from '@/store/cartSlice';
 import api from '@/utils/api';
