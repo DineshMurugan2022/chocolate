@@ -54,7 +54,11 @@ function PageWrapper() {
     <>
       {!location.pathname.includes('/checkout') && <DecorativeElements />}
       <ChocolateDripTransition isVisible={isTransitioning} />
-      <Suspense fallback={<div className="h-screen w-full bg-[#1A0F0D]" />}>
+      <Suspense fallback={
+        <div className="h-screen w-full bg-[#1A0F0D] flex items-center justify-center">
+          <div className="size-32 bg-gold-soft/10 rounded-full blur-3xl animate-pulse" />
+        </div>
+      }>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
