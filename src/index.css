@@ -142,17 +142,17 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(26, 15, 13, 0.02);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: var(--color-burnt-caramel);
   border-radius: 20px;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {

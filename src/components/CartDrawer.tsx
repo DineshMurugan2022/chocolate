@@ -91,47 +91,47 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       layout
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="group relative flex gap-5 pb-8 border-b border-gold-soft/5 last:border-0"
+                      className="group relative flex gap-4 pb-6 border-b border-gold-soft/5 last:border-0"
                     >
-                      <div className="relative size-20 md:size-24 rounded-[20px] overflow-hidden shrink-0 shadow-md">
+                      <div className="relative size-14 md:size-16 rounded-[14px] overflow-hidden shrink-0 shadow-sm">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                       </div>
 
-                      <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
-                        <div className="space-y-2">
+                      <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                        <div className="space-y-1">
                           <div className="flex justify-between items-start gap-2">
-                            <h4 className="font-display italic font-black text-cocoa-deep text-base md:text-lg leading-tight truncate">{item.name}</h4>
+                            <h4 className="font-display italic font-black text-cocoa-deep text-sm md:text-base leading-tight truncate">{item.name}</h4>
                             <button 
                               onClick={() => dispatch(removeFromCart(item.id))}
-                              className="p-1.5 text-cocoa-deep/10 hover:text-red-500 transition-colors shrink-0"
+                              className="p-1 text-cocoa-deep/10 hover:text-red-500 transition-colors shrink-0"
                             >
-                              <Trash2 size={14} />
+                              <Trash2 size={12} />
                             </button>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-body font-medium text-cocoa-deep/40 text-[10px] tracking-tight">₹{item.price.toLocaleString('en-IN')}</span>
-                            <div className="h-1 w-1 rounded-full bg-gold-soft/20" />
-                            <span className="text-[8px] font-body font-black uppercase tracking-widest text-gold-soft">100g</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-body font-medium text-cocoa-deep/30 text-[9px] tracking-tight">₹{item.price.toLocaleString('en-IN')}</span>
+                            <div className="h-0.5 w-0.5 rounded-full bg-gold-soft/20" />
+                            <span className="text-[7px] font-body font-black uppercase tracking-widest text-gold-soft">100g</span>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between mt-4">
-                          <div className="flex items-center bg-white/40 border border-gold-soft/5 rounded-full p-0.5">
+                        <div className="flex items-center justify-between mt-2">
+                          <div className="flex items-center bg-white/40 border border-gold-soft/5 rounded-full p-0.5 scale-90 origin-left">
                             <button
                               onClick={() => dispatch(decrementQuantity(item.id))}
-                              className="size-7 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
+                              className="size-6 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
                             >
-                              <Minus size={12} />
+                              <Minus size={10} />
                             </button>
-                            <span className="w-8 text-center font-body font-black text-[12px] text-cocoa-deep">{item.quantity}</span>
+                            <span className="w-6 text-center font-body font-black text-[10px] text-cocoa-deep">{item.quantity}</span>
                             <button
                               onClick={() => dispatch(addToCart(item))}
-                              className="size-7 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
+                              className="size-6 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
                             >
-                              <Plus size={12} />
+                              <Plus size={10} />
                             </button>
                           </div>
-                          <span className="font-body font-black text-cocoa-deep text-base tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                          <span className="font-body font-black text-cocoa-deep text-sm tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                         </div>
                       </div>
                     </motion.div>
