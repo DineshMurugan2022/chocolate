@@ -36,99 +36,127 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="w-full max-w-md bg-[#F8FAF9] h-full shadow-2xl relative z-10 flex flex-col overflow-hidden"
+            className="w-full sm:max-w-md md:max-w-lg lg:max-w-xl h-full shadow-[0_0_80px_rgba(26,15,13,0.2)] relative z-10 flex flex-col overflow-hidden bg-parchment-base border-l border-gold-soft/10"
           >
+            {/* Ambient Background Glow */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+               <div className="absolute -top-[10%] -right-[10%] w-[60%] h-[40%] bg-gold-soft/10 blur-[80px] rounded-full" />
+               <div className="absolute top-[40%] -left-[10%] w-[50%] h-[30%] bg-burnt-caramel/5 blur-[80px] rounded-full" />
+            </div>
+
             {/* Header */}
-            <div className="flex items-center justify-between p-6 bg-white border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <ShoppingCart className="text-[#357960]" size={24} />
-                <h2 className="text-xl font-bold text-[#1A1A1A]">Shopping Cart</h2>
-                <span className="bg-[#E5E9E7] text-[#357960] text-[10px] font-bold px-3 py-1 rounded-full">
-                  {cartItemCount} items
-                </span>
+            <div className="relative flex items-center justify-between p-6 md:p-8 bg-white/40 backdrop-blur-md border-b border-gold-soft/10">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-3">
+                  <h2 className="text-2xl font-display italic font-black text-cocoa-deep">Vault Registry</h2>
+                  <span className="bg-burnt-caramel text-white text-[8px] font-black uppercase tracking-[0.2em] px-2.5 py-1 rounded-full shadow-sm">
+                    {cartItemCount} Artifacts
+                  </span>
+                </div>
+                <p className="text-[9px] font-body font-black uppercase tracking-[0.3em] text-burnt-caramel/60">Your Personal Heritage Collection</p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="group p-3 hover:bg-cocoa-deep/5 rounded-full transition-all duration-500"
               >
-                <X size={20} />
+                <X size={22} className="text-cocoa-deep group-hover:rotate-90 transition-transform duration-500" />
               </button>
             </div>
 
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="relative flex-1 overflow-y-auto p-6 md:p-10 space-y-10 custom-scrollbar">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
-                  <div className="size-20 bg-gray-100 rounded-full flex items-center justify-center">
-                    <ShoppingCart size={32} className="text-gray-300" />
+                <div className="h-full flex flex-col items-center justify-center text-center space-y-8 py-20">
+                  <div className="relative">
+                    <div className="size-32 bg-gold-soft/5 rounded-full flex items-center justify-center animate-pulse" />
+                    <ShoppingCart size={48} className="absolute inset-0 m-auto text-gold-soft opacity-20" />
                   </div>
-                  <p className="text-gray-500 font-medium">Your cart is empty</p>
+                  <div className="space-y-2">
+                    <p className="text-cocoa-deep font-display italic text-2xl">The vault is currently empty</p>
+                    <p className="text-[10px] font-body font-black uppercase tracking-widest text-burnt-caramel/40">Begin your botanical odyssey to add artifacts</p>
+                  </div>
                   <button
                     onClick={() => { onClose(); navigate('/shop'); }}
-                    className="text-[#357960] font-bold text-sm hover:underline"
+                    className="group flex items-center gap-4 py-4 px-8 border border-gold-soft/20 rounded-full hover:bg-gold-soft/5 transition-all duration-700"
                   >
-                    Continue Shopping
+                    <span className="text-[10px] font-body font-black uppercase tracking-[0.4em] text-burnt-caramel">Explore Registry</span>
+                    <Plus size={14} className="text-burnt-caramel group-hover:rotate-90 transition-transform duration-500" />
                   </button>
                 </div>
               ) : (
                 items.map((item) => (
-                  <div
+                  <motion.div
                     key={item.id}
-                    className="flex gap-4 pb-6 border-b border-gray-100 last:border-0"
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="group relative flex gap-6 md:gap-8 pb-10 border-b border-gold-soft/10 last:border-0"
                   >
-                    <div className="size-20 bg-white rounded-xl border border-gray-100 overflow-hidden shrink-0">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <div className="relative size-24 md:size-32 rounded-[24px] overflow-hidden shrink-0 shadow-lg group-hover:shadow-2xl transition-all duration-700">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-cocoa-deep/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-bold text-[#1A1A1A] text-sm md:text-base truncate">{item.name}</h4>
-                          <p className="text-xs text-gray-400 mt-1">₹{item.price.toFixed(2)} each <span className="bg-gray-100 px-2 py-0.5 rounded ml-2">100 gms</span></p>
+                    <div className="flex-1 min-w-0 flex flex-col justify-between py-2">
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-start gap-4">
+                          <h4 className="font-display italic font-black text-cocoa-deep text-lg md:text-2xl leading-tight group-hover:text-burnt-caramel transition-colors">{item.name}</h4>
+                          <button 
+                            onClick={() => dispatch(removeFromCart(item.id))}
+                            className="p-2 text-cocoa-deep/20 hover:text-red-500 transition-colors"
+                          >
+                            <Trash2 size={18} />
+                          </button>
                         </div>
-                        <span className="font-bold text-[#357960]">₹{(item.price * item.quantity).toFixed(2)}</span>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="font-body font-medium text-cocoa-deep/40 text-xs md:text-sm tracking-tight">₹{item.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })} each</span>
+                          <div className="h-1 w-1 rounded-full bg-gold-soft/30" />
+                          <span className="text-[9px] font-body font-black uppercase tracking-widest text-gold-soft bg-gold-soft/5 px-2 py-0.5 rounded">Artisan Grade</span>
+                        </div>
                       </div>
 
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
+                      <div className="flex items-center justify-between mt-6">
+                        <div className="flex items-center bg-white/50 backdrop-blur-sm border border-gold-soft/10 rounded-full overflow-hidden p-1 shadow-sm">
                           <button
                             onClick={() => dispatch(decrementQuantity(item.id))}
-                            className="p-2 hover:bg-gray-50 text-gray-500 transition-colors"
+                            className="size-8 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/60 hover:text-burnt-caramel transition-all rounded-full"
                           >
                             <Minus size={14} />
                           </button>
-                          <span className="w-10 text-center font-bold text-sm text-[#1A1A1A]">{item.quantity}</span>
+                          <span className="w-10 text-center font-body font-black text-sm text-cocoa-deep tracking-tighter">{item.quantity}</span>
                           <button
                             onClick={() => dispatch(addToCart(item))}
-                            className="p-2 hover:bg-gray-50 text-gray-500 transition-colors"
+                            className="size-8 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/60 hover:text-burnt-caramel transition-all rounded-full"
                           >
                             <Plus size={14} />
                           </button>
                         </div>
-                        <button 
-                          onClick={() => dispatch(removeFromCart(item.id))}
-                          className="text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <Trash2 size={18} />
-                        </button>
+                        <div className="text-right">
+                           <span className="block text-[8px] font-body font-black text-burnt-caramel/40 uppercase tracking-widest mb-1">Subtotal</span>
+                           <span className="font-body font-black text-cocoa-deep text-lg tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))
               )}
             </div>
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="p-6 bg-white border-t border-gray-100 space-y-6 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+              <div className="relative p-6 md:p-10 bg-white/60 backdrop-blur-2xl border-t border-gold-soft/10 space-y-8">
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-500 font-medium">Subtotal ({cartItemCount} items)</span>
-                    <span className="text-gray-500 font-bold">₹{totalPrice.toFixed(2)}</span>
-                  </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[#1A1A1A] font-extrabold text-lg">Total</span>
-                    <span className="text-[#1A1A1A] font-extrabold text-xl">₹{totalPrice.toFixed(2)}</span>
+                    <span className="text-cocoa-deep/40 font-body font-black uppercase text-[10px] tracking-[0.3em]">Vault Summary</span>
+                    <div className="h-[1px] flex-1 mx-6 bg-gold-soft/10" />
+                    <span className="text-cocoa-deep/60 font-body font-bold text-sm">₹{totalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="flex justify-between items-end">
+                    <div className="space-y-1">
+                      <span className="text-cocoa-deep font-display italic text-3xl font-black">Total Amount</span>
+                      <p className="text-[9px] font-body font-black text-gold-soft uppercase tracking-[0.2em]">Including Heritage Surcharge</p>
+                    </div>
+                    <span className="text-cocoa-deep font-body font-black text-4xl tracking-tighter">₹{totalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
 
@@ -137,10 +165,18 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     onClose();
                     navigate('/checkout');
                   }}
-                  className="w-full h-14 bg-[#357960] hover:bg-[#2D6A4F] text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center text-base"
+                  className="group relative w-full h-16 bg-cocoa-deep text-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(26,15,13,0.3)] transition-all active:scale-[0.98]"
                 >
-                  Checkout
+                  <div className="absolute inset-0 bg-burnt-caramel translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+                  <span className="relative z-10 flex items-center justify-center gap-4 text-[11px] font-body font-black uppercase tracking-[0.5em]">
+                    Proceed to Checkout
+                    <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />
+                  </span>
                 </button>
+                
+                <p className="text-center text-[9px] font-body font-medium text-cocoa-deep/30 italic">
+                   "A legacy of taste, secured in your personal vault."
+                </p>
               </div>
             )}
           </motion.div>

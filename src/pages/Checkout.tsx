@@ -110,100 +110,128 @@ export default function Checkout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAF9] pt-12 pb-24 px-4 md:px-8 lg:px-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Back Link */}
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-[#357960] transition-colors mb-8"
-        >
-          <ChevronLeft size={16} /> Back to Shopping
-        </button>
+    <div className="min-h-screen bg-parchment-base pt-12 pb-24 px-4 md:px-8 lg:px-12 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[30%] bg-gold-soft/10 blur-[120px] rounded-full" />
+         <div className="absolute bottom-[10%] left-[-10%] w-[40%] h-[30%] bg-burnt-caramel/5 blur-[120px] rounded-full" />
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-8 items-start">
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
+          <div className="flex flex-col gap-4">
+             <button
+               onClick={() => navigate(-1)}
+               className="group flex items-center gap-3 text-[10px] font-body font-black uppercase tracking-[0.4em] text-burnt-caramel hover:text-cocoa-deep transition-all duration-500"
+             >
+               <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+               Return to Vault
+             </button>
+             <h1 className="text-5xl md:text-7xl font-display italic font-black text-cocoa-deep">Secure Procurement</h1>
+          </div>
+          <div className="hidden lg:block">
+            <Logo variant="dark" showText={false} className="scale-150" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-12 items-start">
           
           {/* Left Column: Shipping Form */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 shadow-sm space-y-10">
-            <div className="flex items-center gap-4 text-[#1A1A1A]">
-              <Truck size={24} className="text-[#357960]" />
-              <h2 className="text-xl md:text-2xl font-bold">Shipping Information</h2>
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-white/40 backdrop-blur-3xl rounded-[40px] border border-gold-soft/10 p-8 md:p-14 shadow-2xl space-y-12"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-4">
+                <Truck size={24} className="text-burnt-caramel" />
+                <h2 className="text-2xl md:text-3xl font-display italic font-black text-cocoa-deep">Shipping Logistics</h2>
+              </div>
+              <p className="text-[10px] font-body font-black uppercase tracking-[0.3em] text-burnt-caramel/40">Enter the destination for your artifacts</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-600 uppercase">Full Name *</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+              <div className="space-y-3">
+                <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">Full Name *</label>
                 <input
                   type="text"
+                  required
                   value={shippingData.name}
                   onChange={(e) => setShippingData({ ...shippingData, name: e.target.value })}
                   placeholder="Dinesh"
-                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                  className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-600 uppercase">Phone Number *</label>
+              <div className="space-y-3">
+                <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">Phone Number *</label>
                 <input
                   type="tel"
+                  required
                   value={shippingData.phoneNumber}
                   onChange={(e) => setShippingData({ ...shippingData, phoneNumber: e.target.value })}
                   placeholder="+919843240703"
-                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                  className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                 />
               </div>
 
-              <div className="md:col-span-2 space-y-2">
-                <label className="text-xs font-bold text-gray-600 uppercase">Address Line 1 *</label>
+              <div className="md:col-span-2 space-y-3">
+                <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">Primary Address *</label>
                 <input
                   type="text"
+                  required
                   value={shippingData.address}
                   onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
-                  placeholder="Big Street"
-                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                  placeholder="Building No, Street Name"
+                  className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                 />
               </div>
 
-              <div className="md:col-span-2 space-y-2">
-                <label className="text-xs font-bold text-gray-600 uppercase">Address Line 2</label>
+              <div className="md:col-span-2 space-y-3">
+                <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">Secondary Details</label>
                 <input
                   type="text"
                   value={shippingData.addressLine2}
                   onChange={(e) => setShippingData({ ...shippingData, addressLine2: e.target.value })}
-                  placeholder="Apartment, suite, etc."
-                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                  placeholder="Apartment, suite, landmark, etc."
+                  className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-600 uppercase">City *</label>
+              <div className="space-y-3">
+                <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">City / Municipality *</label>
                 <input
                   type="text"
+                  required
                   value={shippingData.city}
                   onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
                   placeholder="Davikapuram"
-                  className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                  className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-600 uppercase">State *</label>
+              <div className="grid grid-cols-2 gap-6 md:gap-8">
+                <div className="space-y-3">
+                  <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">State *</label>
                   <input
                     type="text"
+                    required
                     value={shippingData.state}
                     onChange={(e) => setShippingData({ ...shippingData, state: e.target.value })}
                     placeholder="Tamil Nadu"
-                    className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                    className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-600 uppercase">Pincode *</label>
+                <div className="space-y-3">
+                  <label className="text-[9px] font-body font-black text-cocoa-deep/40 uppercase tracking-[0.2em]">Postal Code *</label>
                   <input
                     type="text"
+                    required
                     value={shippingData.postalCode}
                     onChange={(e) => setShippingData({ ...shippingData, postalCode: e.target.value })}
                     placeholder="632326"
-                    className="w-full h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:outline-none focus:border-[#357960] transition-all"
+                    className="w-full h-14 bg-white/50 border border-gold-soft/10 rounded-2xl px-6 text-sm font-body font-medium focus:outline-none focus:border-burnt-caramel focus:bg-white transition-all shadow-sm"
                   />
                 </div>
               </div>
@@ -212,31 +240,42 @@ export default function Checkout() {
             <button
               onClick={handlePayment}
               disabled={isProcessing}
-              className="w-full h-16 bg-[#357960] hover:bg-[#2D6A4F] disabled:bg-gray-300 text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center text-lg mt-10"
+              className="group relative w-full h-20 bg-cocoa-deep text-white rounded-[24px] overflow-hidden shadow-[0_30px_60px_rgba(26,15,13,0.3)] transition-all active:scale-[0.98] flex items-center justify-center text-lg mt-14"
             >
-              {isProcessing ? "Processing..." : "Proceed to Payment"}
+              <div className="absolute inset-0 bg-burnt-caramel translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out" />
+              <span className="relative z-10 flex items-center justify-center gap-6 text-[12px] font-body font-black uppercase tracking-[0.6em]">
+                {isProcessing ? "Validating Secure Link..." : "Authenticate & Pay"}
+                {!isProcessing && <ShieldCheck size={20} className="group-hover:scale-110 transition-transform duration-500" />}
+              </span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Right Column: Order Summary */}
-          <div className="space-y-8">
-            <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm space-y-8">
-              <h2 className="text-xl font-bold text-[#1A1A1A]">Order Summary</h2>
+          <div className="space-y-8 sticky top-32">
+            <motion.div 
+               initial={{ opacity: 0, x: 30 }}
+               animate={{ opacity: 1, x: 0 }}
+               className="bg-white/40 backdrop-blur-3xl rounded-[40px] border border-gold-soft/10 p-8 md:p-12 shadow-2xl space-y-10"
+            >
+              <div className="flex flex-col gap-2">
+                <h2 className="text-2xl font-display italic font-black text-cocoa-deep">Inventory Review</h2>
+                <p className="text-[10px] font-body font-black uppercase tracking-[0.3em] text-burnt-caramel/40">Verifying your selection</p>
+              </div>
 
               {/* Product List */}
-              <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-8 max-h-[500px] overflow-y-auto pr-4 custom-scrollbar">
                 {items.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="size-16 rounded-lg overflow-hidden shrink-0">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                  <div key={item.id} className="group flex gap-6 items-center">
+                    <div className="size-20 rounded-2xl overflow-hidden shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-bold text-sm text-[#1A1A1A] truncate">{item.name}</h4>
-                          <p className="text-[10px] text-gray-400 mt-0.5">Qty: {item.quantity} <span className="ml-2">100 gms</span></p>
+                      <div className="flex justify-between items-center gap-4">
+                        <div className="space-y-1">
+                          <h4 className="font-display italic font-black text-cocoa-deep text-lg group-hover:text-burnt-caramel transition-colors">{item.name}</h4>
+                          <p className="text-[10px] font-body font-black text-cocoa-deep/40 uppercase tracking-widest">Qty: {item.quantity} · <span className="text-gold-soft">100g</span></p>
                         </div>
-                        <span className="font-bold text-sm text-[#1A1A1A]">₹{(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-body font-black text-cocoa-deep text-lg tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
                   </div>
@@ -244,27 +283,35 @@ export default function Checkout() {
               </div>
 
               {/* Totals */}
-              <div className="space-y-4 pt-6 border-t border-gray-50">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-500 font-medium">Subtotal</span>
-                  <span className="text-[#1A1A1A] font-bold">₹{totalPrice.toFixed(2)}</span>
+              <div className="space-y-6 pt-10 border-t border-gold-soft/10">
+                <div className="flex justify-between items-center">
+                  <span className="text-cocoa-deep/40 font-body font-black uppercase text-[10px] tracking-[0.3em]">Vault Subtotal</span>
+                  <span className="text-cocoa-deep/60 font-body font-bold text-sm">₹{totalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-500 font-medium">Shipping</span>
-                  <span className="text-[#357960] font-bold">FREE</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-cocoa-deep/40 font-body font-black uppercase text-[10px] tracking-[0.3em]">Heritage Shipping</span>
+                  <span className="text-gold-soft font-body font-black text-[10px] uppercase tracking-widest">Complimentary</span>
                 </div>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-50">
-                  <span className="text-[#1A1A1A] font-extrabold text-lg">Total</span>
-                  <span className="text-[#1A1A1A] font-extrabold text-2xl">₹{totalPrice.toFixed(2)}</span>
+                <div className="flex justify-between items-end pt-8 border-t border-gold-soft/10">
+                   <div className="space-y-1">
+                      <span className="text-cocoa-deep font-display italic text-3xl font-black leading-none">Total Due</span>
+                      <p className="text-[8px] font-body font-black text-gold-soft uppercase tracking-[0.3em]">Authenticity Verified</p>
+                   </div>
+                   <span className="text-cocoa-deep font-body font-black text-4xl tracking-tighter">₹{totalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
 
               {/* Trust Badge */}
-              <div className="flex items-center justify-center gap-2 pt-4">
-                <ShieldCheck size={14} className="text-gray-400" />
-                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">Secure checkout powered by Razorpay</span>
+              <div className="flex flex-col items-center gap-4 pt-4 opacity-30">
+                <div className="flex items-center gap-3">
+                   <Tag size={12} className="text-gold-soft" />
+                   <span className="text-[9px] font-body font-black uppercase tracking-[0.4em] text-cocoa-deep">Secure Pipeline Protocol</span>
+                </div>
+                <p className="text-[8px] font-body text-center leading-relaxed">
+                   By completing this transaction, you acknowledge the heritage protocols of the British Chocolate Store. Securely processed by Razorpay.
+                </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
