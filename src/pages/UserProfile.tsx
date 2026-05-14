@@ -214,44 +214,69 @@ export default function UserProfile() {
                         </button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {orders.map((order, idx) => (
                           <motion.div
                             key={order._id}
-                            className="group bg-white/40 backdrop-blur-3xl rounded-[32px] border border-gold-soft/10 p-8 hover:border-burnt-caramel/20 transition-all duration-500 relative overflow-hidden shadow-sm"
+                            className="group bg-white/40 backdrop-blur-3xl rounded-[40px] border border-gold-soft/10 p-10 hover:border-burnt-caramel/30 transition-all duration-700 relative overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1"
                           >
-                            <div className="space-y-6 relative z-10">
+                            {/* Paper Grain Overlay */}
+                            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+                            
+                            {/* Archive Index Watermark */}
+                            <div className="absolute -right-4 -top-4 text-[140px] font-display font-black text-cocoa-deep/[0.03] select-none pointer-events-none italic tracking-tighter group-hover:text-burnt-caramel/[0.05] transition-colors duration-700">
+                              {String(idx + 1).padStart(2, '0')}
+                            </div>
+
+                            <div className="space-y-10 relative z-10">
                               <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                  <p className="font-body text-[7px] uppercase text-cocoa-deep/40 tracking-widest font-black">Archive Ref</p>
-                                  <p className="font-body text-[10px] text-cocoa-deep font-bold tracking-tight">#{order._id.slice(-8).toUpperCase()}</p>
+                                <div className="space-y-1">
+                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.4em] font-black">Archive Ref</p>
+                                  <p className="font-body text-xs text-cocoa-deep font-black tracking-tight">#{order._id.slice(-8).toUpperCase()}</p>
                                 </div>
-                                <div className={`px-3 py-1 rounded-lg text-[7px] font-body font-black uppercase tracking-widest ${order.status === 'Delivered' ? 'bg-burnt-caramel/10 text-burnt-caramel' : 'bg-cocoa-deep/5 text-cocoa-deep/30'
+                                <div className={`px-4 py-1.5 rounded-full text-[8px] font-body font-black uppercase tracking-[0.2em] shadow-inner ${order.status === 'Delivered' 
+                                  ? 'bg-burnt-caramel/10 text-burnt-caramel border border-burnt-caramel/10' 
+                                  : 'bg-cocoa-deep/5 text-cocoa-deep/30 border border-gold-soft/10'
                                   }`}>
                                   {order.status}
                                 </div>
                               </div>
 
-                              <div className="space-y-3">
-                                <h4 className="text-3xl font-display text-cocoa-deep italic">
-                                  {order.items.length} <span className="text-cocoa-deep/20 not-italic font-black text-sm uppercase tracking-widest">Artifacts Securely Acquired</span>
-                                </h4>
-                                <div className="flex items-center gap-4 text-cocoa-deep/30">
-                                  <div className="flex items-center gap-1.5 font-body text-[8px] uppercase tracking-widest font-black"><Calendar size={10} /> {new Date(order.createdAt).toLocaleDateString()}</div>
-                                  <div className="flex items-center gap-1.5 font-body text-[8px] uppercase tracking-widest font-black"><MapPin size={10} /> {order.shippingAddress.city}</div>
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-4">
+                                  <div className="h-[1px] w-8 bg-burnt-caramel/20" />
+                                  <h4 className="text-4xl font-display text-cocoa-deep italic leading-none">
+                                    {order.items.length} <span className="text-cocoa-deep/20 not-italic font-black text-[10px] uppercase tracking-[0.4em] ml-2">Acquisitions Secure</span>
+                                  </h4>
+                                </div>
+                                
+                                <div className="flex items-center gap-6 text-cocoa-deep/40 pl-12">
+                                  <div className="flex items-center gap-2 font-body text-[9px] uppercase tracking-widest font-black">
+                                    <Calendar size={12} className="text-burnt-caramel/40" /> 
+                                    {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                  </div>
+                                  <div className="flex items-center gap-2 font-body text-[9px] uppercase tracking-widest font-black">
+                                    <MapPin size={12} className="text-burnt-caramel/40" /> 
+                                    {order.shippingAddress.city.toUpperCase()}
+                                  </div>
                                 </div>
                               </div>
 
-                              <div className="flex items-end justify-between pt-5 border-t border-gold-soft/5">
-                                <div className="space-y-0.5">
-                                  <p className="font-body text-[7px] uppercase text-cocoa-deep/40 tracking-widest font-black">Final Assessment</p>
-                                  <p className="text-3xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">₹{order.totalPrice.toLocaleString('en-IN')}</p>
+                              <div className="flex items-end justify-between pt-8 border-t border-gold-soft/10">
+                                <div className="space-y-1">
+                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.5em] font-black">Final Assessment</p>
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-lg font-body font-black text-burnt-caramel/40">₹</span>
+                                    <p className="text-4xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">
+                                      {order.totalPrice.toLocaleString('en-IN')}
+                                    </p>
+                                  </div>
                                 </div>
                                 <button
                                   onClick={() => setSelectedOrder(order)}
-                                  className="size-11 rounded-xl bg-white/60 border border-gold-soft/10 flex items-center justify-center text-cocoa-deep hover:bg-cocoa-deep hover:text-white transition-all shadow-md group-hover:translate-x-1"
+                                  className="size-14 rounded-2xl bg-white/60 border border-gold-soft/10 flex items-center justify-center text-cocoa-deep hover:bg-cocoa-deep hover:text-white transition-all shadow-lg hover:shadow-cocoa-deep/20 group-hover:translate-x-1"
                                 >
-                                  <ChevronRight size={18} />
+                                  <ChevronRight size={24} />
                                 </button>
                               </div>
                             </div>
