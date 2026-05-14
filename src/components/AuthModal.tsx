@@ -27,7 +27,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const mutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
-      const res = await api.post(endpoint, data);
+      // Only send necessary data for login
+      const payload = isLogin ? { email: data.email, password: data.password } : data;
+      const res = await api.post(endpoint, payload);
       return res.data;
     },
     onSuccess: (data) => {
@@ -35,11 +37,23 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       dispatch(setCredentials({ user }));
       toast.success(isLogin ? 'Welcome back!' : 'Account created successfully!');
       onClose();
+    },
+    onError: (error: any) => {
+      const message = error.response?.data?.message || error.message || 'Something went wrong';
+      toast.error(message);
     }
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLogin && formData.name.length < 2) {
+      toast.error('Name must be at least 2 characters');
+      return;
+    }
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
     mutation.mutate(formData);
   };
 

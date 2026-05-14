@@ -242,7 +242,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                   onClick={() => setIsAuthModalOpen(true)}
                   className={`hidden sm:block font-body text-[8px] xl:text-[9px] font-black uppercase tracking-[0.2em] ${themeColors.text} ${themeColors.hover} transition-colors italic`}
                 >
-                  LOG_IN
+                  Log In
                 </button>
               ) : (
                 <button

@@ -76,7 +76,7 @@ export default function MeltHero() {
                   {/* Glass Reflection Overlay */}
                   <div className="absolute inset-0 z-20 opacity-0 group-hover/gate:opacity-30 transition-opacity bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
                   <div
-                     className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-l-[40px] md:rounded-[80px] border-r-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
+                     className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-l-[40px] md:rounded-[80px] shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                      style={{
                         backgroundImage: `url("${chocolateGate}")`,
                         backgroundPosition: 'left center'
@@ -91,7 +91,7 @@ export default function MeltHero() {
                   {/* Glass Reflection Overlay */}
                   <div className="absolute inset-0 z-20 opacity-0 group-hover/gate:opacity-30 transition-opacity bg-gradient-to-tr from-white/20 to-transparent pointer-events-none" />
                   <div
-                     className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-r-[40px] md:rounded-[80px] border-l-[6px] border-burnt-caramel/40 shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
+                     className="w-[160px] h-[280px] md:w-[380px] md:h-[650px] bg-cover bg-center rounded-r-[40px] md:rounded-[80px] shadow-[0_60px_120px_rgba(26,15,13,0.6)] relative overflow-hidden"
                      style={{
                         backgroundImage: `url("${chocolateGate}")`,
                         backgroundPosition: 'right center'

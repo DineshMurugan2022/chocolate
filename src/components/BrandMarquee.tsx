@@ -20,9 +20,9 @@ export default function BrandMarquee({ onBrandClick }: BrandMarqueeProps) {
       className="group relative flex-shrink-0 w-40 md:w-56 aspect-[3/2] mx-6 md:mx-12 cursor-pointer transition-all duration-700"
       whileHover={{ y: -8, scale: 1.1 }}
     >
-      {/* Brand Logo with mix-blend-multiply to remove white backgrounds */}
+      {/* Brand Logo - Removed filters that were causing some logos to disappear */}
       <div 
-        className="absolute inset-0 bg-contain bg-no-repeat bg-center opacity-60 group-hover:opacity-100 transition-all duration-700 mix-blend-multiply filter grayscale group-hover:grayscale-0 p-4 md:p-6"
+        className="absolute inset-0 bg-contain bg-no-repeat bg-center opacity-80 group-hover:opacity-100 transition-all duration-700 p-4 md:p-6"
         style={{ backgroundImage: `url("${brand.image}")` }}
       />
 
