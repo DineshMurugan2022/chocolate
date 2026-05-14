@@ -84,7 +84,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
-  const isCelestialTheme = location.pathname === '/profile';
+  const isRubyTheme = location.pathname === '/profile';
 
   const leftLinks: NavItem[] = [
     { name: 'STORY', path: '/about', icon: <BookOpen size={18} /> },
@@ -110,13 +110,13 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
     { name: 'WORKSHOP', path: '/workshop', icon: <Hammer size={18} /> }
   ];
 
-  const themeColors = isCelestialTheme
+  const themeColors = isRubyTheme
     ? {
-      text: 'text-aurora-cyan',
-      bg: 'bg-white/5',
-      border: 'border-white/10',
-      hover: 'hover:text-white',
-      accent: 'text-aurora-cyan'
+      text: 'text-heritage-red',
+      bg: 'bg-white/95',
+      border: 'border-heritage-red/20',
+      hover: 'hover:text-onyx-black',
+      accent: 'text-heritage-red'
     }
     : {
       text: 'text-cocoa-deep',
@@ -128,7 +128,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] transition-all duration-700 pointer-events-none">
-      <div className={`max-w-[2000px] mx-auto px-4 md:px-6 lg:px-8 xl:px-14 h-16 md:h-24 lg:h-28 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isCelestialTheme ? 'bg-[#030308]/40 backdrop-blur-3xl border-b border-white/5' : 'bg-white/30 backdrop-blur-md border-b border-gold-soft/5'}`}>
+      <div className={`max-w-[2000px] mx-auto px-4 md:px-6 lg:px-8 xl:px-14 h-16 md:h-24 lg:h-28 grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-700 relative z-20 pointer-events-auto ${isRubyTheme ? 'bg-onyx-black/90 backdrop-blur-3xl border-b-4 border-heritage-red shadow-2xl' : 'bg-white/30 backdrop-blur-md border-b border-gold-soft/5'}`}>
 
         {/* Left Section */}
         <div className="flex items-center justify-start h-full">
@@ -147,7 +147,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                 <Magnetic>
                   <button
                     onClick={() => link.path !== '#' && navigate(link.path)}
-                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap`}
+                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md whitespace-nowrap`}
                   >
                     {link.name}
                   </button>
@@ -176,7 +176,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         <div className="flex items-center justify-center px-4 md:px-6 lg:px-10 z-30 relative">
           <Magnetic>
             <Logo
-              variant={isCelestialTheme ? 'celestial' : 'dark'}
+              variant={isRubyTheme ? 'dark' : 'dark'}
               showText={false}
               className="scale-110 md:scale-125 lg:scale-140 transition-transform duration-700 pointer-events-auto"
             />
@@ -193,7 +193,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                 <Magnetic>
                   <button
                     onClick={() => link.path !== '#' && navigate(link.path)}
-                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md italic whitespace-nowrap`}
+                    className={`font-body text-[8px] xl:text-[9px] 2xl:text-[10px] font-black tracking-[0.2em] xl:tracking-[0.3em] 2xl:tracking-[0.4em] ${themeColors.text} ${themeColors.hover} transition-all uppercase drop-shadow-md whitespace-nowrap`}
                   >
                     {link.name}
                   </button>
@@ -201,12 +201,12 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
                 {link.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
-                    <div className={`min-w-[160px] ${isCelestialTheme ? 'bg-[#030308]/90 border-white/10' : 'bg-white/95 border-gold-soft/10'} backdrop-blur-xl border rounded-2xl p-4 shadow-2xl flex flex-col gap-3`}>
+                    <div className={`min-w-[160px] ${isRubyTheme ? 'bg-white border-heritage-red/20' : 'bg-white/95 border-gold-soft/10'} backdrop-blur-xl border rounded-none p-4 shadow-2xl flex flex-col gap-3`}>
                       {link.dropdown.map(subItem => (
                         <button
                           key={subItem.name}
                           onClick={() => navigate(subItem.path)}
-                          className={`text-left font-body text-[9px] font-black tracking-widest uppercase ${themeColors.text} hover:text-burnt-caramel transition-colors`}
+                          className={`text-left font-body text-[9px] font-black tracking-widest uppercase ${themeColors.text} hover:text-onyx-black transition-colors`}
                         >
                           {subItem.name}
                         </button>
@@ -240,7 +240,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
               {!user ? (
                 <button
                   onClick={() => setIsAuthModalOpen(true)}
-                  className={`hidden sm:block font-body text-[8px] xl:text-[9px] font-black uppercase tracking-[0.2em] ${themeColors.text} ${themeColors.hover} transition-colors italic`}
+                  className={`hidden sm:block font-body text-[8px] xl:text-[9px] font-black uppercase tracking-[0.2em] ${themeColors.text} ${themeColors.hover} transition-colors`}
                 >
                   Log In
                 </button>
@@ -258,7 +258,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
                   onClick={() => setIsCartOpen(true)}
                   className="relative group flex items-center justify-center"
                 >
-                  <div className={`size-8 md:size-10 lg:size-11 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} rounded-full flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
+                  <div className={`size-8 md:size-10 lg:size-11 ${themeColors.bg} backdrop-blur-md border ${themeColors.border} ${isRubyTheme ? 'rounded-none' : 'rounded-full'} flex items-center justify-center transition-all hover:bg-white hover:border-white group-hover:bg-white group-hover:scale-105 shadow-xl`}>
                     <ShoppingBag size={16} className={`${themeColors.text} group-hover:text-black transition-colors`} />
                   </div>
                   {cartItemCount > 0 && (
@@ -287,13 +287,13 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
       {/* Mobile Menu Drawer */}
       <div
         className={`fixed top-0 left-0 bottom-0 w-[80%] max-w-sm z-[1100] flex flex-col pointer-events-auto lg:hidden transition-transform duration-300 ease-in-out transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } ${isCelestialTheme ? 'bg-[#030308] border-r border-white/10 text-white' : 'bg-white/95 backdrop-blur-3xl shadow-2xl text-cocoa-deep rounded-r-3xl'}`}
+          } ${isRubyTheme ? 'bg-white border-r-4 border-heritage-red text-onyx-black' : 'bg-white/95 backdrop-blur-3xl shadow-2xl text-cocoa-deep rounded-r-3xl'}`}
       >
         <div className="flex justify-between items-center p-6 border-b border-black/5">
-          <Logo variant={isCelestialTheme ? "celestial" : "dark"} showText={false} className="scale-150 origin-left" />
+          <Logo variant={isRubyTheme ? "dark" : "dark"} showText={false} className="scale-150 origin-left" />
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`p-2 rounded-full transition-colors ${isCelestialTheme ? 'bg-white/10 hover:bg-white/20' : 'bg-cocoa-deep/5 hover:bg-cocoa-deep/10'}`}
+            className={`p-2 transition-colors ${isRubyTheme ? 'bg-heritage-red/10 text-heritage-red hover:bg-heritage-red/20' : 'bg-cocoa-deep/5 hover:bg-cocoa-deep/10 rounded-full'}`}
           >
             <X size={20} />
           </button>
@@ -304,19 +304,19 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             <MobileNavItem
               key={link.name}
               link={link}
-              isCelestialTheme={isCelestialTheme}
+              isCelestialTheme={isRubyTheme}
               navigate={navigate}
               setIsMobileMenuOpen={setIsMobileMenuOpen}
             />
           ))}
         </nav>
 
-        <div className={`mt-auto p-6 bg-black/5 flex flex-col gap-4 rounded-br-3xl`}>
-          <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
-            <Heart size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'} /> Wishlist
+        <div className={`mt-auto p-6 bg-black/5 flex flex-col gap-4 ${isRubyTheme ? '' : 'rounded-br-3xl'}`}>
+          <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isRubyTheme ? 'text-onyx-black hover:text-heritage-red' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
+            <Heart size={18} className={isRubyTheme ? 'text-heritage-red' : 'text-burnt-caramel'} /> Wishlist
           </button>
-          <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
-            <User size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'} /> {user ? 'Profile' : 'Log In'}
+          <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isRubyTheme ? 'text-onyx-black hover:text-heritage-red' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
+            <User size={18} className={isRubyTheme ? 'text-heritage-red' : 'text-burnt-caramel'} /> {user ? 'Profile' : 'Log In'}
           </button>
         </div>
       </div>

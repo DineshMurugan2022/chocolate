@@ -83,12 +83,12 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-light text-onyx-black selection:bg-heritage-red selection:text-white relative overflow-x-hidden ruby-noir-theme">
+    <div className="min-h-screen bg-onyx-black text-white selection:bg-heritage-red selection:text-white relative overflow-x-hidden ruby-noir-theme">
       {/* Architectural Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-         <div className="absolute top-0 right-0 w-1/3 h-full bg-white border-l-2 border-onyx-black/5" />
-         <div className="absolute top-[20%] left-[-5%] w-[110%] h-[1px] bg-heritage-red/10 rotate-12" />
-         <div className="absolute top-[40%] left-[-5%] w-[110%] h-[1px] bg-heritage-red/10 -rotate-6" />
+         <div className="absolute top-0 right-0 w-1/3 h-full bg-white/5 border-l-2 border-white/10" />
+         <div className="absolute top-[20%] left-[-5%] w-[110%] h-[1px] bg-heritage-red/20 rotate-12" />
+         <div className="absolute top-[40%] left-[-5%] w-[110%] h-[1px] bg-heritage-red/20 -rotate-6" />
       </div>
 
       <Header setIsCartOpen={setIsCartOpen} />
