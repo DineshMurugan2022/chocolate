@@ -142,21 +142,23 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(26, 15, 13, 0.02);
+  background: rgba(26, 15, 13, 0.05);
+  border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: var(--color-burnt-caramel);
-  border-radius: 20px;
-  opacity: 0.4;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  opacity: 1;
+  background-color: var(--color-burnt-caramel);
 }
 
 /* Animations */

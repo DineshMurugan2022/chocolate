@@ -252,7 +252,7 @@ export default function Checkout() {
             </div>
 
             {/* Product List - Constrained scroll area with explicit height fix */}
-            <div className="flex-1 min-h-0 overflow-y-auto pr-4 -mr-2 custom-scrollbar space-y-4 py-2 overscroll-contain">
+            <div className="flex-1 min-h-0 overflow-y-auto pr-2 custom-scrollbar space-y-4 py-2">
               {items.map((item) => (
                 <div key={item.id} className="group flex gap-4 items-center">
                   <div className="size-12 rounded-xl overflow-hidden shrink-0 shadow-sm border border-gold-soft/5">

@@ -64,7 +64,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             </div>
 
             {/* Cart Items Container - Pinned with flex-1 and min-h-0 scroll fix */}
-            <div className="relative flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 md:p-6 pr-6 -mr-1 custom-scrollbar overscroll-contain touch-pan-y">
+            <div className="relative flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 md:p-6 custom-scrollbar touch-pan-y">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-10">
                   <div className="relative">
