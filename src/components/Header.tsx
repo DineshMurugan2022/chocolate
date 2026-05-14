@@ -18,12 +18,12 @@ interface NavItem {
 
 const MobileNavItem = ({
   link,
-  isCelestialTheme,
+  isRubyTheme,
   navigate,
   setIsMobileMenuOpen
 }: {
   link: NavItem,
-  isCelestialTheme: boolean,
+  isRubyTheme: boolean,
   navigate: (path: string) => void,
   setIsMobileMenuOpen: (open: boolean) => void
 }) => {
@@ -41,10 +41,10 @@ const MobileNavItem = ({
           }
         }}
         className={`flex items-center justify-between py-3 font-display font-bold text-lg transition-colors
-          ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}
+          ${isRubyTheme ? 'text-onyx-black hover:text-heritage-red' : 'text-cocoa-deep hover:text-burnt-caramel'}`}
       >
         <div className="flex items-center gap-3">
-          {link.icon && <span className={isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'}>{link.icon}</span>}
+          {link.icon && <span className={isRubyTheme ? 'text-heritage-red' : 'text-burnt-caramel'}>{link.icon}</span>}
           <span className="capitalize">{link.name.toLowerCase()}</span>
         </div>
         {link.dropdown && (
@@ -62,7 +62,7 @@ const MobileNavItem = ({
                 navigate(subItem.path);
                 setIsMobileMenuOpen(false);
               }}
-              className={`text-left font-body font-medium text-base transition-colors py-1 ${isCelestialTheme ? 'text-white/70 hover:text-aurora-cyan' : 'text-cocoa-deep/60 hover:text-burnt-caramel'}`}
+              className={`text-left font-body font-medium text-base transition-colors py-1 ${isRubyTheme ? 'text-onyx-black/70 hover:text-heritage-red' : 'text-cocoa-deep/60 hover:text-burnt-caramel'}`}
             >
               {subItem.name.charAt(0) + subItem.name.slice(1).toLowerCase()}
             </button>
@@ -155,7 +155,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
 
                 {link.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-50">
-                    <div className={`min-w-[160px] ${isCelestialTheme ? 'bg-[#030308]/90 border-white/10' : 'bg-white/95 border-gold-soft/10'} backdrop-blur-xl border rounded-2xl p-4 shadow-2xl flex flex-col gap-3`}>
+                    <div className={`min-w-[160px] ${isRubyTheme ? 'bg-onyx-black/90 border-white/10' : 'bg-white/95 border-gold-soft/10'} backdrop-blur-xl border rounded-none p-4 shadow-2xl flex flex-col gap-3`}>
                       {link.dropdown.map(subItem => (
                         <button
                           key={subItem.name}
@@ -304,7 +304,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             <MobileNavItem
               key={link.name}
               link={link}
-              isCelestialTheme={isRubyTheme}
+              isRubyTheme={isRubyTheme}
               navigate={navigate}
               setIsMobileMenuOpen={setIsMobileMenuOpen}
             />
