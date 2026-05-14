@@ -224,7 +224,7 @@ export default function UserProfile() {
                               <div className="flex items-center justify-between">
                                 <div className="space-y-0.5">
                                   <p className="font-body text-[7px] uppercase text-cocoa-deep/40 tracking-widest font-black">Archive Ref</p>
-                                  <p className="font-body text-[10px] text-cocoa-deep font-black">#{order._id.slice(-8).toUpperCase()}</p>
+                                  <p className="font-body text-[10px] text-cocoa-deep font-bold tracking-tight">#{order._id.slice(-8).toUpperCase()}</p>
                                 </div>
                                 <div className={`px-3 py-1 rounded-lg text-[7px] font-body font-black uppercase tracking-widest ${order.status === 'Delivered' ? 'bg-burnt-caramel/10 text-burnt-caramel' : 'bg-cocoa-deep/5 text-cocoa-deep/30'
                                   }`}>
@@ -245,7 +245,7 @@ export default function UserProfile() {
                               <div className="flex items-end justify-between pt-5 border-t border-gold-soft/5">
                                 <div className="space-y-0.5">
                                   <p className="font-body text-[7px] uppercase text-cocoa-deep/40 tracking-widest font-black">Final Assessment</p>
-                                  <p className="text-3xl font-display font-black text-cocoa-deep">₹{order.totalPrice.toLocaleString('en-IN')}</p>
+                                  <p className="text-3xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">₹{order.totalPrice.toLocaleString('en-IN')}</p>
                                 </div>
                                 <button
                                   onClick={() => setSelectedOrder(order)}
@@ -346,7 +346,7 @@ export default function UserProfile() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/40 rounded-2xl p-4 border border-gold-soft/10">
                     <p className="font-body text-[7px] uppercase text-cocoa-deep/20 tracking-widest mb-1 font-black">Order Reference</p>
-                    <p className="font-body text-[9px] text-cocoa-deep font-black">#{selectedOrder._id}</p>
+                    <p className="font-body text-[9px] text-cocoa-deep font-black tracking-tight">#{selectedOrder._id}</p>
                   </div>
                   <div className="bg-white/40 rounded-2xl p-4 border border-gold-soft/10">
                     <p className="font-body text-[7px] uppercase text-cocoa-deep/20 tracking-widest mb-1 font-black">Registry Status</p>
@@ -372,7 +372,7 @@ export default function UserProfile() {
                             <p className="font-body text-[8px] text-cocoa-deep/20 uppercase tracking-widest font-black">Qty: {item.quantity}</p>
                           </div>
                         </div>
-                        <p className="text-lg font-display font-black text-cocoa-deep/80">₹{item.price}</p>
+                        <p className="text-lg font-body font-black text-cocoa-deep/80 tabular-nums">₹{item.price}</p>
                       </div>
                     ))}
                   </div>
@@ -396,7 +396,7 @@ export default function UserProfile() {
                 <div className="flex items-center justify-between py-6 border-t border-gold-soft/10">
                   <div className="space-y-0.5">
                     <p className="font-body text-[8px] uppercase text-cocoa-deep/20 tracking-[0.5em] font-black">Net Acquisition Value</p>
-                    <p className="text-4xl font-display font-black text-cocoa-deep">₹{selectedOrder.totalPrice.toLocaleString('en-IN')}</p>
+                    <p className="text-4xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">₹{selectedOrder.totalPrice.toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               </div>
