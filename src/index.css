@@ -2,31 +2,68 @@
 @import "tailwindcss";
 
 @theme {
-  /* Ruby Noir Palette - Modern Angular Design */
+  /* Botanical Boutique Palette - Tailwind 4 */
+  --color-cocoa-deep: #1A0F0D;
+  --color-burnt-caramel: #B3530F;
+  --color-ivory-warm: #F5F2ED;
+  --color-parchment-light: #FDFBF7;
+  --color-parchment-base: #F5F2ED;
+  --color-parchment-shadow: #E8DECB;
+  --color-botanical-green: #14211A;
+  --color-gold-soft: #D4AF37;
+
+  /* Celestial Aurora Redesign Palette */
+  --color-celestial-bg: #030308;
+  --color-aurora-cyan: #00F5FF;
+  --color-aurora-purple: #BD93F9;
+  --color-chrome-silver: #E0E0E0;
+  --color-deep-space: #0A0A10;
+
+  /* Additional Extended Palette */
+  --color-gold-accent: #FFD700;
+  --color-gold-deep: #B8860B;
+  --color-burnt-orange: #CC5500;
+  --color-satin-gold: #C5A059;
+  --color-cream-text: #FDFBF7;
+  --color-chocolate-rich: #3D1F16;
+  --color-chocolate-dark: #1A0F0D;
+  --color-espresso-900: #2B1B17;
+  --color-espresso-950: #1A0F0D;
+  --color-taupe-muted: #8B7D77;
+  --color-umber-text: #4A3728;
+
+  --scrollbar-thumb: var(--color-burnt-caramel);
+  --scrollbar-track: var(--color-ivory-warm);
+
+  --font-display: "Cormorant Garamond", serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-body: "Outfit", sans-serif;
+
+  --shadow-organic: 0 30px 60px -12px rgba(26, 15, 13, 0.12), 0 18px 36px -18px rgba(0, 0, 0, 0.2);
+}
+
+.celestial-theme {
+  --scrollbar-thumb: var(--color-aurora-cyan);
+  --scrollbar-track: var(--color-deep-space);
+}
+
+.ruby-noir-theme {
   --color-heritage-red: #D11F1F;
   --color-ruby-deep: #9E1B1B;
   --color-onyx-black: #0A0A0A;
   --color-slate-dark: #1A1A1A;
   --color-stone-light: #F2F2F2;
-  --color-pure-white: #FFFFFF;
-  --color-silver-edge: #E0E0E0;
   
-  /* Core Brand Tokens */
   --color-cocoa-deep: var(--color-onyx-black);
   --color-burnt-caramel: var(--color-heritage-red);
   --color-gold-soft: var(--color-heritage-red);
   --color-parchment-base: var(--color-stone-light);
   
   --font-display: "Playfair Display", serif;
-  --font-body: "Outfit", sans-serif;
+  --shadow-organic: 10px 10px 0px 0px rgba(0, 0, 0, 0.05);
   
-  --shadow-angular: 10px 10px 0px 0px rgba(0, 0, 0, 0.05);
-  --shadow-organic: var(--shadow-angular);
-}
-
-.celestial-theme {
-  --scrollbar-thumb: var(--color-aurora-cyan);
-  --scrollbar-track: var(--color-deep-space);
+  --scrollbar-thumb: var(--color-heritage-red);
+  --scrollbar-track: var(--color-stone-light);
 }
 
 .grid-bg {
@@ -38,7 +75,7 @@
 
 .grid-line-bg {
   background: linear-gradient(90deg, rgba(26, 15, 13, 0.03) 1px, transparent 1px),
-              linear-gradient(rgba(26, 15, 13, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(26, 15, 13, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -46,9 +83,10 @@
   * {
     @apply border-transparent transition-colors duration-300;
   }
+
   body {
     background-color: var(--color-parchment-base);
-    background-image: 
+    background-image:
       radial-gradient(circle at 50% 50%, var(--color-parchment-light) 0%, transparent 70%),
       radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
       radial-gradient(circle at 80% 70%, rgba(179, 83, 15, 0.03) 0%, transparent 40%),
@@ -62,7 +100,7 @@
 
 .heritage-parchment {
   background-color: var(--color-parchment-base);
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 50%, var(--color-parchment-light) 0%, transparent 70%),
     radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(179, 83, 15, 0.05) 0%, transparent 50%),
@@ -110,9 +148,11 @@
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 20px;
@@ -145,9 +185,19 @@
 
 /* Animations */
 @keyframes float-gentle {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  33% { transform: translateY(-15px) rotate(2deg); }
-  66% { transform: translateY(10px) rotate(-1deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  33% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+
+  66% {
+    transform: translateY(10px) rotate(-1deg);
+  }
 }
 
 .animate-gentle {
@@ -161,19 +211,43 @@
 }
 
 @keyframes reveal-up-anim {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes drip {
-  0% { transform: translateY(-100%); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateY(500%); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(500%);
+    opacity: 0;
+  }
 }
 
 @keyframes drip-slow {
-  0% { transform: translateY(-100%) scaleY(0.5); opacity: 0; }
-  15% { opacity: 1; transform: translateY(0) scaleY(1.2); }
-  100% { transform: translateY(800%) scaleY(0.8); opacity: 0; }
+  0% {
+    transform: translateY(-100%) scaleY(0.5);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1.2);
+  }
+
+  100% {
+    transform: translateY(800%) scaleY(0.8);
+    opacity: 0;
+  }
 }
 
 .animate-drip {
@@ -190,13 +264,23 @@
 
 /* Marquee Animations */
 @keyframes marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-right {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .animate-marquee-left {
@@ -225,15 +309,47 @@
 }
 
 @keyframes noise {
-  0% { transform: translate(0,0) }
-  10% { transform: translate(-5%,-5%) }
-  20% { transform: translate(-10%,5%) }
-  30% { transform: translate(5%,-10%) }
-  40% { transform: translate(-5%,15%) }
-  50% { transform: translate(-10%,5%) }
-  60% { transform: translate(15%,0) }
-  70% { transform: translate(0,10%) }
-  80% { transform: translate(-15%,0) }
-  90% { transform: translate(10%,5%) }
-  100% { transform: translate(5%,0) }
+  0% {
+    transform: translate(0, 0)
+  }
+
+  10% {
+    transform: translate(-5%, -5%)
+  }
+
+  20% {
+    transform: translate(-10%, 5%)
+  }
+
+  30% {
+    transform: translate(5%, -10%)
+  }
+
+  40% {
+    transform: translate(-5%, 15%)
+  }
+
+  50% {
+    transform: translate(-10%, 5%)
+  }
+
+  60% {
+    transform: translate(15%, 0)
+  }
+
+  70% {
+    transform: translate(0, 10%)
+  }
+
+  80% {
+    transform: translate(-15%, 0)
+  }
+
+  90% {
+    transform: translate(10%, 5%)
+  }
+
+  100% {
+    transform: translate(5%, 0)
+  }
 }

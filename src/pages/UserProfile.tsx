@@ -83,7 +83,7 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-light text-onyx-black selection:bg-heritage-red selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-stone-light text-onyx-black selection:bg-heritage-red selection:text-white relative overflow-x-hidden ruby-noir-theme">
       {/* Architectural Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
          <div className="absolute top-0 right-0 w-1/3 h-full bg-white border-l-2 border-onyx-black/5" />
