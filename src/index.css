@@ -19,6 +19,13 @@
   --color-chrome-silver: #E0E0E0;
   --color-deep-space: #0A0A10;
 
+  /* Ruby Noir Palette */
+  --color-heritage-red: #D11F1F;
+  --color-ruby-deep: #9E1B1B;
+  --color-onyx-black: #0A0A0A;
+  --color-slate-dark: #1A1A1A;
+  --color-stone-light: #F2F2F2;
+
   /* Additional Extended Palette */
   --color-gold-accent: #FFD700;
   --color-gold-deep: #B8860B;
@@ -48,12 +55,6 @@
 }
 
 .ruby-noir-theme {
-  --color-heritage-red: #D11F1F;
-  --color-ruby-deep: #9E1B1B;
-  --color-onyx-black: #0A0A0A;
-  --color-slate-dark: #1A1A1A;
-  --color-stone-light: #F2F2F2;
-  
   --color-cocoa-deep: var(--color-onyx-black);
   --color-burnt-caramel: var(--color-heritage-red);
   --color-gold-soft: var(--color-heritage-red);
