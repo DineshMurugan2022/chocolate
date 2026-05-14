@@ -63,75 +63,67 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               </button>
             </div>
 
-            {/* Cart Items Container - Explicit height management for scroller */}
-            <div className="relative flex-1 overflow-y-auto overflow-x-hidden p-6 md:p-8 space-y-8 custom-scrollbar">
+            {/* Cart Items Container - Pinned with flex-1 */}
+            <div className="relative flex-1 overflow-y-auto overflow-x-hidden p-5 md:p-6 custom-scrollbar overscroll-contain touch-pan-y">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-6 py-10">
+                <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-10">
                   <div className="relative">
-                    <div className="size-24 bg-gold-soft/5 rounded-full flex items-center justify-center animate-pulse" />
-                    <ShoppingCart size={32} className="absolute inset-0 m-auto text-gold-soft opacity-20" />
+                    <div className="size-20 bg-gold-soft/5 rounded-full flex items-center justify-center animate-pulse" />
+                    <ShoppingCart size={28} className="absolute inset-0 m-auto text-gold-soft opacity-20" />
                   </div>
                   <div className="space-y-1">
-                    <p className="text-cocoa-deep font-display italic text-xl">The vault is currently empty</p>
-                    <p className="text-[9px] font-body font-black uppercase tracking-widest text-burnt-caramel/40">Add artifacts to begin</p>
+                    <p className="text-cocoa-deep font-display italic text-lg">Vault Empty</p>
+                    <p className="text-[8px] font-body font-black uppercase tracking-widest text-burnt-caramel/40">Add artifacts</p>
                   </div>
-                  <button
-                    onClick={() => { onClose(); navigate('/shop'); }}
-                    className="group flex items-center gap-3 py-3 px-6 border border-gold-soft/20 rounded-full hover:bg-gold-soft/5 transition-all duration-700"
-                  >
-                    <span className="text-[9px] font-body font-black uppercase tracking-[0.3em] text-burnt-caramel">Explore</span>
-                    <Plus size={12} className="text-burnt-caramel group-hover:rotate-90 transition-transform duration-500" />
-                  </button>
                 </div>
               ) : (
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-6">
                   {items.map((item) => (
                     <motion.div
                       key={item.id}
-                      layout
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="group relative flex gap-4 pb-6 border-b border-gold-soft/5 last:border-0"
+                      className="group relative flex gap-4 pb-5 border-b border-gold-soft/5 last:border-0"
                     >
-                      <div className="relative size-14 md:size-16 rounded-[14px] overflow-hidden shrink-0 shadow-sm">
+                      <div className="relative size-12 md:size-14 rounded-[12px] overflow-hidden shrink-0 shadow-sm">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                       </div>
 
                       <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                         <div className="space-y-1">
                           <div className="flex justify-between items-start gap-2">
-                            <h4 className="font-display italic font-black text-cocoa-deep text-sm md:text-base leading-tight truncate">{item.name}</h4>
+                            <h4 className="font-display italic font-black text-cocoa-deep text-xs md:text-sm leading-tight truncate">{item.name}</h4>
                             <button 
                               onClick={() => dispatch(removeFromCart(item.id))}
                               className="p-1 text-cocoa-deep/10 hover:text-red-500 transition-colors shrink-0"
                             >
-                              <Trash2 size={12} />
+                              <Trash2 size={10} />
                             </button>
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <span className="font-body font-medium text-cocoa-deep/30 text-[9px] tracking-tight">₹{item.price.toLocaleString('en-IN')}</span>
+                            <span className="font-body font-medium text-cocoa-deep/30 text-[8px] tracking-tight">₹{item.price.toLocaleString('en-IN')}</span>
                             <div className="h-0.5 w-0.5 rounded-full bg-gold-soft/20" />
-                            <span className="text-[7px] font-body font-black uppercase tracking-widest text-gold-soft">100g</span>
+                            <span className="text-[6px] font-body font-black uppercase tracking-widest text-gold-soft">100g</span>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between mt-2">
-                          <div className="flex items-center bg-white/40 border border-gold-soft/5 rounded-full p-0.5 scale-90 origin-left">
+                        <div className="flex items-center justify-between mt-1">
+                          <div className="flex items-center bg-white/40 border border-gold-soft/5 rounded-full p-0.5 scale-75 origin-left">
                             <button
                               onClick={() => dispatch(decrementQuantity(item.id))}
-                              className="size-6 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
+                              className="size-5 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
                             >
-                              <Minus size={10} />
+                              <Minus size={8} />
                             </button>
-                            <span className="w-6 text-center font-body font-black text-[10px] text-cocoa-deep">{item.quantity}</span>
+                            <span className="w-6 text-center font-body font-black text-[9px] text-cocoa-deep">{item.quantity}</span>
                             <button
                               onClick={() => dispatch(addToCart(item))}
-                              className="size-6 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
+                              className="size-5 flex items-center justify-center hover:bg-burnt-caramel/10 text-cocoa-deep/40 hover:text-burnt-caramel transition-all rounded-full"
                             >
-                              <Plus size={10} />
+                              <Plus size={8} />
                             </button>
                           </div>
-                          <span className="font-body font-black text-cocoa-deep text-sm tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                          <span className="font-body font-black text-cocoa-deep text-xs tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                         </div>
                       </div>
                     </motion.div>
@@ -140,21 +132,21 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               )}
             </div>
 
-            {/* Footer - Reduced height and padding */}
+            {/* Footer - Pinned to bottom, reduced height */}
             {items.length > 0 && (
-              <div className="relative p-6 md:p-8 bg-white/60 backdrop-blur-2xl border-t border-gold-soft/10 space-y-6 shrink-0">
-                <div className="space-y-3">
+              <div className="mt-auto relative p-4 md:p-5 bg-white/60 backdrop-blur-2xl border-t border-gold-soft/10 space-y-4 shrink-0">
+                <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-cocoa-deep/30 font-body font-black uppercase text-[9px] tracking-[0.2em]">Summary</span>
-                    <div className="h-[1px] flex-1 mx-4 bg-gold-soft/5" />
-                    <span className="text-cocoa-deep/60 font-body font-bold text-xs">₹{totalPrice.toLocaleString('en-IN')}</span>
+                    <span className="text-cocoa-deep/30 font-body font-black uppercase text-[8px] tracking-[0.2em]">Vault Summary</span>
+                    <div className="h-[1px] flex-1 mx-3 bg-gold-soft/5" />
+                    <span className="text-cocoa-deep/60 font-body font-bold text-[10px]">₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="flex justify-between items-end">
-                    <div className="space-y-0.5">
-                      <span className="text-cocoa-deep font-display italic text-2xl font-black leading-none">Total Amount</span>
-                      <p className="text-[8px] font-body font-black text-gold-soft uppercase tracking-[0.1em]">Heritage Surcharge Included</p>
+                    <div className="space-y-0">
+                      <span className="text-cocoa-deep font-display italic text-xl font-black leading-none">Total Amount</span>
+                      <p className="text-[7px] font-body font-black text-gold-soft uppercase tracking-[0.1em]">Verified Heritage Artifacts</p>
                     </div>
-                    <span className="text-cocoa-deep font-body font-black text-2xl tracking-tighter">₹{totalPrice.toLocaleString('en-IN')}</span>
+                    <span className="text-cocoa-deep font-body font-black text-xl tracking-tighter">₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
@@ -163,17 +155,17 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     onClose();
                     navigate('/checkout');
                   }}
-                  className="group relative w-full h-14 bg-cocoa-deep text-white rounded-2xl overflow-hidden shadow-xl transition-all active:scale-[0.98]"
+                  className="group relative w-full h-11 bg-cocoa-deep text-white rounded-xl overflow-hidden shadow-lg transition-all active:scale-[0.98]"
                 >
                   <div className="absolute inset-0 bg-burnt-caramel translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                  <span className="relative z-10 flex items-center justify-center gap-3 text-[10px] font-body font-black uppercase tracking-[0.3em]">
+                  <span className="relative z-10 flex items-center justify-center gap-2 text-[9px] font-body font-black uppercase tracking-[0.2em]">
                     Proceed to Checkout
-                    <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
+                    <Plus size={12} className="group-hover:rotate-90 transition-transform duration-500" />
                   </span>
                 </button>
                 
-                <p className="text-center text-[8px] font-body font-medium text-cocoa-deep/20 italic">
-                   "A legacy of taste, secured in your vault."
+                <p className="text-center text-[7px] font-body font-medium text-cocoa-deep/20 italic">
+                   "A legacy secured in your vault."
                 </p>
               </div>
             )}
