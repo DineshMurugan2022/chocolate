@@ -251,20 +251,20 @@ export default function Checkout() {
               <p className="text-[8px] font-body font-black uppercase tracking-[0.3em] text-burnt-caramel/40">Verified Selection</p>
             </div>
 
-            {/* Product List - Constrained scroll area */}
-            <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-5 py-2">
+            {/* Product List - Constrained scroll area with explicit height fix */}
+            <div className="flex-1 min-h-0 overflow-y-auto pr-4 -mr-2 custom-scrollbar space-y-4 py-2 overscroll-contain">
               {items.map((item) => (
                 <div key={item.id} className="group flex gap-4 items-center">
-                  <div className="size-14 rounded-xl overflow-hidden shrink-0 shadow-sm border border-gold-soft/5">
+                  <div className="size-12 rounded-xl overflow-hidden shrink-0 shadow-sm border border-gold-soft/5">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center gap-3">
                       <div className="space-y-0.5">
-                        <h4 className="font-display italic font-black text-cocoa-deep text-sm truncate">{item.name}</h4>
-                        <p className="text-[9px] font-body font-black text-cocoa-deep/30 uppercase tracking-widest">{item.quantity} Unit · <span className="text-gold-soft">100g</span></p>
+                        <h4 className="font-display italic font-black text-cocoa-deep text-xs truncate">{item.name}</h4>
+                        <p className="text-[8px] font-body font-black text-cocoa-deep/30 uppercase tracking-widest">{item.quantity} Unit · <span className="text-gold-soft">100g</span></p>
                       </div>
-                      <span className="font-body font-black text-cocoa-deep text-sm tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                      <span className="font-body font-black text-cocoa-deep text-xs tracking-tighter">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                     </div>
                   </div>
                 </div>
