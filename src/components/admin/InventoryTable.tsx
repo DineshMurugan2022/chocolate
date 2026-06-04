@@ -18,8 +18,8 @@ const InventoryTable = ({ products, loading, handleOpenModal, handleDelete }: In
               <Package size={20} />
            </div>
            <div className="flex flex-col">
-              <h3 className="text-xl font-display font-black text-gold-soft italic uppercase tracking-wider">Heritage_Registry</h3>
-              <span className="text-[10px] font-black uppercase text-gold-soft/30 tracking-widest">Database_Sync_Secure</span>
+              <h3 className="text-xl font-display font-black text-gold-soft italic uppercase tracking-wider">Product Inventory</h3>
+              <span className="text-[10px] font-black uppercase text-gold-soft/30 tracking-widest">Real-time Sync</span>
            </div>
         </div>
         
@@ -27,7 +27,7 @@ const InventoryTable = ({ products, loading, handleOpenModal, handleDelete }: In
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/30" size={14} />
           <input 
             type="text" 
-            placeholder="Search manifests..."
+            placeholder="Search products..."
             className="pl-12 pr-6 py-3 bg-black/40 border border-gold-soft/10 rounded-full text-[11px] font-black uppercase tracking-[0.2em] focus:border-gold-soft focus:outline-none w-full md:w-80 transition-all text-gold-soft placeholder:text-gold-soft/10"
           />
         </div>
@@ -37,17 +37,17 @@ const InventoryTable = ({ products, loading, handleOpenModal, handleDelete }: In
         <table className="w-full text-left">
           <thead className="text-gold-soft/30 text-[10px] font-black uppercase tracking-[0.2em] bg-black/60 border-b border-gold-soft/10">
             <tr>
-              <th className="px-8 py-5">ARTIFACT_NAME</th>
-              <th className="px-8 py-5">TAXONOMY</th>
-              <th className="px-8 py-5">VALUATION</th>
-              <th className="px-8 py-5">QUANTITY</th>
-              <th className="px-8 py-5 text-right">PROTOCOLS</th>
+              <th className="px-8 py-5">Product Name</th>
+              <th className="px-8 py-5">Category</th>
+              <th className="px-8 py-5">Price</th>
+              <th className="px-8 py-5">Stock Level</th>
+              <th className="px-8 py-5 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gold-soft/5">
             {loading ? (
               <tr>
-                <td colSpan={5} className="px-8 py-40 text-center text-gold-soft/20 font-display italic text-2xl">Synchronizing Artifacts...</td>
+                <td colSpan={5} className="px-8 py-40 text-center text-gold-soft/20 font-display italic text-2xl">Loading Products...</td>
               </tr>
             ) : products.map((p) => (
               <tr key={p._id} className="hover:bg-gold-soft/[0.03] transition-colors group">
@@ -57,7 +57,7 @@ const InventoryTable = ({ products, loading, handleOpenModal, handleDelete }: In
                   </div>
                   <div className="flex flex-col">
                     <p className="font-display font-black text-gold-soft text-lg tracking-tight uppercase italic">{p.name}</p>
-                    <p className="text-[9px] font-black text-gold-soft/20 uppercase tracking-widest">HASH: {p._id.slice(-12).toUpperCase()}</p>
+                    <p className="text-[9px] font-black text-gold-soft/20 uppercase tracking-widest">ID: {p._id.slice(-12).toUpperCase()}</p>
                   </div>
                 </td>
                 <td className="px-8 py-6">

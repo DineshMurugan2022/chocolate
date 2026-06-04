@@ -106,10 +106,10 @@ export default function UserProfile() {
             <motion.div className="lg:col-span-3 space-y-4" variants={fadeUp}>
               <div className="flex items-center gap-3">
                 <div className="h-[1px] w-10 bg-burnt-caramel/30" />
-                <span className="font-body text-[8px] font-black uppercase tracking-[0.5em] text-burnt-caramel">Registry Identity</span>
+                <span className="font-body text-[8px] font-black uppercase tracking-[0.5em] text-burnt-caramel">Account Profile</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-display font-black leading-none text-cocoa-deep italic">
-                Greetings, {user.name.split(' ')[0]}
+                Welcome, {user.name.split(' ')[0]}
               </h1>
             </motion.div>
 
@@ -138,9 +138,9 @@ export default function UserProfile() {
             <motion.div className="lg:col-span-3 lg:sticky lg:top-32 space-y-6" variants={fadeUp}>
               <div className="bg-white/40 backdrop-blur-3xl rounded-[32px] p-5 border border-gold-soft/10 space-y-2 shadow-xl">
                 {[
-                  { id: 'registry', icon: History, label: 'ACQUISITION REGISTRY' },
-                  { id: 'access', icon: ShieldCheck, label: 'ACCESS PROTECTION' },
-                  { id: 'notices', icon: Mail, label: 'LEDGER NOTICES' }
+                  { id: 'registry', icon: History, label: 'ORDER HISTORY' },
+                  { id: 'access', icon: ShieldCheck, label: 'SECURITY SETTINGS' },
+                  { id: 'notices', icon: Mail, label: 'NOTIFICATIONS' }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -156,7 +156,7 @@ export default function UserProfile() {
 
               {/* Account Identity Shard */}
               <div className="bg-gradient-to-br from-burnt-caramel/5 to-transparent backdrop-blur-2xl rounded-[32px] p-8 border border-gold-soft/10 relative overflow-hidden">
-                <p className="font-body text-[7px] uppercase tracking-[0.4em] text-burnt-caramel font-black mb-4">Vault Credentials</p>
+                <p className="font-body text-[7px] uppercase tracking-[0.4em] text-burnt-caramel font-black mb-4">Account Details</p>
                 <div className="space-y-4">
                   <div>
                     <p className="text-lg font-display italic text-cocoa-deep font-black">{user.name}</p>
@@ -187,7 +187,7 @@ export default function UserProfile() {
                   >
                     <div className="flex items-center justify-between border-b border-gold-soft/10 pb-6">
                       <h3 className="text-3xl font-display font-black tracking-tight uppercase text-cocoa-deep">
-                        Acquisition <span className="text-burnt-caramel italic font-light">Archives</span>
+                        Order <span className="text-burnt-caramel italic font-light">History</span>
                       </h3>
                       <span className="font-body text-[8px] uppercase tracking-widest text-cocoa-deep/30 font-black">{orders.length} Entries Recorded</span>
                     </div>
@@ -203,8 +203,8 @@ export default function UserProfile() {
                           <ShoppingBag size={32} />
                         </div>
                         <div className="space-y-2">
-                          <p className="font-display text-3xl italic text-cocoa-deep/40">The registry is empty.</p>
-                          <p className="font-body text-[8px] uppercase tracking-[0.4em] text-cocoa-deep/20">Begin your legacy by exploring the collection.</p>
+                          <p className="font-display text-3xl italic text-cocoa-deep/40">No orders found.</p>
+                          <p className="font-body text-[8px] uppercase tracking-[0.4em] text-cocoa-deep/20">Explore our collection to place your first order.</p>
                         </div>
                         <button
                           onClick={() => navigate('/shop')}
@@ -231,7 +231,7 @@ export default function UserProfile() {
                             <div className="space-y-10 relative z-10">
                               <div className="flex items-center justify-between">
                                 <div className="space-y-1">
-                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.4em] font-black">Archive Ref</p>
+                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.4em] font-black">Order ID</p>
                                   <p className="font-body text-xs text-cocoa-deep font-black tracking-tight">#{order._id.slice(-8).toUpperCase()}</p>
                                 </div>
                                 <div className={`px-4 py-1.5 rounded-full text-[8px] font-body font-black uppercase tracking-[0.2em] shadow-inner ${order.status === 'Delivered'
@@ -246,7 +246,7 @@ export default function UserProfile() {
                                 <div className="flex items-center gap-4">
                                   <div className="h-[1px] w-8 bg-burnt-caramel/20" />
                                   <h4 className="text-4xl font-display text-cocoa-deep italic leading-none">
-                                    {order.items.length} <span className="text-cocoa-deep/20 not-italic font-black text-[10px] uppercase tracking-[0.4em] ml-2">Acquisitions Secure</span>
+                                    {order.items.length} <span className="text-cocoa-deep/20 not-italic font-black text-[10px] uppercase tracking-[0.4em] ml-2">Items Purchased</span>
                                   </h4>
                                 </div>
 
@@ -264,7 +264,7 @@ export default function UserProfile() {
 
                               <div className="flex items-end justify-between pt-8 border-t border-gold-soft/10">
                                 <div className="space-y-1">
-                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.5em] font-black">Final Assessment</p>
+                                  <p className="font-body text-[8px] uppercase text-cocoa-deep/30 tracking-[0.5em] font-black">Total Price</p>
                                   <div className="flex items-baseline gap-1">
                                     <span className="text-lg font-body font-black text-burnt-caramel/40">₹</span>
                                     <p className="text-4xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">
@@ -299,11 +299,11 @@ export default function UserProfile() {
                       <ShieldCheck size={28} />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-display italic font-black uppercase text-cocoa-deep">Access <span className="text-burnt-caramel font-light">Protection</span></h3>
-                      <p className="font-body text-[9px] text-cocoa-deep/30 uppercase tracking-widest max-w-xs mx-auto font-black leading-loose">Your heritage credentials are secured with end-to-end encryption protocols.</p>
+                      <h3 className="text-2xl font-display italic font-black uppercase text-cocoa-deep">Security <span className="text-burnt-caramel font-light">Settings</span></h3>
+                      <p className="font-body text-[9px] text-cocoa-deep/30 uppercase tracking-widest max-w-xs mx-auto font-black leading-loose">Your account credentials are secured with end-to-end encryption.</p>
                     </div>
                     <button className="h-12 px-10 bg-white/50 border border-gold-soft/10 text-cocoa-deep rounded-xl font-body text-[8px] font-black uppercase tracking-widest hover:bg-cocoa-deep hover:text-white transition-all shadow-sm">
-                      Modify Credentials
+                      Update Password
                     </button>
                   </motion.div>
                 )}
@@ -320,8 +320,8 @@ export default function UserProfile() {
                       <Mail size={28} />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-display italic font-black uppercase text-cocoa-deep">Ledger <span className="text-burnt-caramel font-light">Notices</span></h3>
-                      <p className="font-body text-[9px] text-cocoa-deep/30 uppercase tracking-widest max-w-xs mx-auto font-black leading-loose">Periodic updates from the British Chocolate Store curators will appear here.</p>
+                      <h3 className="text-2xl font-display italic font-black uppercase text-cocoa-deep">Store <span className="text-burnt-caramel font-light">Notifications</span></h3>
+                      <p className="font-body text-[9px] text-cocoa-deep/30 uppercase tracking-widest max-w-xs mx-auto font-black leading-loose">Updates and announcements from British Chocolate Store will appear here.</p>
                     </div>
                   </motion.div>
                 )}
@@ -353,8 +353,8 @@ export default function UserProfile() {
               {/* Modal Header */}
               <div className="p-8 border-b border-gold-soft/10 flex items-center justify-between shrink-0 relative z-10">
                 <div className="space-y-0.5">
-                  <p className="font-body text-[7px] uppercase text-burnt-caramel tracking-[0.4em] font-black">Archive Details</p>
-                  <h2 className="text-3xl font-display font-black text-cocoa-deep italic">Registry Summary</h2>
+                  <p className="font-body text-[7px] uppercase text-burnt-caramel tracking-[0.4em] font-black">Order Information</p>
+                  <h2 className="text-3xl font-display font-black text-cocoa-deep italic">Order Summary</h2>
                 </div>
                 <button
                   onClick={() => setSelectedOrder(null)}
@@ -374,7 +374,7 @@ export default function UserProfile() {
                     <p className="font-body text-[9px] text-cocoa-deep font-black tracking-tight">#{selectedOrder._id}</p>
                   </div>
                   <div className="bg-white/40 rounded-2xl p-4 border border-gold-soft/10">
-                    <p className="font-body text-[7px] uppercase text-cocoa-deep/20 tracking-widest mb-1 font-black">Registry Status</p>
+                    <p className="font-body text-[7px] uppercase text-cocoa-deep/20 tracking-widest mb-1 font-black">Current Status</p>
                     <div className="flex items-center gap-2">
                       <div className="size-1.5 rounded-full bg-burnt-caramel animate-pulse" />
                       <p className="font-body text-[9px] text-burnt-caramel font-black uppercase tracking-widest">{selectedOrder.status}</p>
@@ -384,7 +384,7 @@ export default function UserProfile() {
 
                 {/* Artifacts List */}
                 <div className="space-y-4">
-                  <p className="font-body text-[8px] uppercase text-cocoa-deep/20 tracking-[0.3em] font-black text-center border-b border-gold-soft/5 pb-2">Acquired Artifacts</p>
+                  <p className="font-body text-[8px] uppercase text-cocoa-deep/20 tracking-[0.3em] font-black text-center border-b border-gold-soft/5 pb-2">Ordered Items</p>
                   <div className="space-y-3">
                     {selectedOrder.items.map((item, i) => (
                       <div key={i} className="flex items-center justify-between p-4 bg-white/30 rounded-xl border border-gold-soft/5 group">
@@ -420,7 +420,7 @@ export default function UserProfile() {
                 {/* Net Final */}
                 <div className="flex items-center justify-between py-6 border-t border-gold-soft/10">
                   <div className="space-y-0.5">
-                    <p className="font-body text-[8px] uppercase text-cocoa-deep/20 tracking-[0.5em] font-black">Net Acquisition Value</p>
+                    <p className="font-body text-[8px] uppercase text-cocoa-deep/20 tracking-[0.5em] font-black">Total Amount Paid</p>
                     <p className="text-4xl font-body font-black text-cocoa-deep tabular-nums tracking-tighter">₹{selectedOrder.totalPrice.toLocaleString('en-IN')}</p>
                   </div>
                 </div>

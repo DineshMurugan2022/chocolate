@@ -105,9 +105,9 @@ const ProductModal = ({
                   </div>
                   <div>
                     <h3 className="text-2xl font-display font-black text-gold-soft italic uppercase tracking-tighter">
-                      {editingProduct ? 'Update_Artifact' : 'Register_New_Artifact'}
+                      {editingProduct ? 'Edit Product' : 'Add New Product'}
                     </h3>
-                    <p className="text-[10px] font-black text-gold-soft/30 uppercase tracking-[0.3em]">Protocol: Secure_Entry_v2.0</p>
+                    <p className="text-[10px] font-black text-gold-soft/30 uppercase tracking-[0.4em]">Secure Product Management</p>
                   </div>
                </div>
                <button 
@@ -130,11 +130,11 @@ const ProductModal = ({
                              value={formData.name} 
                              onChange={(v) => setFormData({...formData, name: v})} 
                              icon={<Tag size={16} />} 
-                             placeholder="NOMENCLATURE_ID..." 
+                             placeholder="Enter product name..." 
                            />
                         </div>
                         <div className="space-y-3 text-left md:col-span-2">
-                           <label className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.2em] px-1">Taxonomy_Class</label>
+                           <label className="text-[10px] font-black text-gold-soft/40 uppercase tracking-[0.2em] px-1">Product Category</label>
                            <div className="relative group">
                               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20 group-focus-within:text-gold-soft transition-colors pointer-events-none">
                                 <Tag size={16} />
@@ -144,7 +144,7 @@ const ProductModal = ({
                                 onChange={(e) => setFormData({...formData, category: e.target.value})} 
                                 className="w-full h-14 bg-black/40 border border-gold-soft/10 rounded-2xl pl-12 pr-4 text-sm focus:border-gold-soft focus:bg-black/60 focus:outline-none text-gold-soft appearance-none cursor-pointer transition-all"
                               >
-                                 <option value="" className="bg-[#0F0A09]">Select Classification...</option>
+                                 <option value="" className="bg-[#0F0A09]">Select Category...</option>
                                  {categories.map((cat) => (
                                    <option key={cat._id} value={cat.name} className="bg-[#0F0A09]">{cat.name}</option>
                                  ))}
@@ -287,10 +287,10 @@ const ProductModal = ({
                     <span className="text-[10px] font-black text-gold-soft uppercase tracking-[0.4em]">AUTHENTICATED_SECURE_BYPASS</span>
                   </div>
                   <div className="flex gap-6 ml-auto">
-                     <button type="button" onClick={() => { stopCamera(); onClose(); }} className="h-14 px-8 rounded-2xl text-[10px] font-black text-gold-soft/40 hover:text-gold-soft transition-all uppercase tracking-widest active:scale-95">Discard_Changes</button>
+                     <button type="button" onClick={() => { stopCamera(); onClose(); }} className="h-14 px-8 rounded-2xl text-[10px] font-black text-gold-soft/40 hover:text-gold-soft transition-all uppercase tracking-widest active:scale-95">Cancel</button>
                      <button type="submit" className="h-14 px-12 bg-gold-soft text-black rounded-2xl flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(212,175,55,0.15)] hover:shadow-[0_25px_50px_rgba(212,175,55,0.25)] hover:bg-gold-bright transition-all active:scale-95">
                         <ShieldCheck size={18} />
-                        {editingProduct ? 'Commit_Update' : 'Commit_Registry'}
+                        {editingProduct ? 'Save Changes' : 'Add Product'}
                      </button>
                   </div>
                </div>

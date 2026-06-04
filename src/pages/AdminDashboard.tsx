@@ -266,7 +266,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <StatsCard label="Total Products" value={products.length.toString()} icon={<Package size={20} className="text-gold-soft" />} />
                 <StatsCard label="Out of Stock" value={products.filter(p => p.stock === 0).length.toString()} icon={<X size={20} className="text-red-400" />} />
-                <StatsCard label="Categories" value={categories.length.toString()} icon={<Tag size={20} className="text-gold-soft" />} />
+                <StatsCard label="Total Categories" value={categories.length.toString()} icon={<Tag size={20} className="text-gold-soft" />} />
               </div>
             </motion.div>
           ) : activeTab === 'inventory' ? (

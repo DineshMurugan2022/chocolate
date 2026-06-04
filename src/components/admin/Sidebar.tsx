@@ -27,11 +27,11 @@ const Sidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, log
   }
 
   const tabs: Tab[] = [
-    { id: 'overview', icon: LayoutDashboard, label: 'REGISTRY_STATUS' },
-    { id: 'inventory', icon: Package, label: 'HERITAGE_COLLECTION' },
-    { id: 'orders', icon: ShoppingCart, label: 'CUSTOMER_MANIFESTS' },
-    { id: 'categories', icon: Tag, label: 'TAXONOMY_GROUPS' },
-    { id: 'analytics', icon: BarChart3, label: 'ANALYTIC_METRICS' },
+    { id: 'overview', icon: LayoutDashboard, label: 'Dashboard' },
+    { id: 'inventory', icon: Package, label: 'Products' },
+    { id: 'orders', icon: ShoppingCart, label: 'Orders' },
+    { id: 'categories', icon: Tag, label: 'Categories' },
+    { id: 'analytics', icon: BarChart3, label: 'Analytics' },
   ];
 
   return (
@@ -54,7 +54,7 @@ const Sidebar = ({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, log
               <Logo className="w-40 h-auto" variant="light" />
            </div>
            <div className="text-center">
-              <span className="text-[10px] font-bold text-gold-soft/30 uppercase tracking-[0.5em]">Registry_Protocol</span>
+              <span className="text-[10px] font-bold text-gold-soft/30 uppercase tracking-[0.5em]">Administrator</span>
            </div>
         </div>
         

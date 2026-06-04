@@ -18,8 +18,8 @@ const OrdersTable = ({ orders, loading, handleUpdateOrderStatus, setSelectedOrde
               <ShoppingBag size={20} />
            </div>
            <div className="flex flex-col">
-              <h3 className="text-xl font-display font-black text-gold-soft italic uppercase tracking-wider">Customer_Manifests</h3>
-              <span className="text-[10px] font-black uppercase text-gold-soft/30 tracking-widest">Global_Order_Registry</span>
+              <h3 className="text-xl font-display font-black text-gold-soft italic uppercase tracking-wider">Customer Orders</h3>
+              <span className="text-[10px] font-black uppercase text-gold-soft/30 tracking-widest">Order Activity</span>
            </div>
         </div>
       </div>
@@ -28,21 +28,21 @@ const OrdersTable = ({ orders, loading, handleUpdateOrderStatus, setSelectedOrde
         <table className="w-full text-left">
           <thead className="text-gold-soft/30 text-[10px] font-black uppercase tracking-[0.2em] bg-black/60 border-b border-gold-soft/10">
             <tr>
-              <th className="px-8 py-5">ORDER_ID</th>
-              <th className="px-8 py-5">CUSTOMER_PROFILE</th>
-              <th className="px-8 py-5">VALUATION</th>
-              <th className="px-8 py-5">PROTOCOL_STATUS</th>
-              <th className="px-8 py-5 text-right">OPERATIONS</th>
+              <th className="px-8 py-5">Order ID</th>
+              <th className="px-8 py-5">Customer</th>
+              <th className="px-8 py-5">Amount</th>
+              <th className="px-8 py-5">Status</th>
+              <th className="px-8 py-5 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gold-soft/5">
             {loading ? (
               <tr>
-                <td colSpan={5} className="px-8 py-40 text-center text-gold-soft/20 font-display italic text-2xl">Synchronizing Manifests...</td>
+                <td colSpan={5} className="px-8 py-40 text-center text-gold-soft/20 font-display italic text-2xl">Loading Orders...</td>
               </tr>
             ) : orders.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-8 py-20 text-center text-gold-soft/20 font-display italic text-xl">No manifests found in registry</td>
+                <td colSpan={5} className="px-8 py-20 text-center text-gold-soft/20 font-display italic text-xl">No orders found</td>
               </tr>
             ) : orders.map((order) => (
               <tr key={order._id} className="hover:bg-gold-soft/[0.03] transition-colors group">

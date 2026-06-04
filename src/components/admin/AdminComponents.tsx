@@ -24,7 +24,7 @@ export function InputField({ label, value, onChange, icon, type = 'text', placeh
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-soft/20 group-focus-within:text-gold-soft transition-colors">
           {icon}
         </div>
-        <input 
+        <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}

@@ -31,13 +31,19 @@ export default function Logo({
         };
       case 'celestial':
         return {
-          img: 'brightness-200 contrast-150 drop-shadow-[0_0_20px_rgba(0,245,255,0.6)]',
+          img: 'invert brightness-200 drop-shadow-[0_0_20px_rgba(0,245,255,0.4)]',
           text: 'text-aurora-cyan',
           accent: 'bg-aurora-cyan shadow-[0_0_10px_rgba(0,245,255,0.8)]'
         };
+      case 'white':
+        return {
+          img: 'brightness-0 invert drop-shadow-[0_4px_12px_rgba(255,255,255,0.3)]',
+          text: 'text-white',
+          accent: 'bg-white'
+        };
       default: // light (for dark backgrounds)
         return {
-          img: 'brightness-0 invert drop-shadow-[0_8px_24px_rgba(255,255,255,0.2)]',
+          img: 'brightness-110 contrast-110 drop-shadow-[0_8px_24px_rgba(255,255,255,0.2)]',
           text: 'text-ivory-warm',
           accent: 'bg-gold-soft'
         };
@@ -49,24 +55,30 @@ export default function Logo({
   return (
     <div
       onClick={() => navigate('/')}
-      className={`flex items-center gap-2 md:gap-3 cursor-pointer group select-none ${className}`}
+      className={`flex items-center gap-4 md:gap-6 cursor-pointer group select-none ${className}`}
     >
       <div className="relative flex-shrink-0">
         <div className={`absolute inset-0 blur-3xl opacity-10 group-hover:opacity-30 transition-opacity duration-700 ${styles.accent}`} />
         <img
           src={logooo}
           alt="British Chocolate Store Logo"
-          className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[5deg] ${styles.img}`}
+          className={`w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[5deg] ${styles.img}`}
         />
       </div>
 
 
       {showText && (
-        <div className="flex flex-col leading-none">
-          <span className={`font-display text-base md:text-lg lg:text-xl font-black tracking-[0.1em] uppercase italic transition-all duration-700 group-hover:tracking-[0.15em] ${styles.text}`}>
-            British <span className={variant === 'celestial' ? 'text-white' : 'text-gold-soft'}>Chocolate Store</span>
+        <div className="flex flex-col leading-[0.8] items-start">
+          <span className={`font-display text-lg md:text-2xl lg:text-3xl font-black tracking-[0.1em] uppercase italic transition-all duration-700 group-hover:tracking-[0.15em] ${styles.text}`}>
+            British
           </span>
-          <div className="h-[1px] w-0 group-hover:w-full transition-all duration-700 ease-out mt-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50" />
+          <span className={`font-display text-lg md:text-2xl lg:text-3xl font-black tracking-[0.1em] uppercase italic transition-all duration-700 group-hover:tracking-[0.15em] ${variant === 'celestial' ? 'text-white' : 'text-gold-soft'}`}>
+            Chocolate
+          </span>
+          <span className={`font-display text-lg md:text-2xl lg:text-3xl font-black tracking-[0.1em] uppercase italic transition-all duration-700 group-hover:tracking-[0.15em] ${variant === 'celestial' ? 'text-white' : 'text-gold-soft'}`}>
+            Store
+          </span>
+          <div className="h-[2px] w-0 group-hover:w-full transition-all duration-700 ease-out mt-2 bg-gradient-to-r from-transparent via-gold-soft to-transparent opacity-50" />
         </div>
       )}
 
