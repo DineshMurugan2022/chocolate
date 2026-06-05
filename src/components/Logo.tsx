@@ -4,7 +4,7 @@ import logooo from '../assets/branding/logooo.png';
 
 interface LogoProps {
   className?: string;
-  variant?: 'light' | 'dark' | 'gold' | 'celestial';
+  variant?: 'light' | 'dark' | 'gold' | 'celestial' | 'white';
   showText?: boolean;
 }
 
