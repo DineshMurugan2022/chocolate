@@ -3,10 +3,12 @@ import type { User } from '@/types';
 
 export interface AuthState {
   user: User | null;
+  isAuthModalOpen: boolean;
 }
 
 const initialState: AuthState = {
   user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null,
+  isAuthModalOpen: false,
 };
 
 const authSlice = createSlice({
@@ -23,8 +25,14 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     },
+    openAuthModal: (state) => {
+      state.isAuthModalOpen = true;
+    },
+    closeAuthModal: (state) => {
+      state.isAuthModalOpen = false;
+    },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, openAuthModal, closeAuthModal } = authSlice.actions;
 export default authSlice.reducer;

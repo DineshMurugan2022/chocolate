@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '@/store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Heart, ShoppingBag, Search, Menu, X, ChevronDown, BookOpen, Store, Sprout, Calendar, RefreshCw, Gift, Sparkles, Hammer } from 'lucide-react';
 import AuthModal from '@/components/AuthModal';
 import WishlistDrawer from '@/components/WishlistDrawer';
+import { openAuthModal, closeAuthModal } from '@/store/authSlice';
 import Logo from './Logo';
 import LiveViewerCount from './LiveViewerCount';
 import Magnetic from './Magnetic';
@@ -75,11 +76,11 @@ const MobileNavItem = ({
 
 export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolean) => void }) {
   const { items } = useSelector((state: RootState) => state.cart);
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, isAuthModalOpen } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
 
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -239,7 +240,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
             <div className="flex items-center gap-2 md:gap-4">
               {!user ? (
                 <button
-                  onClick={() => setIsAuthModalOpen(true)}
+                  onClick={() => dispatch(openAuthModal())}
                   className={`hidden sm:block font-body text-[8px] xl:text-[9px] font-black uppercase tracking-[0.2em] ${themeColors.text} ${themeColors.hover} transition-colors italic`}
                 >
                   Log In
@@ -273,7 +274,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
         </div>
       </div>
 
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => dispatch(closeAuthModal())} />
       <WishlistDrawer isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
 
       {/* Mobile Menu Backdrop */}
@@ -315,7 +316,7 @@ export default function Header({ setIsCartOpen }: { setIsCartOpen: (open: boolea
           <button onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
             <Heart size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'} /> Wishlist
           </button>
-          <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
+          <button onClick={() => { dispatch(openAuthModal()); setIsMobileMenuOpen(false); }} className={`flex items-center gap-3 text-sm font-body font-bold transition-colors ${isCelestialTheme ? 'text-white hover:text-aurora-cyan' : 'text-cocoa-deep hover:text-burnt-caramel'}`}>
             <User size={18} className={isCelestialTheme ? 'text-aurora-cyan' : 'text-burnt-caramel'} /> {user ? 'Profile' : 'Log In'}
           </button>
         </div>

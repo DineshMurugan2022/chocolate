@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { addToCart, decrementQuantity, removeFromCart } from '@/store/cartSlice';
+import { openAuthModal } from '@/store/authSlice';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface CartDrawerProps {
 
 export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
+  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -153,7 +155,11 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <button
                   onClick={() => {
                     onClose();
-                    navigate('/checkout');
+                    if (!user) {
+                      dispatch(openAuthModal());
+                    } else {
+                      navigate('/checkout');
+                    }
                   }}
                   className="group relative w-full h-11 bg-cocoa-deep text-white rounded-xl overflow-hidden shadow-lg transition-all active:scale-[0.98]"
                 >
