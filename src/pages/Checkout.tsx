@@ -33,10 +33,15 @@ export default function Checkout() {
       return;
     }
 
+    if (typeof (window as any).Razorpay === 'undefined') {
+      alert('Razorpay SDK failed to load. Please refresh the page or check your internet connection.');
+      return;
+    }
+
     setIsProcessing(true);
     try {
       // The backend expects shippingAddress as an object and items to have product ID and quantity
-      const orderResponse = await api.post('/orders', {
+      const orderResponse = await api.post('/orders/razorpay/order', {
         items: items.map(item => ({
           product: item.id,
           quantity: item.quantity,
@@ -52,16 +57,25 @@ export default function Checkout() {
         }
       });
 
+      const razorpayOrderId = orderResponse.data.razorpayOrderId || orderResponse.data.order?.id;
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+
+      if (!razorpayOrderId) {
+        alert('Failed to initialize Razorpay order.');
+        setIsProcessing(false);
+        return;
+      }
+
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: razorpayKey,
         amount: Math.round(totalPrice * 100),
         currency: "INR",
         name: "British Chocolate",
         description: "Artisan Selection",
-        order_id: orderResponse.data.razorpayOrderId,
+        order_id: razorpayOrderId,
         handler: async function (response: any) {
           try {
-            await api.post('/orders/verify', {
+            await api.post('/orders/razorpay/verify', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
