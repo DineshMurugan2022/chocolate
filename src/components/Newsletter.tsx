@@ -1,7 +1,41 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles, Loader2 } from 'lucide-react';
+import api from '@/utils/api';
+import toast from 'react-hot-toast';
 
 export default function Newsletter() {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    reason: '',
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.reason.trim()) {
+      toast.error('Please fill in all the fields.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await api.post('/contact', formData);
+      toast.success('Your application has been received. Our team will connect with you soon.');
+      setFormData({ name: '', phone: '', email: '', reason: '' });
+    } catch (err: any) {
+      // Errors handled by axios response interceptor or fall back here
+      const errMsg = err.response?.data?.message || 'Failed to submit application.';
+      if (err.response?.status !== 400) {
+        toast.error(errMsg);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="py-40 px-6 lg:px-20 relative overflow-hidden flex items-center justify-center">
       
@@ -56,28 +90,76 @@ export default function Newsletter() {
            </div>
            
            <form 
-             onSubmit={(e) => e.preventDefault()}
-             className="relative z-10 space-y-6 px-4"
+             onSubmit={handleSubmit}
+             className="relative z-10 space-y-5 px-4"
            >
-              <div className="group relative">
+              <div>
+                 <input 
+                   type="text" 
+                   value={formData.name}
+                   onChange={e => setFormData({ ...formData, name: e.target.value })}
+                   placeholder="CURATOR NAME"
+                   required
+                   disabled={loading}
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                 />
+              </div>
+
+              <div>
+                 <input 
+                   type="tel" 
+                   value={formData.phone}
+                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                   placeholder="PHONE NUMBER"
+                   required
+                   disabled={loading}
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                 />
+              </div>
+
+              <div>
                  <input 
                    type="email" 
+                   value={formData.email}
+                   onChange={e => setFormData({ ...formData, email: e.target.value })}
                    placeholder="CURATOR_IDENTITY@DOMAIN"
-                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-10 py-8 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                   required
+                   disabled={loading}
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
                  />
-                 <div className="absolute top-1/2 right-4 -translate-y-1/2 size-12 rounded-2xl bg-botanical-green text-white flex items-center justify-center opacity-0 group-focus-within:opacity-100 transition-all shadow-lg active:scale-95">
-                    <ArrowRight size={18} />
-                 </div>
+              </div>
+
+              <div>
+                 <textarea 
+                   value={formData.reason}
+                   onChange={e => setFormData({ ...formData, reason: e.target.value })}
+                   placeholder="REASON FOR INDUCTION"
+                   required
+                   disabled={loading}
+                   rows={3}
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10 resize-none min-h-[100px]"
+                 />
               </div>
               
               <button 
-                className="w-full h-20 bg-botanical-green text-ivory-warm rounded-[32px] font-body font-black uppercase text-[10px] tracking-[0.5em] shadow-2xl hover:bg-burnt-caramel transition-all transform hover:translate-y-[-5px] active:scale-95 flex items-center justify-center gap-6 group"
+                type="submit"
+                disabled={loading}
+                className="w-full h-20 bg-botanical-green text-ivory-warm rounded-[32px] font-body font-black uppercase text-[10px] tracking-[0.5em] shadow-2xl hover:bg-burnt-caramel transition-all transform hover:translate-y-[-5px] active:scale-95 flex items-center justify-center gap-6 group disabled:opacity-75 disabled:pointer-events-none"
               >
-                Apply for Induction
-                <div className="size-1 w-8 bg-ivory-warm/30 rounded-full group-hover:w-12 transition-all" />
+                {loading ? (
+                  <>
+                    Processing
+                    <Loader2 className="animate-spin size-4" />
+                  </>
+                ) : (
+                  <>
+                    Apply for Induction
+                    <div className="size-1 w-8 bg-ivory-warm/30 rounded-full group-hover:w-12 transition-all" />
+                  </>
+                )}
               </button>
 
-              <div className="flex items-center gap-4 pt-4 opacity-30">
+              <div className="flex items-center gap-4 pt-2 opacity-30">
                  <div className="w-10 h-[1.5px] bg-cocoa-deep" />
                  <p className="text-[8px] font-body font-black uppercase tracking-[0.2em] max-w-[200px]">
                     Authorized Digital Communiqués of Luxury ONLY.
