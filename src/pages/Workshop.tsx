@@ -7,13 +7,20 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { Sparkles, Zap, Flame, Droplets, Wind, Star, X, Send, BookOpen, AlertCircle, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
+import api from '@/utils/api';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Workshop() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    attendees: '1',
+    preferredDate: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,19 +87,27 @@ export default function Workshop() {
     return () => ctx.revert();
   }, []);
 
-  const handleApply = (e: React.FormEvent) => {
+  const handleApply = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) {
-      toast.error("Please enter your email address.");
+    if (!formData.fullName || !formData.phone || !formData.email) {
+      toast.error("Please complete all required fields.");
       return;
     }
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      await api.post('/workshop', formData);
       toast.success("Thank you! We've received your workshop application.");
-      setIsSubmitting(false);
       setIsApplyModalOpen(false);
-      setEmail('');
-    }, 1500);
+      setFormData({ fullName: '', phone: '', email: '', attendees: '1', preferredDate: '' });
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to submit application.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -276,18 +291,85 @@ export default function Workshop() {
                      </div>
                      
                      <form onSubmit={handleApply} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           <div className="space-y-3">
+                              <label className="font-body text-[9px] font-black uppercase tracking-[0.3em] text-cocoa-deep/60">
+                                 Full Name
+                              </label>
+                              <input 
+                                 name="fullName"
+                                 type="text" 
+                                 required
+                                 value={formData.fullName}
+                                 onChange={handleChange}
+                                 placeholder="YOUR NAME"
+                                 className="w-full bg-white border border-gold-soft/20 rounded-xl px-4 py-3 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all placeholder:opacity-30"
+                              />
+                           </div>
+                           <div className="space-y-3">
+                              <label className="font-body text-[9px] font-black uppercase tracking-[0.3em] text-cocoa-deep/60">
+                                 Phone Number
+                              </label>
+                              <input 
+                                 name="phone"
+                                 type="tel" 
+                                 required
+                                 value={formData.phone}
+                                 onChange={handleChange}
+                                 placeholder="+91"
+                                 className="w-full bg-white border border-gold-soft/20 rounded-xl px-4 py-3 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all placeholder:opacity-30"
+                              />
+                           </div>
+                        </div>
+
                         <div className="space-y-3">
                            <label className="font-body text-[9px] font-black uppercase tracking-[0.3em] text-cocoa-deep/60">
                               Email Address
                            </label>
                            <input 
+                              name="email"
                               type="email" 
                               required
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              value={formData.email}
+                              onChange={handleChange}
                               placeholder="you@example.com"
-                              className="w-full bg-white border border-gold-soft/20 rounded-xl px-6 py-4 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all placeholder:opacity-30"
+                              className="w-full bg-white border border-gold-soft/20 rounded-xl px-4 py-3 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all placeholder:opacity-30"
                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           <div className="space-y-3">
+                              <label className="font-body text-[9px] font-black uppercase tracking-[0.3em] text-cocoa-deep/60">
+                                 Attendees
+                              </label>
+                              <select 
+                                 name="attendees"
+                                 value={formData.attendees}
+                                 onChange={handleChange}
+                                 className="w-full bg-white border border-gold-soft/20 rounded-xl px-4 py-3 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all appearance-none cursor-pointer"
+                              >
+                                 <option value="1">1 Person</option>
+                                 <option value="2">2 People</option>
+                                 <option value="3">3 People</option>
+                                 <option value="4+">4+ People</option>
+                              </select>
+                           </div>
+                           <div className="space-y-3">
+                              <label className="font-body text-[9px] font-black uppercase tracking-[0.3em] text-cocoa-deep/60">
+                                 Preferred Date
+                              </label>
+                              <select 
+                                 name="preferredDate"
+                                 value={formData.preferredDate}
+                                 onChange={handleChange}
+                                 className="w-full bg-white border border-gold-soft/20 rounded-xl px-4 py-3 font-serif italic text-base text-cocoa-deep focus:outline-none focus:border-gold-soft transition-all appearance-none cursor-pointer"
+                              >
+                                 <option value="">Any Available</option>
+                                 <option value="This Weekend">This Weekend</option>
+                                 <option value="Next Weekend">Next Weekend</option>
+                                 <option value="Next Month">Next Month</option>
+                              </select>
+                           </div>
                         </div>
                         
                         <button 

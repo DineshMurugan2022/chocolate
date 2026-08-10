@@ -28,9 +28,7 @@ export default function Newsletter() {
     } catch (err: any) {
       // Errors handled by axios response interceptor or fall back here
       const errMsg = err.response?.data?.message || 'Failed to submit application.';
-      if (err.response?.status !== 400) {
-        toast.error(errMsg);
-      }
+      toast.error(errMsg);
     } finally {
       setLoading(false);
     }

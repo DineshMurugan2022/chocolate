@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, FileText, CheckCircle2 } from 'lucide-react';
-
+import { Send, FileText, CheckCircle2, Loader2 } from 'lucide-react';
+import api from '@/utils/api';
+import toast from 'react-hot-toast';
 export default function CorporateInquiryForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     giftingType: 'Festive',
-    giftCount: '',
+    location: '',
     budget: '',
     address: '',
     details: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
+    if (!formData.fullName || !formData.phone || !formData.email) {
+      toast.error('Please complete all required fields.');
+      return;
+    }
+    setLoading(true);
+    try {
+      await api.post('/inquiry', formData);
       setIsSubmitted(true);
-    }, 1000);
+      toast.success('Your inquiry has been received.');
+    } catch (err: any) {
+      const errMsg = err.response?.data?.message || 'Failed to submit inquiry.';
+      toast.error(errMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -133,7 +146,7 @@ export default function CorporateInquiryForm() {
 
              {/* Types of Gifting */}
              <div className="space-y-4">
-                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Gifting Modality</label>
+                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Gifting Method</label>
                 <select 
                   name="giftingType"
                   onChange={handleChange}
@@ -146,20 +159,20 @@ export default function CorporateInquiryForm() {
                 </select>
              </div>
 
-             {/* Count & Budget */}
+             {/* Location & Budget */}
              <div className="space-y-4">
-                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Unit Allocation</label>
+                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Location</label>
                 <input 
-                  name="giftCount"
+                  name="location"
                   onChange={handleChange}
-                  type="number" 
-                  placeholder="00" 
+                  type="text" 
+                  placeholder="CITY / VENUE" 
                   className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
                 />
              </div>
 
              <div className="space-y-4">
-                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Budget Paradigm</label>
+                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Budget</label>
                 <input 
                    name="budget"
                    onChange={handleChange}
@@ -172,7 +185,7 @@ export default function CorporateInquiryForm() {
 
           {/* Additional Details */}
           <div className="space-y-4 pt-10">
-             <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Narrative Details</label>
+             <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Story or Background</label>
              <textarea 
                 name="details"
                 onChange={handleChange}
@@ -184,9 +197,14 @@ export default function CorporateInquiryForm() {
 
           <button 
             type="submit"
-            className="w-full py-8 bg-gold-soft text-black font-body font-black text-[11px] uppercase tracking-[0.6em] rounded-full sm:rounded-[100px] hover:bg-white transition-all shadow-[0_0_50px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-center justify-center gap-4 group"
+            disabled={loading}
+            className="w-full py-8 bg-gold-soft text-black font-body font-black text-[11px] uppercase tracking-[0.6em] rounded-full sm:rounded-[100px] hover:bg-white transition-all shadow-[0_0_50px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-center justify-center gap-4 group disabled:opacity-75 disabled:pointer-events-none"
           >
-            Dispatch Inquiry <Send size={18} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" />
+            {loading ? (
+              <>Processing <Loader2 size={18} className="animate-spin" /></>
+            ) : (
+              <>Dispatch Inquiry <Send size={18} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" /></>
+            )}
           </button>
        </form>
     </div>
