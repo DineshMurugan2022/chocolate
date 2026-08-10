@@ -97,10 +97,10 @@ export default function CorporateInquiryForm() {
 
        <form 
          onSubmit={handleSubmit}
-         className="relative bg-black/40 backdrop-blur-3xl rounded-[60px] border border-gold-soft/10 p-10 md:p-16 space-y-12"
+         className="relative bg-gradient-to-br from-[#3E2723]/90 via-[#2a1b15]/95 to-black/90 backdrop-blur-3xl rounded-[60px] border border-gold-soft/30 p-10 md:p-16 space-y-12 shadow-[0_20px_60px_rgba(212,175,55,0.15)]"
        >
           <div className="text-center md:text-left space-y-4 mb-12">
-             <span className="font-body text-[10px] text-gold-soft font-black uppercase tracking-[0.5em]">Inquiry Registry</span>
+             <span className="font-body text-[10px] text-gold-soft font-black uppercase tracking-[0.5em]">Inquiry Form</span>
              <h2 className="text-4xl md:text-6xl font-display italic font-black text-ivory-warm leading-tight">Secure Your Date</h2>
           </div>
 
@@ -113,34 +113,34 @@ export default function CorporateInquiryForm() {
                   name="fullName"
                   onChange={handleChange}
                   type="text" 
-                  placeholder="REGISTRY NAME_" 
-                  className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                  placeholder="YOUR NAME" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
                 />
              </div>
 
              {/* Phone */}
              <div className="space-y-4">
-                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Phone Path</label>
+                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Phone Number</label>
                 <input 
                   required
                   name="phone"
                   onChange={handleChange}
                   type="tel" 
-                  placeholder="+91_" 
-                  className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                  placeholder="+91" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
                 />
              </div>
 
              {/* Email */}
              <div className="space-y-4">
-                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Digital Link (Email)</label>
+                <label className="font-display text-[10px] text-gold-soft font-black uppercase tracking-[0.4em]">Email Address</label>
                 <input 
                   required
                   name="email"
                   onChange={handleChange}
                   type="email" 
-                  placeholder="ADDRESS_REGISTRY" 
-                  className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                  placeholder="EMAIL ADDRESS" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
                 />
              </div>
 
@@ -150,7 +150,7 @@ export default function CorporateInquiryForm() {
                 <select 
                   name="giftingType"
                   onChange={handleChange}
-                  className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-xs font-black uppercase tracking-widest text-ivory-warm transition-all appearance-none cursor-pointer"
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-xs font-black uppercase tracking-widest text-ivory-warm transition-all appearance-none cursor-pointer"
                 >
                    <option value="Festive" className="bg-cocoa-deep text-ivory-warm">Festive Gifting</option>
                    <option value="Employee Reward" className="bg-cocoa-deep text-ivory-warm">Employee Reward</option>
@@ -167,7 +167,7 @@ export default function CorporateInquiryForm() {
                   onChange={handleChange}
                   type="text" 
                   placeholder="CITY / VENUE" 
-                  className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
                 />
              </div>
 
@@ -177,8 +177,8 @@ export default function CorporateInquiryForm() {
                    name="budget"
                    onChange={handleChange}
                    type="text" 
-                   placeholder="₹ / INR Registry" 
-                   className="w-full bg-transparent border-b border-gold-soft/10 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                   placeholder="₹ / INR" 
+                   className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
                 />
              </div>
           </div>
@@ -190,8 +190,8 @@ export default function CorporateInquiryForm() {
                 name="details"
                 onChange={handleChange}
                 rows={4}
-                placeholder="SPECIFIC REQUIREMENTS OR VISION_MAP..." 
-                className="w-full bg-transparent border border-gold-soft/10 p-6 rounded-3xl focus:border-gold-soft focus:bg-white/[0.02] outline-none font-serif text-lg italic text-ivory-warm transition-all placeholder:text-ivory-warm/10"
+                placeholder="SPECIFIC REQUIREMENTS OR DETAILS..." 
+                className="w-full bg-transparent border border-gold-soft/20 p-6 rounded-3xl focus:border-gold-soft focus:bg-white/[0.02] outline-none font-serif text-lg italic text-ivory-warm transition-all placeholder:text-ivory-warm/30"
              />
           </div>
 
