@@ -44,7 +44,7 @@ export default function Newsletter() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-full max-w-6xl relative z-10 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-20 items-center bg-white/40 backdrop-blur-3xl rounded-[80px] p-12 md:p-24 border border-white shadow-organic overflow-hidden"
+        className="w-full max-w-6xl relative z-10 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-20 items-center bg-gradient-to-br from-burnt-caramel via-orange-400 to-gold-soft backdrop-blur-3xl rounded-[80px] p-12 md:p-24 border border-white/40 shadow-2xl overflow-hidden"
       >
         {/* Left: Botanical Invitation */}
         <div className="space-y-12">
@@ -54,19 +54,19 @@ export default function Newsletter() {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="flex items-center gap-6"
               >
-                 <Sparkles className="size-5 text-burnt-caramel" />
-                 <span className="font-body text-[10px] font-black uppercase tracking-[0.6em] text-burnt-caramel">The Inheritance List</span>
+                 <Sparkles className="size-5 text-white" />
+                 <span className="font-body text-[10px] font-black uppercase tracking-[0.6em] text-white">Our Newsletter</span>
               </motion.div>
 
-              <h2 className="text-5xl md:text-7xl font-display font-black leading-[0.9] tracking-tight text-cocoa-deep">
-                 Join the <br /> 
-                 <span className="italic font-light text-cocoa-deep/30 pr-4">Artisan</span> 
-                 <span className="text-botanical-green">Registry</span>
+              <h2 className="text-5xl md:text-7xl font-display font-black leading-[0.9] tracking-tight text-white">
+                 Join Our <br /> 
+                 <span className="italic font-light text-white/80 pr-4">Mailing</span> 
+                 <span className="text-cocoa-deep">List</span>
               </h2>
            </div>
 
-           <p className="font-serif italic text-xl md:text-2xl text-cocoa-deep/50 leading-relaxed max-w-md">
-             Receive limited seasonal alerts, heritage collection drops, and invitations to clandestine harvest tastings.
+           <p className="font-serif italic text-xl md:text-2xl text-white/90 leading-relaxed max-w-md">
+             Get updates on seasonal offers, new chocolate collections, and exclusive events.
            </p>
 
            <div className="flex items-center gap-6 pt-6">
@@ -77,14 +77,14 @@ export default function Newsletter() {
                     </div>
                  ))}
               </div>
-              <span className="font-body text-[9px] font-bold uppercase tracking-widest text-cocoa-deep/30">Inherited by 4.2k+ Connoisseurs</span>
+              <span className="font-body text-[9px] font-bold uppercase tracking-widest text-white/80">Joined by 4.2k+ Customers</span>
            </div>
         </div>
 
         {/* Right: The Minimalist Entry Form */}
         <div className="space-y-10 relative">
-           <div className="absolute top-[-100px] right-[-50px] text-[15vw] font-display font-black text-cocoa-deep/[0.03] select-none pointer-events-none italic">
-              Entry
+           <div className="absolute top-[-100px] right-[-50px] text-[15vw] font-display font-black text-white/[0.1] select-none pointer-events-none italic">
+              Join
            </div>
            
            <form 
@@ -96,10 +96,10 @@ export default function Newsletter() {
                    type="text" 
                    value={formData.name}
                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                   placeholder="CURATOR NAME"
+                   placeholder="YOUR NAME"
                    required
                    disabled={loading}
-                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-black text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-black/60"
                  />
               </div>
 
@@ -111,7 +111,7 @@ export default function Newsletter() {
                    placeholder="PHONE NUMBER"
                    required
                    disabled={loading}
-                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-black text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-black/60"
                  />
               </div>
 
@@ -120,10 +120,10 @@ export default function Newsletter() {
                    type="email" 
                    value={formData.email}
                    onChange={e => setFormData({ ...formData, email: e.target.value })}
-                   placeholder="CURATOR_IDENTITY@DOMAIN"
+                   placeholder="EMAIL ADDRESS"
                    required
                    disabled={loading}
-                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10"
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-black text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-black/60"
                  />
               </div>
 
@@ -131,18 +131,18 @@ export default function Newsletter() {
                  <textarea 
                    value={formData.reason}
                    onChange={e => setFormData({ ...formData, reason: e.target.value })}
-                   placeholder="REASON FOR INDUCTION"
+                   placeholder="YOUR MESSAGE"
                    required
                    disabled={loading}
                    rows={3}
-                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-cocoa-deep text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-cocoa-deep/10 resize-none min-h-[100px]"
+                   className="w-full bg-white border border-cocoa-deep/5 rounded-[32px] px-8 py-5 text-black text-xs font-body font-black uppercase tracking-[0.4em] focus:outline-none focus:border-burnt-caramel transition-all shadow-inner placeholder:text-black/60 resize-none min-h-[100px]"
                  />
               </div>
               
               <button 
                 type="submit"
                 disabled={loading}
-                className="w-full h-20 bg-botanical-green text-ivory-warm rounded-[32px] font-body font-black uppercase text-[10px] tracking-[0.5em] shadow-2xl hover:bg-burnt-caramel transition-all transform hover:translate-y-[-5px] active:scale-95 flex items-center justify-center gap-6 group disabled:opacity-75 disabled:pointer-events-none"
+                className="w-full h-20 bg-cocoa-deep text-ivory-warm rounded-[32px] font-body font-black uppercase text-[10px] tracking-[0.5em] shadow-2xl hover:bg-black transition-all transform hover:translate-y-[-5px] active:scale-95 flex items-center justify-center gap-6 group disabled:opacity-75 disabled:pointer-events-none"
               >
                 {loading ? (
                   <>
@@ -151,16 +151,16 @@ export default function Newsletter() {
                   </>
                 ) : (
                   <>
-                    Apply for Induction
+                    Subscribe Now
                     <div className="size-1 w-8 bg-ivory-warm/30 rounded-full group-hover:w-12 transition-all" />
                   </>
                 )}
               </button>
 
-              <div className="flex items-center gap-4 pt-2 opacity-30">
-                 <div className="w-10 h-[1.5px] bg-cocoa-deep" />
-                 <p className="text-[8px] font-body font-black uppercase tracking-[0.2em] max-w-[200px]">
-                    Authorized Digital Communiqués of Luxury ONLY.
+              <div className="flex items-center gap-4 pt-2 opacity-50">
+                 <div className="w-10 h-[1.5px] bg-white" />
+                 <p className="text-[8px] font-body font-black uppercase tracking-[0.2em] max-w-[200px] text-white">
+                    We only send important updates. No spam.
                  </p>
               </div>
            </form>
