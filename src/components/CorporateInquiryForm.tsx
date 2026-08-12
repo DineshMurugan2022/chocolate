@@ -113,8 +113,8 @@ export default function CorporateInquiryForm() {
                   name="fullName"
                   onChange={handleChange}
                   type="text" 
-                  placeholder="YOUR NAME" 
-                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                  placeholder="Your Full Name" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
                 />
              </div>
 
@@ -126,8 +126,8 @@ export default function CorporateInquiryForm() {
                   name="phone"
                   onChange={handleChange}
                   type="tel" 
-                  placeholder="+91" 
-                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                  placeholder="+91 98432 40703" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
                 />
              </div>
 
@@ -139,8 +139,8 @@ export default function CorporateInquiryForm() {
                   name="email"
                   onChange={handleChange}
                   type="email" 
-                  placeholder="EMAIL ADDRESS" 
-                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                  placeholder="your.email@example.com" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
                 />
              </div>
 
@@ -150,7 +150,7 @@ export default function CorporateInquiryForm() {
                 <select 
                   name="giftingType"
                   onChange={handleChange}
-                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-xs font-black uppercase tracking-widest text-ivory-warm transition-all appearance-none cursor-pointer"
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all appearance-none cursor-pointer"
                 >
                    <option value="Festive" className="bg-cocoa-deep text-ivory-warm">Festive Gifting</option>
                    <option value="Employee Reward" className="bg-cocoa-deep text-ivory-warm">Employee Reward</option>
@@ -166,8 +166,8 @@ export default function CorporateInquiryForm() {
                   name="location"
                   onChange={handleChange}
                   type="text" 
-                  placeholder="CITY / VENUE" 
-                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                  placeholder="City / Venue (e.g. Chennai)" 
+                  className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
                 />
              </div>
 
@@ -177,8 +177,8 @@ export default function CorporateInquiryForm() {
                    name="budget"
                    onChange={handleChange}
                    type="text" 
-                   placeholder="₹ / INR" 
-                   className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-sm font-black uppercase tracking-widest text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                   placeholder="₹ / INR (e.g. 10,000)" 
+                   className="w-full bg-transparent border-b border-gold-soft/20 py-4 focus:border-gold-soft outline-none font-body text-base font-semibold normal-case tracking-wide text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
                 />
              </div>
           </div>
@@ -190,18 +190,18 @@ export default function CorporateInquiryForm() {
                 name="details"
                 onChange={handleChange}
                 rows={4}
-                placeholder="SPECIFIC REQUIREMENTS OR DETAILS..." 
-                className="w-full bg-transparent border border-gold-soft/20 p-6 rounded-3xl focus:border-gold-soft focus:bg-white/[0.02] outline-none font-serif text-lg italic text-ivory-warm transition-all placeholder:text-ivory-warm/30"
+                placeholder="Share specific requirements or background details..." 
+                className="w-full bg-transparent border border-gold-soft/20 p-6 rounded-3xl focus:border-gold-soft focus:bg-white/[0.02] outline-none font-serif text-lg italic normal-case text-ivory-warm transition-all placeholder:text-ivory-warm/30 placeholder:normal-case"
              />
           </div>
 
           <button 
             type="submit"
             disabled={loading}
-            className="w-full py-8 bg-gold-soft text-black font-body font-black text-[11px] uppercase tracking-[0.6em] rounded-full sm:rounded-[100px] hover:bg-white transition-all shadow-[0_0_50px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-center justify-center gap-4 group disabled:opacity-75 disabled:pointer-events-none"
+            className="w-full py-8 bg-gold-soft text-black font-body font-black text-[11px] uppercase tracking-[0.6em] rounded-full sm:rounded-[100px] hover:bg-white transition-all shadow-[0_0_50px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-center justify-center gap-4 group disabled:opacity-75 disabled:pointer-events-none cursor-pointer"
           >
             {loading ? (
-              <>Processing <Loader2 size={18} className="animate-spin" /></>
+              <>Processing Inquiry <Loader2 size={18} className="animate-spin" /></>
             ) : (
               <>Dispatch Inquiry <Send size={18} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" /></>
             )}
